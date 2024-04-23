@@ -13,6 +13,18 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        poppins: "Poppins",
+        baloo: "Baloo",
+        "baloo-2": "'Baloo 2'",
+        lato: "Lato",
+        quicksand: "Quicksand",
+        "paytone-one": "'Paytone One'",
+        "barlow-condensed": "'Barlow Condensed'",
+        inherit: "inherit",
+        "baloo-bhaijaan": "'Baloo Bhaijaan'",
+        inter: "Inter",
+      },
     },
   },
   plugins: [],
