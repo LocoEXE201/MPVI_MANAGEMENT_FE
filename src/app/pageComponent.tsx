@@ -3,7 +3,7 @@
 const HomePageComponent = (props: {}) => {
   return (
     <>
-      <div>Main Content Here</div>
+      <div style={{ minHeight: "100vh" }}>Main Content Here</div>
     </>
   );
 };
