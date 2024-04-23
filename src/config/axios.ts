@@ -3,7 +3,6 @@ import axios, { AxiosRequestConfig } from 'axios';
 export enum AxiosClientFactoryEnum {
   AUTH = 'auth',
   SHOP = 'shop',
-  MARKETING = 'marketing',
   WAREHOUSE = 'warehouse',
 }
 
@@ -30,10 +29,9 @@ export const parseParams = (params: any) => {
   return options ? options.slice(0, -1) : options;
 };
 
-const auth = `https://artvistaauthapi.azurewebsites.net/api/`;
-const shop = `https://artvistamanagementapi.azurewebsites.net/api/`;
-const marketing = `https://artvistamarketapi.azurewebsites.net/api/`;
-const warehouse = `https://artvistamarketapi.azurewebsites.net/api/`;
+const auth = `https://mpviauth.azurewebsites.net/api/`;
+const shop = `https://mpvishopapi.azurewebsites.net/api/`;
+const warehouse = `https://mpviwarehouse.azurewebsites.net/api/`;
 
 const request = axios.create({
   baseURL: auth,
@@ -67,33 +65,14 @@ requestManagement.interceptors.response.use(
   (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
 );
 
-const requestMarket = axios.create({
-    baseURL: marketing,
-    paramsSerializer: parseParams,
-    headers: {
-        Authorization:
-          'Bearer '
-      }
-  });
-  
-  
-requestMarket.interceptors.request.use((options) => {
-    return options;
-  });
-  
-requestMarket.interceptors.response.use(
-    (response) => response,
-    (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
-  );
-
-  const requestWarehouse = axios.create({
+const requestWarehouse = axios.create({
     baseURL: warehouse,
     paramsSerializer: parseParams,
     headers: {
         Authorization:
           'Bearer '
       }
-  });
+});
   
   
 requestWarehouse.interceptors.request.use((options) => {
@@ -112,8 +91,6 @@ class AxiosClientFactory {
         return request;
       case 'shop':
         return requestManagement;
-      case 'marketing':
-        return requestMarket;
       case 'warehouse':
         return requestWarehouse;
       default:
@@ -127,7 +104,6 @@ const axiosClientFactory = new AxiosClientFactory();
 const axiosInstances = {
   auth: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.AUTH),
   shop: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SHOP),
-  marketing: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.MARKETING),
   warehouse: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.WAREHOUSE),
 };
 
