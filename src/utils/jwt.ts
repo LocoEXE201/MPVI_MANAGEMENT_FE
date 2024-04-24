@@ -21,11 +21,11 @@ const setSession = (accessToken: string | null) => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
     axiosInstances.shop.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-    axiosInstances.marketing.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    axiosInstances.warehouse.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   } else {
     localStorage.removeItem('accessToken');
     delete axiosInstances.shop.defaults.headers.common.Authorization;
-    delete axiosInstances.marketing.defaults.headers.common.Authorization;
+    delete axiosInstances.warehouse.defaults.headers.common.Authorization;
   }
 };
 
