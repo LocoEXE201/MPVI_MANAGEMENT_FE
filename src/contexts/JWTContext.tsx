@@ -330,18 +330,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
       role: role,
       // address,
     });
-
-    // if (
-    //   response.data.isSuccess &&
-    //   !response.data.result.succeeded &&
-    //   response.data.result.errors[0] != null
-    // ) {
-    //   disableLoading();
-    //   localStorage.setItem(
-    //     "REGISTER_CONFIRMING_ERROR",
-    //     response.data.result.errors[0].description
-    //   );
-    // }
   };
 
   const logout = async () => {
@@ -349,7 +337,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     setUserInfo({});
     localStorage.removeItem("USER_INFO");
     dispatch({ type: Types.Logout });
-    router.push("/");
+    router.push(PATH_AUTH.login);
   };
 
   const resetPassword = (email: string) => {};
