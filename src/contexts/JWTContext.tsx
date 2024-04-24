@@ -167,7 +167,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
             const { id, name, email, phoneNumber, role, address } =
               response.data.result.user;
 
-            var userRole: string[] = [];
+            var userRole: any[] = [];
             userRole.push(checkRoleCode(role));
 
             const user = {
@@ -248,7 +248,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
             const { id, name, email, phoneNumber, role } =
               response.data.result.user;
 
-            var userRole: string[] = [];
+            var userRole: any[] = [];
             userRole.push(checkRoleCode(role));
 
             const user = {
