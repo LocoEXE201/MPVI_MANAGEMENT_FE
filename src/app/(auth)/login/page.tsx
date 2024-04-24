@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import LoginPageProvider from "./components/LoginPageProvider";
 
 export const metadata: Metadata = {
-  title: "Loco. - Love Connection",
+  title: "Loco. - Quản Lý",
   description: "This is Loco. Login Page",
 };
 

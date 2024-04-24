@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import HomePageProvider from "./pageProvider";
 
 export const metadata: Metadata = {
-  title: "Loco. - Love Connection",
+  title: "Loco. - Quản Lý",
   description: "This is Loco. Landing Page",
 };
 

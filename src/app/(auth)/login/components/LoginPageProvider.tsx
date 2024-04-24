@@ -4,15 +4,18 @@ import { AuthProvider } from "@/contexts/JWTContext";
 import LoginPageComponent from "./LoginPageComponent";
 import GuestGuard from "@/guards/GuestGuard";
 import { AppProvider } from "@/contexts/AppContext";
+import { AuthContextProvider } from "@/contexts/AuthGoogleContext";
 
 const LoginPageProvider = (props: {}) => {
   return (
     <>
       <AppProvider>
         <AuthProvider>
-          <GuestGuard>
-            <LoginPageComponent />
-          </GuestGuard>
+          <AuthContextProvider>
+            <GuestGuard>
+              <LoginPageComponent />
+            </GuestGuard>
+          </AuthContextProvider>
         </AuthProvider>
       </AppProvider>
     </>

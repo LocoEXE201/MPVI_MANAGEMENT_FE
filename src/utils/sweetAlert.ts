@@ -10,6 +10,7 @@ const sweetAlert = {
       showConfirmButton: false,
       timer: time,
       timerProgressBar: true,
+      showCloseButton: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);
@@ -31,6 +32,7 @@ const sweetAlert = {
       showConfirmButton: false,
       timer: time,
       timerProgressBar: true,
+      showCloseButton: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);
@@ -52,6 +54,7 @@ const sweetAlert = {
       showConfirmButton: false,
       timer: time,
       timerProgressBar: true,
+      showCloseButton: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);
@@ -73,6 +76,7 @@ const sweetAlert = {
       showConfirmButton: false,
       timer: time,
       timerProgressBar: true,
+      showCloseButton: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);

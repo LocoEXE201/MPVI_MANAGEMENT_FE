@@ -122,8 +122,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
             sweetAlert.alertInfo(
               "Phiên đăng nhập hết hạn",
               "Xin vui lòng đăng nhập lại",
-              2000,
-              30
+              3000,
+              25
             );
           }
 
@@ -194,7 +194,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
             sweetAlert.alertFailed(
               `Đăng nhập thất bại`,
               `Xin bạn vui lòng kiểm tra email hoặc mật khẩu và đăng nhập lại`,
-              2000,
+              5000,
               30
             );
           }
@@ -205,7 +205,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
           sweetAlert.alertFailed(
             `Đăng nhập thất bại`,
             `Xin bạn vui lòng kiểm tra email hoặc mật khẩu và đăng nhập lại`,
-            2000,
+            5000,
             30
           );
           router.push(PATH_AUTH.login);
@@ -213,7 +213,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         .finally(() => {
           if (getUserInfo()) {
             setTimeout(() => {
-              sweetAlert.alertSuccess("Đăng nhập thành công", "", 1200, 20);
+              sweetAlert.alertSuccess("Đăng nhập thành công", "", 1200, 22);
             }, 200);
           }
         });
@@ -223,7 +223,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       sweetAlert.alertFailed(
         `Đăng nhập thất bại`,
         `Xin bạn vui lòng kiểm tra email hoặc mật khẩu và đăng nhập lại`,
-        2000,
+        5000,
         30
       );
       router.push(PATH_AUTH.login);
@@ -241,8 +241,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
             response.data.result != null &&
             response.data.result.user != null
           ) {
-            console.log(response);
-
             const { id, name, email, phoneNumber, role } =
               response.data.result.user;
 
@@ -273,25 +271,24 @@ function AuthProvider({ children }: { children: ReactNode }) {
               `Đăng nhập thất bại`,
               `Email này hiện chưa được đăng ký`,
               2000,
-              25
+              28
             );
           }
-          console.log(response);
         })
         .catch((error) => {
-          console.log("haha", error);
+          console.log(error);
           disableLoading();
           sweetAlert.alertFailed(
             `Đăng nhập thất bại`,
             `Email này hiện chưa được đăng ký`,
             2000,
-            25
+            28
           );
         })
         .finally(() => {
           if (getUserInfo()) {
             setTimeout(() => {
-              sweetAlert.alertSuccess("Đăng nhập thành công", "", 1200, 20);
+              sweetAlert.alertSuccess("Đăng nhập thành công", "", 1200, 22);
             }, 200);
           }
         });
@@ -301,7 +298,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       sweetAlert.alertFailed(
         `Đăng nhập thất bại`,
         `Xin bạn vui lòng kiểm tra email hoặc mật khẩu và đăng nhập lại`,
-        2000,
+        5000,
         30
       );
       router.push(PATH_AUTH.login);
@@ -313,53 +310,31 @@ function AuthProvider({ children }: { children: ReactNode }) {
     password: string,
     name: string,
     phoneNumber: string,
-    role: string,
-    address: string
+    role: string
+    // address: string
   ) => {
     enableLoading();
 
-    const trimmedPhone = phoneNumber.replace(/^0+/, "");
-    const parsedPhone = "+84" + trimmedPhone;
     const response = await axiosInstances.auth.post("/auth/register", {
-      email,
-      password,
-      name,
-      phoneNumber: parsedPhone,
-      role,
-      address,
+      email: email,
+      password: password,
+      name: name,
+      phoneNumber: phoneNumber,
+      role: role,
+      // address,
     });
 
-    console.log({
-      email,
-      password,
-      name,
-      phoneNumber: parsedPhone,
-      role,
-      address,
-    });
-
-    if (response.data.isSuccess && response.data.result.succeeded) {
-      localStorage.setItem(
-        "REGISTER_CONFIRMING_USER",
-        JSON.stringify({
-          email,
-          password,
-        })
-      );
-      disableLoading();
-    }
-
-    if (
-      response.data.isSuccess &&
-      !response.data.result.succeeded &&
-      response.data.result.errors[0] != null
-    ) {
-      disableLoading();
-      localStorage.setItem(
-        "REGISTER_CONFIRMING_ERROR",
-        response.data.result.errors[0].description
-      );
-    }
+    // if (
+    //   response.data.isSuccess &&
+    //   !response.data.result.succeeded &&
+    //   response.data.result.errors[0] != null
+    // ) {
+    //   disableLoading();
+    //   localStorage.setItem(
+    //     "REGISTER_CONFIRMING_ERROR",
+    //     response.data.result.errors[0].description
+    //   );
+    // }
   };
 
   const logout = async () => {

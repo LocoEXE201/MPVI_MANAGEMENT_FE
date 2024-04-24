@@ -25,6 +25,9 @@ const config: Config = {
         "baloo-bhaijaan": "'Baloo Bhaijaan'",
         inter: "Inter",
       },
+      colors: {
+        primay: "#cb6f04",
+      }
     },
   },
   plugins: [],

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import OrderPageProvider from "./components/OrderPageProvider";
 
 export const metadata: Metadata = {
-  title: "Loco. - Love Connection",
+  title: "Loco. - Quản Lý",
   description: "This is Loco. Category Management Page",
 };
 
