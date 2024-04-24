@@ -32,7 +32,7 @@ export const setUserInfo = (userInfo) => {
       name: userInfo.name,
       email: userInfo.email,
       phoneNumber: userInfo.phoneNumber,
-      // role: userInfo.role,
+      role: userInfo.role,
       // address: userInfo.address,
     })
   );
