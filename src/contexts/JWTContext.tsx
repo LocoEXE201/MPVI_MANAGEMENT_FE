@@ -11,7 +11,7 @@ import {
   AuthUser,
   JWTContextType,
 } from "@/types/authentication";
-import { AccountRoleCode } from "@/enums/accountRole";
+import { AccountRoleCode, checkRoleCode } from "@/enums/accountRole";
 import { useRouter } from "next/navigation";
 import useAppContext from "@/hooks/useAppContext";
 import { PATH_AUTH } from "@/routes/paths";
@@ -167,12 +167,15 @@ function AuthProvider({ children }: { children: ReactNode }) {
             const { id, name, email, phoneNumber, role, address } =
               response.data.result.user;
 
+            var userRole: string[] = [];
+            userRole.push(checkRoleCode(role));
+
             const user = {
               id: id,
               name: name,
               email: email,
               phoneNumber: phoneNumber,
-              // role: role,
+              role: userRole,
               // address: address,
             };
 
@@ -233,6 +236,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const loginWithEmail = async (email: string) => {
     try {
       enableLoading();
+
       await axiosInstances.auth
         .post("/auth/LoginGoogle", email)
         .then((response) => {
@@ -244,12 +248,15 @@ function AuthProvider({ children }: { children: ReactNode }) {
             const { id, name, email, phoneNumber, role } =
               response.data.result.user;
 
+            var userRole: string[] = [];
+            userRole.push(checkRoleCode(role));
+
             const user = {
               id: id,
               name: name,
               email: email,
               phoneNumber: phoneNumber,
-              // role: role,
+              role: userRole,
             };
 
             const accessToken = response.data.result.token;

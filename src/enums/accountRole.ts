@@ -14,3 +14,20 @@ export enum AccountRoleString {
    MEMBER = "MPVI_MEMBER",
    CUSTOMER = "MPVI_CUSTOMER",
 }
+
+export const checkRoleCode = (role: any) => {
+   switch(role) {
+      case AccountRoleString.SUPER_ADMIN:
+         return AccountRoleCode.SUPER_ADMIN;
+      case AccountRoleString.WAREHOUSE_MANAGER:
+         return AccountRoleCode.WAREHOUSE_MANAGER;
+      case AccountRoleString.ECONOMIC_LEAD:
+         return AccountRoleCode.ECONOMIC_LEAD;
+      case AccountRoleString.MEMBER:
+         return AccountRoleCode.MEMBER;
+      case AccountRoleString.CUSTOMER:
+         return AccountRoleCode.CUSTOMER;
+      default:
+      return AccountRoleCode.ANYNOMOUS
+   }
+}

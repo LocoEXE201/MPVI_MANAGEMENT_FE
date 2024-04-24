@@ -39,6 +39,14 @@ const request = axios.create({
 });
 
 request.interceptors.request.use((options) => {
+  const { method } = options;
+
+  if (method === 'put' || method === 'post') {
+    Object.assign(options.headers, {
+      'Content-Type': 'application/json;charset=UTF-8'
+    });
+  }
+
   return options;
 });
 
@@ -57,6 +65,14 @@ const requestManagement = axios.create({
 });
 
 requestManagement.interceptors.request.use((options) => {
+  const { method } = options;
+
+  if (method === 'put' || method === 'post') {
+    Object.assign(options.headers, {
+      'Content-Type': 'application/json;charset=UTF-8'
+    });
+  }
+
   return options;
 });
 
@@ -76,7 +92,15 @@ const requestWarehouse = axios.create({
   
   
 requestWarehouse.interceptors.request.use((options) => {
-    return options;
+    const { method } = options;
+
+  if (method === 'put' || method === 'post') {
+    Object.assign(options.headers, {
+      'Content-Type': 'application/json;charset=UTF-8'
+    });
+  }
+
+  return options;
   });
   
 requestWarehouse.interceptors.response.use(

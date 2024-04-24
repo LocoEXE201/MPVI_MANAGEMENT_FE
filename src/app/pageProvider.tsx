@@ -12,17 +12,17 @@ const HomePageProvider = (props: {}) => {
     <>
       <AppProvider>
         <AuthProvider>
-          {/* <AuthGuard> */}
-          {/* <RoleBasedGuard
+          <AuthGuard>
+            <RoleBasedGuard
               accessibleRoles={[
-                AccountRoleCode.MPVI_SUPER_ADMIN,
-                AccountRoleCode.MPVI_ECONOMIC_LEAD,
-                AccountRoleCode.MPVI_WAREHOUSE_MANAGER,
+                AccountRoleCode.SUPER_ADMIN,
+                AccountRoleCode.ECONOMIC_LEAD,
+                AccountRoleCode.WAREHOUSE_MANAGER,
               ]}
-            > */}
-          <HomePageComponent />
-          {/* </RoleBasedGuard> */}
-          {/* </AuthGuard> */}
+            >
+              <HomePageComponent />
+            </RoleBasedGuard>
+          </AuthGuard>
         </AuthProvider>
       </AppProvider>
     </>
