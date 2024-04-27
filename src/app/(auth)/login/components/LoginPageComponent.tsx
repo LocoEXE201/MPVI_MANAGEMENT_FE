@@ -7,10 +7,11 @@ import GuestGuard from "@/guards/GuestGuard";
 import useAuth from "@/hooks/useAuth";
 import useAppContext from "@/hooks/useAppContext";
 import Swal from "sweetalert2";
-// import authApi from "@/api/auth/auth";
 import { useAuthGoogle } from "@/contexts/AuthGoogleContext";
 import LoginFrame from "./LoginFrame";
 import Welcomeframe from "./welcomeframe";
+import { PATH_AUTH } from "@/routes/paths";
+import Loading from "@/components/Loading/Loading";
 
 const LoginPageComponent = (props: {}) => {
   const router = useRouter();
@@ -53,66 +54,34 @@ const LoginPageComponent = (props: {}) => {
   });
 
   const handleForgetPassword = () => {
-    // Swal.fire({
-    //   title: `Enter your email`,
-    //   html: `Please enter email of your account`,
-    //   input: "email",
-    //   inputAttributes: {
-    //     autocapitalize: "off",
-    //   },
-    //   showCancelButton: true,
-    //   showConfirmButton: true,
-    //   confirmButtonText: "Confirm",
-    //   allowOutsideClick: false,
-    // })
-    //   .then(async (result) => {
-    //     if (result.isConfirmed === true) {
-    //       enableLoading();
-    //       var email = result.value;
-    //       authApi
-    //         .sendEmailForgotPassword(email)
-    //         .then((response) => {
-    //           disableLoading();
-    //           if (!response.data.isSuccess) {
-    //             Swal.fire({
-    //               title: `Sorry`,
-    //               html: `We have not found any account with email: </br><strong> ${email}. </strong><br/>
-    //             Please check your email and try again later.`,
-    //               timerProgressBar: true,
-    //               showCancelButton: false,
-    //               showConfirmButton: true,
-    //               confirmButtonText: "Confirm",
-    //               showLoaderOnConfirm: true,
-    //               allowOutsideClick: false,
-    //             })
-    //               .then((result) => {})
-    //               .catch((err) => {});
-    //           } else if (response.data.isSuccess) {
-    //             Swal.fire({
-    //               title: `Verify your account`,
-    //               html: `We have sent a verify link to your email: </br><strong> ${email}. </strong><br/>
-    //             Please check your mail and follow the instruction to reset password.`,
-    //               timerProgressBar: true,
-    //               showCancelButton: false,
-    //               showConfirmButton: true,
-    //               confirmButtonText: "Confirm",
-    //               showLoaderOnConfirm: true,
-    //               allowOutsideClick: false,
-    //             })
-    //               .then((result) => {})
-    //               .catch((err) => {});
-    //           }
-    //         })
-    //         .catch((err) => {
-    //           console.log(err);
-    //         });
-    //     }
-    //   })
-    //   .catch((err) => {});
+    Swal.fire({
+      title: `Đặt lại mật khẩu`,
+      html: `Xin bạn vui lòng điền địa chỉ email của tài khoản bạn vào phần dưới đây.`,
+      input: "email",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      confirmButtonColor: "#3085d6",
+      cancelButtonText: "Hủy bỏ",
+      focusConfirm: true,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: false,
+      preConfirm: (login) => {},
+    }).then((result) => {
+      if (result.isConfirmed) {
+        enableLoading();
+        if (result.value && result.value != "") {
+          router.push(PATH_AUTH.loginForgotPassword(result.value));
+        }
+      }
+    });
   };
 
   return (
     <GuestGuard>
+      <Loading loading={isLoading} />
       <div className="font-baloo-2 text-lightslategray mq800:gap-[0px_24px] mq1325:flex-wrap relative flex w-full min-w-full flex-row items-start justify-start gap-[0px_49px] overflow-hidden bg-neutral-white text-left text-base tracking-[normal]">
         <Welcomeframe propMargin="0" />
         <div className="min-h-screen justify-center mq800:pt-[31px] mq800:box-border mq800:min-w-full mq1325:flex-1 mq1125:pt-12 mq1125:box-border box-border flex w-[632px] min-w-[632px] max-w-full flex-col items-start px-0 pb-0 pt-[20px]">
@@ -212,7 +181,7 @@ const LoginPageComponent = (props: {}) => {
                           style={{ fontWeight: "bolder" }}
                           className="hover:bg-yellow-600 bg-primay text-white mt-3 box-border flex w-full max-w-full flex-1 cursor-pointer flex-row items-start justify-center overflow-hidden whitespace-nowrap rounded-md bg-primary-colour px-5 py-[21px] [border:none]"
                         >
-                          <div className="font-barlow relative mt-0 flex w-full items-center justify-center text-center text-lg font-medium text-neutral-white">
+                          <div className="text-[1.5rem] font-baloo-2 relative mt-0 flex w-full items-center justify-center text-center text-lg font-medium text-neutral-white">
                             Đăng Nhập
                           </div>
                         </button>
@@ -243,7 +212,7 @@ const LoginPageComponent = (props: {}) => {
                           alt=""
                           src="/Icons/google_icon.svg"
                         />
-                        <div className="relative z-[1] w-full self-stretch pl-5 font-medium">
+                        <div className="text-[1.25rem] relative z-[1] w-full self-stretch pl-5 font-medium font-baloo-2">
                           Đăng Nhập Với Google
                         </div>
                       </div>
