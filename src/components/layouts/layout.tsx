@@ -3,6 +3,7 @@ import { AuthContextProvider } from "@/contexts/AuthGoogleContext";
 import { AuthProvider } from "@/contexts/JWTContext";
 import React from "react";
 import SideBar from "./sidebarComponent";
+import NavBar from "./navbar";
 
 export default function MainLayoutComponent({
     children,
@@ -13,10 +14,15 @@ export default function MainLayoutComponent({
         <AppProvider>
             <AuthProvider>
                 <AuthContextProvider>
-                    <SideBar/>
-                    <main>
-                        {children}
-                    </main>
+                    <div className="flex h-screen">
+                        <SideBar />
+                        <div className="flex flex-col flex-1">
+                            <NavBar />
+                            <main className="flex-1 overflow-y-auto p-4">
+                                {children}
+                            </main>
+                        </div>
+                    </div>
                 </AuthContextProvider>
             </AuthProvider>
         </AppProvider>
