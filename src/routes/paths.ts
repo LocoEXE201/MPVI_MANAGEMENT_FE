@@ -9,3 +9,7 @@ export const PATH_AUTH = {
   register: '/register',
   loginForgotPassword: (email: string) => `/login/forgotPassword/${email}`,
 };
+
+export const PATH_MAIN = {
+  root: "/",
+};
