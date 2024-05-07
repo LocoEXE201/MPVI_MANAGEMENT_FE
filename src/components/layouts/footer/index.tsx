@@ -1,15 +1,16 @@
 import { AppProvider } from "@/contexts/AppContext"
 import { AuthProvider } from "@/contexts/JWTContext"
-import SideBarComponent from "./SideBarComponent"
+import FooterComponent from "./Footer"
 
-const SideBar = (props : {}) => {
+
+const Footer = (props : {}) => {
     return (
         <AppProvider>
             <AuthProvider>
-                <SideBarComponent />
+                <FooterComponent/>
             </AuthProvider>
         </AppProvider>
     )
 }
 
-export default SideBar
+export default Footer

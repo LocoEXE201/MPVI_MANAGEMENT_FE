@@ -1,15 +1,16 @@
 import { AppProvider } from "@/contexts/AppContext"
 import { AuthProvider } from "@/contexts/JWTContext"
-import SideBarComponent from "./SideBarComponent"
+import DashBoardComponent from "./DashBoardComponent"
 
-const SideBar = (props : {}) => {
+
+const Dashboard = (props : {}) => {
     return (
         <AppProvider>
             <AuthProvider>
-                <SideBarComponent />
+                <DashBoardComponent/>
             </AuthProvider>
         </AppProvider>
     )
 }
 
-export default SideBar
+export default Dashboard

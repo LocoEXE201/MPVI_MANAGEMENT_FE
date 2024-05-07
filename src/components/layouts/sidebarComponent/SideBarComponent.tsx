@@ -2,14 +2,37 @@ import path from "path";
 import "./SideBarComponent.css";
 import { title } from "process";
 import { useState } from "react";
+import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstants";
+import { PATH_MAIN } from "@/routes/paths";
+import { useDispatch } from "react-redux";
+import { setCurrentPage } from "@/config/actions";
+import { useRouter } from "next/navigation";
 
 interface SideBarProps {
   activeItem?: string;
+  handleCategoryClick: () => void;
 }
 
-const SideBarComponent: React.FC<SideBarProps> = ({ activeItem }) => {
+const SideBarComponent = (props: {}) => {
   const [isHovered, setIsHovered] = useState(false);
-  const routes = [{ path: "/", title: "Dashboard" }];
+  const router = useRouter();
+
+  const navigateTo = (route: string) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
+    }
+    router.push(route);
+  };
+
+  const isActive = (route: string) => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+    return (
+      localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
+      localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) == route
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -20,8 +43,15 @@ const SideBarComponent: React.FC<SideBarProps> = ({ activeItem }) => {
       >
         <div className="flex h-screen flex-col justify-between pt-2 pb-6">
           <div>
-            <div /*className="w-max p-2.5"*/ className={`w-max p-2.5 ${isHovered ? 'block' : 'hidden'}`}>
-              <img src="/Icons/logo.png" className="w-32 logo" alt="" style={{width: '12rem', marginLeft: '5px'}} />
+            <div
+              /*className="w-max p-2.5"*/ className={`w-max p-2.5 ${isHovered ? "block" : "hidden"}`}
+            >
+              <img
+                src="/Icons/logo.png"
+                className="w-32 logo"
+                alt=""
+                style={{ width: "12rem", marginLeft: "5px" }}
+              />
             </div>
             <ul className="mt-6 space-y-2 tracking-wide">
               <li className="min-w-max">
@@ -52,29 +82,40 @@ const SideBarComponent: React.FC<SideBarProps> = ({ activeItem }) => {
                 </a>
               </li>
               <li className="min-w-max">
-                <a
-                  href="#"
-                  className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600"
+                <div onClick={() => {
+                  navigateTo(PATH_MAIN.category)
+                }}
+                className={`links_hover relative font-medium inline-block whitespace-nowrap ${
+                  typeof window !== "undefined" &&
+                  isActive(PATH_MAIN.category)
+                    ? "active_current_link"
+                    : ""
+                }`}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+                  <a
+                    href="/category"
+                    className="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600"
                   >
-                    <path
-                      className="fill-current text-gray-300 group-hover:text-cyan-300"
-                      fill-rule="evenodd"
-                      d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
-                      clip-rule="evenodd"
-                    />
-                    <path
-                      className="fill-current text-gray-600 group-hover:text-cyan-600"
-                      d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z"
-                    />
-                  </svg>
-                  <span className="group-hover:text-gray-700">Category</span>
-                </a>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        className="fill-current text-gray-300 group-hover:text-cyan-300"
+                        fill-rule="evenodd"
+                        d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
+                        clip-rule="evenodd"
+                      />
+                      <path
+                        className="fill-current text-gray-600 group-hover:text-cyan-600"
+                        d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z"
+                      />
+                    </svg>
+                    <span className="group-hover:text-gray-700">Category</span>
+                  </a>
+                </div>
               </li>
               <li className="min-w-max">
                 <a

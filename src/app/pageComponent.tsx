@@ -1,12 +1,14 @@
 "use client";
 
+import Dashboard from "@/components/layouts/dashboard";
 import HomePageProvider from "./pageProvider";
 
 const HomePageComponent = (props: {}) => {
   return (
     <>
       <HomePageProvider />
-      <div style={{ minHeight: "100vh" }}>Main Content Here</div>
+      <div style={{  }}>
+      </div>
     </>
   );
 };
