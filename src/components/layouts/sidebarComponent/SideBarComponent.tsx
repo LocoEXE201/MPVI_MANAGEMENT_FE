@@ -35,11 +35,12 @@ const SideBarComponent = (props: {}) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="bg-gray-100" style={{ height: '100%', overflowY: 'auto' }}>
       <div
         className="sidebar min-h-screen w-[3.35rem] overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        style={{ height: '100%' }}
       >
         <div className="flex h-screen flex-col justify-between pt-2 pb-6">
           <div>
