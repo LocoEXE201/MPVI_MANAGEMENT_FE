@@ -37,9 +37,9 @@ const HomePageProvider = (props: {}) => {
         <MainLayoutComponent>
           <Dashboard />
           {currentPage === PATH_MAIN.category && <Category />}
-          <SideBarComponent/>
         </MainLayoutComponent>
       </AppProvider>
+      // <Category/>
   );
 };
 

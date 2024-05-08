@@ -44,7 +44,7 @@ const SideBarComponent = (props: {}) => {
         <div className="flex h-screen flex-col justify-between pt-2 pb-6">
           <div>
             <div
-              /*className="w-max p-2.5"*/ className={`w-max p-2.5 ${isHovered ? "block" : "hidden"}`}
+            className={`w-max p-2.5 ${isHovered ? "block" : "hidden"}`}
             >
               <img
                 src="/Icons/logo.png"
