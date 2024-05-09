@@ -109,7 +109,7 @@ const CategoryComponent = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="" style={{ backgroundColor: '#F1F5F9' }}>
       <div className="above flex justify-around" style={{ marginTop: '1rem' }}>
         <div className="flex">
           <div className="relative group">

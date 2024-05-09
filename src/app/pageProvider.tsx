@@ -18,6 +18,7 @@ import { Provider } from "react-redux";
 import MainLayoutComponent from "@/components/layouts/layout";
 import SideBar from "@/components/layouts/sidebarComponent";
 import SideBarComponent from "@/components/layouts/sidebarComponent/SideBarComponent";
+import Order from "@/components/layouts/order";
 
 const HomePageProvider = (props: {}) => {
   useEffect(() => {
@@ -33,13 +34,14 @@ const HomePageProvider = (props: {}) => {
   }
 
   return (
-      <AppProvider>
-        <MainLayoutComponent>
-          <Dashboard />
-          {/* {currentPage === PATH_MAIN.category && <Category />} */}
-        </MainLayoutComponent>
-      </AppProvider>
-        // <Category/>
+    <AppProvider>
+      <MainLayoutComponent>
+        {/* <Dashboard /> */}
+        {/* {currentPage === PATH_MAIN.category && <Category />} */}
+        <Order />
+      </MainLayoutComponent>
+    </AppProvider>
+        // <Category />
   );
 };
 
