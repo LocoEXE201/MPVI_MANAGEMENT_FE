@@ -5,9 +5,11 @@ import MainLayoutComponent from "../layout";
 
 const Category = (props: {}) => {
   return (
-    <MainLayoutComponent>
-      <CategoryComponent />
-    </MainLayoutComponent>
+    <AppProvider>
+      <AuthProvider>
+        <CategoryComponent/>
+      </AuthProvider>
+    </AppProvider>
   );
 };
 

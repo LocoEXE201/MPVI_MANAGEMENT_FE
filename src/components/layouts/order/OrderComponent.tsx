@@ -6,7 +6,7 @@ const OrderComponent: React.FC = () => {
     <div>
       <div
         className="relative flex min-h-screen flex-col items-center overflow-hidden"
-        style={{ backgroundColor: "#F1F5F9", marginTop: "1rem" }}
+        style={{ backgroundColor: "#F1F5F9" }}
       >
         <div className="relative mx-auto">
           <div className="group relative flex cursor-pointer after:shadow-lg after:shadow-black">

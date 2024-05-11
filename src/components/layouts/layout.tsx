@@ -5,7 +5,6 @@ import React from "react";
 import SideBar from "./sidebarComponent";
 import NavBar from "./navbar";
 import { PATH_MAIN } from "@/routes/paths";
-import Category from "./category";
 
 
 export default function MainLayoutComponent ({children} : {children: React.ReactNode}) {

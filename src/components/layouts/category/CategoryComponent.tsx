@@ -110,7 +110,7 @@ const CategoryComponent = () => {
 
   return (
     <div className="" style={{ backgroundColor: '#F1F5F9' }}>
-      <div className="above flex justify-around" style={{ marginTop: '1rem' }}>
+      <div className="above flex justify-around">
         <div className="flex">
           <div className="relative group">
             <button
