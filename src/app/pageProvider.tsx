@@ -59,8 +59,8 @@ const HomePageProvider: React.FC<HomePageProviderProps> = ({metadata}) => {
         >
           <MainLayout metadata={metadata}>
             <Dashboard />
-            <CategoryManagementPage/>
-            <OrderManagementPage/>
+            {/* <CategoryManagementPage/>
+            <OrderManagementPage/> */}
           </MainLayout>
         </RoleBasedGuard>
       </AuthGuard>
