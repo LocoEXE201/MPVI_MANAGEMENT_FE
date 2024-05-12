@@ -4,7 +4,6 @@ import { AuthProvider } from "@/contexts/JWTContext";
 import React from "react";
 import SideBar from "./sidebarComponent";
 import NavBar from "./navbar";
-import { PATH_MAIN } from "@/routes/paths";
 
 
 export default function MainLayoutComponent ({children} : {children: React.ReactNode}) {
@@ -17,7 +16,6 @@ export default function MainLayoutComponent ({children} : {children: React.React
                         <div className="flex flex-col flex-1">
                             <NavBar />
                             <main className="">
-                                {/* {currentPage === PATH_MAIN.category && <Category/>} */}
                                 {children}
                             </main>
                         </div>

@@ -12,5 +12,6 @@ export const PATH_AUTH = {
 
 export const PATH_MAIN = {
   root: "/",
-  category: '/category'
+  category: '/category',
+  order: '/order'
 };
