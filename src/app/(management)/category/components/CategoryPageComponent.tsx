@@ -230,7 +230,7 @@ const CategoryPageComponent = (props: {}) => {
           </div>
         </div>
       </div>
-      <div className="below" style={{ paddingTop: '1rem' }}>
+      <div className="below" style={{ paddingTop: '1rem', width: '95%', margin: '0 auto' }}>
         <SortableTable/>
       </div>
     </div>
