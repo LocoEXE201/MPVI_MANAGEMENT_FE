@@ -110,7 +110,7 @@ const CategoryPageComponent = (props: {}) => {
   }, []);
 
   return (
-    <div className="" style={{ backgroundColor: '#F1F5F9' }}>
+    <div className="" style={{ backgroundColor: '#F1F5F9', paddingTop: '1rem' }}>
       <div className="above flex justify-around">
         <div className="flex">
           <div className="relative group">
@@ -230,7 +230,7 @@ const CategoryPageComponent = (props: {}) => {
           </div>
         </div>
       </div>
-      <div className="below">
+      <div className="below" style={{ paddingTop: '1rem' }}>
         <SortableTable/>
       </div>
     </div>
