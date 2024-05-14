@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import OrderPageProvider from "./components/OrderPageProvider";
 import MainLayout from "@/components/layouts";
+import SupplierPageProvider from "./components/SupplierPageProvider";
 
 const metadata: Metadata = {
   title: "Loco. - Quản Lý",
@@ -11,7 +11,7 @@ export default function OrderManagementPage() {
   return (
     <>
       <MainLayout metadata={metadata}>
-        <OrderPageProvider />
+        <SupplierPageProvider/>
       </MainLayout>
     </>
   );

@@ -1,3 +1,4 @@
+"use client"
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 // utils
 import axiosInstances from "@/config/axios";

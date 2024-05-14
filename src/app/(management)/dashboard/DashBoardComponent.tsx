@@ -1,7 +1,7 @@
 const DashBoardComponent = () => {
     return (
 <div className="" style={{ backgroundColor: '#F1F5F9' }}>
-  <div className="" style={{ paddingLeft: '2rem', paddingRight: '2rem' }}>
+  <div className="" style={{ paddingLeft: '2rem', paddingRight: '2rem', paddingTop: '0.96rem' }}>
     {/* <nav className="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
         <div className="capitalize">
@@ -64,7 +64,7 @@ const DashBoardComponent = () => {
         </div>
       </div>
     </nav> */}
-    <div className="mt-12">
+    <div className="" >
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
         <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
           <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">

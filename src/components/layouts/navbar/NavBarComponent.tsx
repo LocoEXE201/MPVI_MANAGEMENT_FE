@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import "./Header.css"; // You can define your styles in a separate CSS file
 import Search from "antd/es/input/Search";

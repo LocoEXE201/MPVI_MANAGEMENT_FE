@@ -1,7 +1,9 @@
+"use client"
 import { Metadata } from "next";
 import CategoryPageProvider from "./components/CategoryPageProvider";
+import MainLayout from "@/components/layouts";
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "Loco. - Quản Lý",
   description: "This is Loco. Category Management Page",
 };
@@ -9,7 +11,9 @@ export const metadata: Metadata = {
 export default function CategoryManagementPage() {
   return (
     <>
-      <CategoryPageProvider />
+      <MainLayout metadata={metadata}>
+        <CategoryPageProvider />
+      </MainLayout>
     </>
   );
 }
