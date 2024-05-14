@@ -4,7 +4,6 @@ import { AuthProvider } from "@/contexts/JWTContext";
 import React from "react";
 import SideBar from "./sidebarComponent";
 import NavBar from "./navbar";
-import { PATH_MAIN } from "@/routes/paths";
 
 export default function MainLayoutComponent({
   children,
@@ -19,10 +18,7 @@ export default function MainLayoutComponent({
             <SideBar />
             <div className="flex flex-col flex-1">
               <NavBar />
-              <main className="">
-                {/* {currentPage === PATH_MAIN.category && <Category/>} */}
-                {children}
-              </main>
+              <main className="">{children}</main>
             </div>
           </div>
         </AuthContextProvider>

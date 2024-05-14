@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import "./Header.css"; // You can define your styles in a separate CSS file
 import Search from "antd/es/input/Search";
@@ -77,7 +78,14 @@ const Header = () => {
                   </ul>
                 </div>
               )}
-              <li style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '0.5rem' }}>
+              <li
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginLeft: "0.5rem",
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
