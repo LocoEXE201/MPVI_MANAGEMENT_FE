@@ -22,10 +22,10 @@ import OrderManagementPage from "./(management)/order/page";
 import { Metadata } from "next";
 
 interface HomePageProviderProps {
-  metadata : Metadata
+  metadata: Metadata;
 }
 
-const HomePageProvider: React.FC<HomePageProviderProps> = ({metadata}) => {
+const HomePageProvider: React.FC<HomePageProviderProps> = ({ metadata }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.removeItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE);
@@ -39,33 +39,33 @@ const HomePageProvider: React.FC<HomePageProviderProps> = ({metadata}) => {
   // }
 
   return (
-  //   <AppProvider>
-  //     <MainLayoutComponent>
-  //       {/* <Dashboard /> */}
-  //       {/* {currentPage === PATH_MAIN.category && <Category />} */}
-  //       {/* <Order /> */}
-  //      <Category />
-  //     </MainLayoutComponent>
-  //   </AppProvider>
-  <AppProvider>
-    <AuthProvider>
-      <AuthGuard>
-        <RoleBasedGuard
-          accessibleRoles={[
-            AccountRoleCode.SUPER_ADMIN,
-            AccountRoleCode.ECONOMIC_LEAD,
-            AccountRoleCode.WAREHOUSE_MANAGER,
-          ]}
-        >
-          <MainLayout metadata={metadata}>
-            <Dashboard />
-            {/* <CategoryManagementPage/>
+    //   <AppProvider>
+    //     <MainLayoutComponent>
+    //       {/* <Dashboard /> */}
+    //       {/* {currentPage === PATH_MAIN.category && <Category />} */}
+    //       {/* <Order /> */}
+    //      <Category />
+    //     </MainLayoutComponent>
+    //   </AppProvider>
+    <AppProvider>
+      <AuthProvider>
+        <AuthGuard>
+          <RoleBasedGuard
+            accessibleRoles={[
+              AccountRoleCode.SUPER_ADMIN,
+              AccountRoleCode.ECONOMIC_LEAD,
+              AccountRoleCode.WAREHOUSE_MANAGER,
+            ]}
+          >
+            <MainLayout metadata={metadata}>
+              <Dashboard />
+              {/* <CategoryManagementPage/>
             <OrderManagementPage/> */}
-          </MainLayout>
-        </RoleBasedGuard>
-      </AuthGuard>
-    </AuthProvider>
-  </AppProvider>
+            </MainLayout>
+          </RoleBasedGuard>
+        </AuthGuard>
+      </AuthProvider>
+    </AppProvider>
   );
 };
 

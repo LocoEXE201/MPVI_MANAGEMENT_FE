@@ -2,13 +2,12 @@
 
 import { OrderTable } from "@/components/layouts/table/OrderTable";
 
-
 const OrderPageComponent = (props: {}) => {
   return (
     <div>
       <div
         className="relative flex min-h-screen flex-col items-center overflow-hidden"
-        style={{ backgroundColor: "#F1F5F9", paddingTop: '1rem' }}
+        style={{ backgroundColor: "#F1F5F9", paddingTop: "1rem" }}
       >
         <div className="relative mx-auto">
           <div className="group relative flex cursor-pointer after:shadow-lg after:shadow-black">
@@ -135,7 +134,7 @@ const OrderPageComponent = (props: {}) => {
             ></div>
           </div>
         </div>
-        <div style={{ paddingTop: '1rem', width: '95%' }}>
+        <div style={{ paddingTop: "1rem", width: "95%" }}>
           <OrderTable />
         </div>
       </div>
