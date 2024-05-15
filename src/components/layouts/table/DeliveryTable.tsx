@@ -1,334 +1,214 @@
-import {
-  MagnifyingGlassIcon,
-  ChevronUpDownIcon,
-} from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-import {
-  Card,
-  CardHeader,
-  Input,
-  Typography,
-  Button,
-  CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
-} from "@material-tailwind/react";
+import * as React from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
+import { red, yellow, blue, green } from "@mui/material/colors";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InfoSharpIcon from "@mui/icons-material/InfoSharp";
+import "./DeliveryTable.css";
+import DeliveryBookTicket from "@/components/DialogForm/DeliveryBookTicket";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
+function createData(
+  id: number,
+  cname: string,
+  orderdate: string,
+  payment: string,
+  status: string
+) {
+  return { id, cname, orderdate, payment, status };
+}
+
+const rows = [
+  createData(1, "Hector Hugo", "01/03/2023", "Momo", "Complete"),
+  createData(2, "Fermanda", "29/02/2024", "Vnpay", "Complete"),
+  createData(3, "Francisco", "29/02/2024", "Cash", "Cancel"),
+  createData(4, "Alberto", "29/02/2024", "Cash", "Complete"),
+  createData(5, "Hector Hugo", "01/03/2023", "Momo", "Complete"),
+  createData(6, "Fermanda", "29/02/2024", "Vnpay", "Complete"),
+  createData(7, "Francisco", "29/02/2024", "Cash", "Cancel"),
+  createData(8, "Alberto", "29/02/2024", "Cash", "Pending"),
 ];
 
-const TABLE_HEAD = ["Member", "Function", "Status", "Employed", ""];
+const getColor = (status: String) => {
+  switch (status) {
+    case "Cancel":
+      return { main: red[500], hover: red[700] };
+    case "Pending":
+      return { main: "#FFD700", hover: yellow[700] };
+    default:
+      return { main: "#1E90FF", hover: "#4169E1" };
+  }
+};
 
-const TABLE_ROWS = [
-  {
-    name: "Ocean",
-    email: "ocean@creative-tim.com",
-    job: "Manager",
-    org: "Organization",
-    online: true,
-    date: "27/03/03",
-  },
-  {
-    name: "Alexa Liras",
-    email: "alexa@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: false,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-    name: "Laurent Perrier",
-    email: "laurent@creative-tim.com",
-    job: "Executive",
-    org: "Projects",
-    online: false,
-    date: "19/09/17",
-  },
-  {
-    name: "Michael Levi",
-    email: "michael@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: true,
-    date: "24/12/08",
-  },
-  {
-    name: "Richard Gran",
-    email: "richard@creative-tim.com",
-    job: "Manager",
-    org: "Executive",
-    online: false,
-    date: "04/10/21",
-  },
-];
+export default function DeliveryTable() {
+  const [status, setStatus] = React.useState("");
 
-export function DeliveryTable() {
+  const handleChange = (event: SelectChangeEvent) => {
+    setStatus(event.target.value);
+  };
   return (
-    <Card
-      className="h-full w-full"
-      placeholder={undefined}
-      onPointerEnterCapture={undefined}
-      onPointerLeaveCapture={undefined}
-    >
-      <CardHeader
-        floated={false}
-        shadow={false}
-        className="rounded-none"
-        placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
-      >
-        <div className="mb-8 flex items-center justify-between gap-8">
-          <div>
-            <Typography
-              variant="h5"
-              color="blue-gray"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              Members list
-            </Typography>
-            <Typography
-              color="gray"
-              className="mt-1 font-normal"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              See information about all members
-            </Typography>
-          </div>
+    <div>
+      <div className="delivery-container">
+        <div className="search">
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            placeholder="Search here"
+            sx={{
+              bgcolor: "#fff",
+              width: "80%",
+              borderRadius: "4px",
+              boxShadow: `0px 2px 1px -1px rgba(255, 182, 193, 0.2),
+                    0px 1px 1px 0px rgba(255, 182, 193, 0.14),
+                    0px 1px 3px 0px rgba(255, 182, 193, 0.12)`,
+              "& .MuiOutlinedInput-root": {
+                height: "40px", // Adjust the height as needed
+                "& input": {
+                  padding: "10px 14px", // Adjust padding to center the text vertically
+                },
+              },
+              "& .MuiInputAdornment-root": {
+                marginRight: "4px", // Adjust margin to better align icon
+              },
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
+        <div className="dropdown">
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <InputLabel id="demo-select-small-label" style={{ color: "grey" }}>
+              Filter
+            </InputLabel>
+            <Select
+              labelId="demo-select-small-label"
+              id="demo-select-small"
+              label="Filter"
+              value={status}
+              onChange={handleChange}
+              sx={{
+                bgcolor: "#fff",
+                color: blue[500],
+              }}
             >
-              {TABS.map(({ label, value }) => (
-                <Tab
-                  key={value}
-                  value={value}
-                  placeholder={undefined}
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                >
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
-          <div className="w-full md:w-72 relative">
-            <Input
-              label="Search here"
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-              crossOrigin={undefined}
-              className="pr-10" // Thêm lớp CSS để tăng padding bên phải
-            />
-            <MagnifyingGlassIcon className="h-5 w-5 absolute top-1/2 transform -translate-y-1/2 right-3 text-gray-400" />{" "}
-            {/* Đặt icon ở vị trí phía sau và căn giữa theo chiều dọc */}
-          </div>
+              <MenuItem value="Complete">COMPLETE</MenuItem>
+              <MenuItem value="Pending">PENDING</MenuItem>
+              <MenuItem value="Cancel">CANCEL</MenuItem>
+            </Select>
+          </FormControl>
         </div>
-      </CardHeader>
-      <CardBody
-        className="overflow-scroll px-0"
-        placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
-      >
-        <table className="mt-4 w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head, index) => (
-                <th
-                  key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
-                    placeholder={undefined}
-                    onPointerEnterCapture={undefined}
-                    onPointerLeaveCapture={undefined}
-                  >
-                    {head}{" "}
-                    {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_ROWS.map(
-              ({ name, email, job, org, online, date }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
+        <div className="book-ticket-button">
+          <DeliveryBookTicket />
+        </div>
+      </div>
 
-                return (
-                  <tr key={name}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        {/* <Avatar
-                          src={img}
-                          alt={name}
-                          size="sm"
-                          placeholder={undefined}
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        /> */}
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                            placeholder={undefined}
-                            onPointerEnterCapture={undefined}
-                            onPointerLeaveCapture={undefined}
-                          >
-                            {name}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                            placeholder={undefined}
-                            onPointerEnterCapture={undefined}
-                            onPointerLeaveCapture={undefined}
-                          >
-                            {email}
-                          </Typography>
-                        </div>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                          placeholder={undefined}
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        >
-                          {job}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                          placeholder={undefined}
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        >
-                          {org}
-                        </Typography>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={online ? "online" : "offline"}
-                          color={online ? "green" : "blue-gray"}
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                        placeholder={undefined}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      >
-                        {date}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Tooltip content="Edit User">
-                        <IconButton
-                          variant="text"
-                          placeholder={undefined}
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        >
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
-      </CardBody>
-      <CardFooter
-        className="flex items-center justify-between border-t border-blue-gray-50 p-4"
-        placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
-      >
-        <Typography
-          variant="small"
-          color="blue-gray"
-          className="font-normal"
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button
-            variant="outlined"
-            size="sm"
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outlined"
-            size="sm"
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            Next
-          </Button>
-        </div>
-      </CardFooter>
-    </Card>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell
+                align="center"
+                className="header-table"
+                style={{ color: "silver", fontWeight: "bold" }}
+              >
+                Customer Name
+              </TableCell>
+              <TableCell
+                align="center"
+                className="header-table"
+                style={{ color: "silver", fontWeight: "bold" }}
+              >
+                Order Date
+              </TableCell>
+              <TableCell
+                align="center"
+                className="header-table"
+                style={{ color: "silver", fontWeight: "bold" }}
+              >
+                Payment Type
+              </TableCell>
+              <TableCell
+                align="center"
+                className="header-table"
+                style={{ color: "silver", fontWeight: "bold" }}
+              >
+                Status
+              </TableCell>
+              <TableCell
+                align="center"
+                className="header-table"
+                style={{ color: "silver", fontWeight: "bold" }}
+              >
+                Detail
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => {
+              const { main, hover } = getColor(row.status);
+              return (
+                <TableRow
+                  key={row.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    align="center"
+                    style={{ fontWeight: "bold" }}
+                  >
+                    {row.cname}
+                  </TableCell>
+                  <TableCell align="center" style={{ color: "grey" }}>
+                    {row.orderdate}
+                  </TableCell>
+                  <TableCell align="center" style={{ color: "grey" }}>
+                    {row.payment}
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      sx={{
+                        bgcolor: main,
+                        width: "110px",
+                        "&:hover": {
+                          bgcolor: hover,
+                        },
+                      }}
+                    >
+                      {row.status}
+                    </Button>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button variant="text">
+                      <InfoSharpIcon sx={{ color: "grey" }} />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }

@@ -15,4 +15,5 @@ export const PATH_MAIN = {
   category: "/category",
   order: "/order",
   supplier: "/supplier",
+  delivery: "/delivery",
 };
