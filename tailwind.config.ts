@@ -26,7 +26,7 @@ const config: Config = {
         inter: "Inter",
       },
       colors: {
-        primay: "#cb6f04",
+        primary: "#cb6f04",
       }
     },
   },
