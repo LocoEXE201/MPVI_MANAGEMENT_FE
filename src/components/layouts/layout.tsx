@@ -11,7 +11,7 @@ export default function MainLayoutComponent ({children} : {children: React.React
         <AppProvider>
             <AuthProvider>
                 <AuthContextProvider>
-                    <div className="flex h-screen">
+                    <div className="flex h-full">
                         <SideBar />
                         <div className="flex flex-col flex-1">
                             <NavBar />

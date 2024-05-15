@@ -36,9 +36,9 @@ const SideBarComponent = (props: {}) => {
   };
 
   return (
-    <div className="bg-gray-100" style={{ height: '100%', overflowY: 'auto' }}>
+    <div className="bg-gray-100" style={{ height: '100%', overflowY: 'auto', position: 'sticky', left: 0, top: 0, bottom: 0 }}>
       <div
-        className="sidebar min-h-screen w-[3.35rem] overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg"
+        className="sidebar h-full w-[3.35rem] overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         style={{ height: '100%' }}
