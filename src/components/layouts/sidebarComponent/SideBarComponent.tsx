@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import path from "path";
 import "./SideBarComponent.css";
 import { title } from "process";
@@ -41,13 +41,11 @@ const SideBarComponent = (props: {}) => {
         className="sidebar h-full w-[3.35rem] overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        style={{ height: '100%' }}
+        style={{ height: "100%" }}
       >
         <div className="flex h-screen flex-col justify-between pt-2 pb-6">
           <div>
-            <div
-              className={`w-max p-2.5 ${isHovered ? "block" : "hidden"}`}
-            >
+            <div className={`w-max p-2.5 ${isHovered ? "block" : "hidden"}`}>
               <img
                 src="/Icons/logo.png"
                 className="w-32 logo"
@@ -57,14 +55,15 @@ const SideBarComponent = (props: {}) => {
             </div>
             <ul className="mt-6 space-y-2 tracking-wide">
               <li className="min-w-max">
-                <div onClick={() => {
-                  navigateTo(PATH_MAIN.root)
-                }}
-                  className={`links_hover ${typeof window !== "undefined" &&
-                    isActive(PATH_MAIN.root)
-                    ? "active_current_link"
-                    : ""
-                    }`}
+                <div
+                  onClick={() => {
+                    navigateTo(PATH_MAIN.root);
+                  }}
+                  className={`links_hover ${
+                    typeof window !== "undefined" && isActive(PATH_MAIN.root)
+                      ? "active_current_link"
+                      : ""
+                  }`}
                 >
                   <a
                     href="/"
@@ -94,14 +93,16 @@ const SideBarComponent = (props: {}) => {
                 </div>
               </li>
               <li className="min-w-max">
-                <div onClick={() => {
-                  navigateTo(PATH_MAIN.category)
-                }}
-                  className={`links_hover ${typeof window !== "undefined" &&
+                <div
+                  onClick={() => {
+                    navigateTo(PATH_MAIN.category);
+                  }}
+                  className={`links_hover ${
+                    typeof window !== "undefined" &&
                     isActive(PATH_MAIN.category)
-                    ? "active_current_link"
-                    : ""
-                    }`}
+                      ? "active_current_link"
+                      : ""
+                  }`}
                 >
                   <a
                     href="/category"
@@ -129,14 +130,16 @@ const SideBarComponent = (props: {}) => {
                 </div>
               </li>
               <li className="min-w-max">
-                <div onClick={() => {
-                  navigateTo(PATH_MAIN.order)
-                }}
-                  className={`links_hover ${typeof window !== "undefined" &&
-                    isActive(PATH_MAIN.order)
-                    ? "active_current_link"
-                    : ""
-                    }`}>
+                <div
+                  onClick={() => {
+                    navigateTo(PATH_MAIN.order);
+                  }}
+                  className={`links_hover ${
+                    typeof window !== "undefined" && isActive(PATH_MAIN.order)
+                      ? "active_current_link"
+                      : ""
+                  }`}
+                >
                   <a
                     href="/order"
                     className="relative flex items-center rounded-full space-x-4 text-gray-700 hover:bg-gradient-to-r hover:from-sky-600 hover:to-cyan-400 px-4 py-3 hover:text-white"
@@ -163,14 +166,16 @@ const SideBarComponent = (props: {}) => {
                 </div>
               </li>
               <li className="min-w-max">
-                <div onClick={() => {
-                  navigateTo(PATH_MAIN.supplier)
-                }}
-                className={`links_hover ${typeof window !== "undefined" &&
+                <div
+                  onClick={() => {
+                    navigateTo(PATH_MAIN.supplier);
+                  }}
+                  className={`links_hover ${
+                    typeof window !== "undefined" &&
                     isActive(PATH_MAIN.supplier)
-                    ? "active_current_link"
-                    : ""
-                    }`}
+                      ? "active_current_link"
+                      : ""
+                  }`}
                 >
                   <a
                     href="/supplier"
@@ -222,7 +227,7 @@ const SideBarComponent = (props: {}) => {
               </li>
               <li className="min-w-max">
                 <a
-                  href="#"
+                  href="/delivery"
                   className="relative flex items-center rounded-full space-x-4 text-gray-700 hover:bg-gradient-to-r hover:from-sky-600 hover:to-cyan-400 px-4 py-3 hover:text-white"
                 >
                   <svg

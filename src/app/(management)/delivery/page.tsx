@@ -1,6 +1,6 @@
 "use client";
 import { Metadata } from "next";
-import CategoryPageProvider from "./components/CategoryPageProvider";
+import DeliveryPageProvider from "./components/DeliveryPageProvider";
 import MainLayout from "@/components/layouts";
 
 const metadata: Metadata = {
@@ -12,7 +12,7 @@ export default function CategoryManagementPage() {
   return (
     <>
       <MainLayout metadata={metadata}>
-        <CategoryPageProvider />
+        <DeliveryPageProvider />
       </MainLayout>
     </>
   );

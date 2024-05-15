@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useContext, createContext, useEffect, useState } from "react";
 import {
   GoogleAuthProvider,

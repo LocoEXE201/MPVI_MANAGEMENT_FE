@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { ReactNode, createContext, useEffect, useReducer } from "react";
 
 type AppContextState = {

@@ -1,0 +1,20 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.delivery-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+.search {
+  flex: 8;
+}
+.dropdown {
+  flex: 1;
+}
+.book-ticket-button {
+  flex: 2;
+}
