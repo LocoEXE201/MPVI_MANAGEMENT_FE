@@ -1,7 +1,7 @@
 const DashBoardComponent = () => {
     return (
 <div className="" style={{ backgroundColor: '#F1F5F9' }}>
-  <div className="" style={{ paddingLeft: '2rem', paddingRight: '2rem', paddingTop: '0.96rem' }}>
+  <div className="" style={{ paddingLeft: '2rem', paddingRight: '2rem', paddingTop: '1.5rem' }}>
     {/* <nav className="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
         <div className="capitalize">
