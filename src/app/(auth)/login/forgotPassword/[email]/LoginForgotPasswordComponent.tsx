@@ -110,7 +110,7 @@ const LoginForgotPasswordComponent: NextPage = () => {
           className="w-full"
         >
           <h1
-            className="font-baloo text-primay text-center"
+            className="font-baloo text-primary text-center"
             style={{ fontSize: "3rem", fontWeight: "bolder" }}
           >
             Đặt Lại Mật Khẩu
@@ -123,7 +123,7 @@ const LoginForgotPasswordComponent: NextPage = () => {
             bên dưới đây.<br></br>
             Trong trường hợp bạn chưa nhận được mã xác nhận, bạn vui lòng{" "}
             <a
-              className="links_hover text-primay font-medium"
+              className="links_hover text-primary font-medium"
               onClick={() => {
                 sendCodeForgotPassword(userEmail);
                 enableLoading();
@@ -274,7 +274,7 @@ const LoginForgotPasswordComponent: NextPage = () => {
           <Form.Item className="text-center">
             <button
               type="submit"
-              className="hover:bg-yellow-600 text-white bg-primay mt-3 box-border flex w-full max-w-full flex-1 cursor-pointer flex-row items-start justify-center overflow-hidden whitespace-nowrap rounded-md bg-primary-colour px-5 py-[10px] [border:none]"
+              className="hover:bg-yellow-600 text-white bg-primary mt-3 box-border flex w-full max-w-full flex-1 cursor-pointer flex-row items-start justify-center overflow-hidden whitespace-nowrap rounded-md bg-primary-colour px-5 py-[10px] [border:none]"
             >
               <div className="font-barlow relative mt-0 flex w-full items-center justify-center text-center text-lg font-medium text-neutral-white">
                 Xác Nhận Cài Lại Mật Khẩu Mới

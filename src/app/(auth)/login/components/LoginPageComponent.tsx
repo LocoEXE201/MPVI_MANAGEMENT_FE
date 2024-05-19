@@ -179,9 +179,9 @@ const LoginPageComponent = (props: {}) => {
                         <button
                           type="submit"
                           style={{ fontWeight: "bolder" }}
-                          className="hover:bg-yellow-600 bg-primay text-white mt-3 box-border flex w-full max-w-full flex-1 cursor-pointer flex-row items-start justify-center overflow-hidden whitespace-nowrap rounded-md bg-primary-colour px-5 py-[21px] [border:none]"
+                          className="hover:bg-yellow-600 bg-primary text-white mt-3 box-border flex w-full max-w-full flex-1 cursor-pointer flex-row items-start justify-center overflow-hidden whitespace-nowrap rounded-md bg-primary-colour px-5 py-[21px] [border:none]"
                         >
-                          <div className="text-[1.5rem] font-baloo-2 relative mt-0 flex w-full items-center justify-center text-center text-lg font-medium text-neutral-white">
+                          <div className="text-[1.6rem] font-baloo-2 relative mt-0 flex w-full items-center justify-center text-center text-lg font-medium text-neutral-white">
                             Đăng Nhập
                           </div>
                         </button>
@@ -189,13 +189,13 @@ const LoginPageComponent = (props: {}) => {
                     </Form>
                     <div className="text-silver-200 mq450:flex-wrap mq450:gap-[0px_17px] flex flex-row items-end justify-center gap-[0px_35px] self-stretch text-center text-xs">
                       <div className="box-border flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
-                        <div className="border-whitesmoke-100 relative box-border h-px self-stretch border-t-[1px] border-solid" />
+                        <div className="border-gray-800 relative box-border h-px self-stretch border-t-[1px] border-solid" />
                       </div>
                       <div className="text-[1.3rem] mq450:w-full mq450:h-3 relative flex w-3 items-center justify-center">
                         Hoặc
                       </div>
                       <div className="box-border flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
-                        <div className="border-whitesmoke-100 relative box-border h-px self-stretch border-t-[1px] border-solid" />
+                        <div className="border-gray-800 relative box-border h-px self-stretch border-t-[1px] border-solid" />
                       </div>
                     </div>
                     <div
@@ -212,7 +212,7 @@ const LoginPageComponent = (props: {}) => {
                           alt=""
                           src="/Icons/google_icon.svg"
                         />
-                        <div className="text-[1.25rem] relative z-[1] w-full self-stretch pl-5 font-medium font-baloo-2">
+                        <div className="text-[1.3rem] relative z-[1] w-full self-stretch pl-5 font-medium font-baloo-2">
                           Đăng Nhập Với Google
                         </div>
                       </div>
