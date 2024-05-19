@@ -36,7 +36,17 @@ const SideBarComponent = (props: {}) => {
   };
 
   return (
-    <div className="bg-gray-100" style={{ height: '100%', overflowY: 'auto', position: 'sticky', left: 0, top: 0, bottom: 0 }}>
+    <div
+      className="bg-gray-100"
+      style={{
+        height: "100%",
+        overflowY: "auto",
+        position: "sticky",
+        left: 0,
+        top: 0,
+        bottom: 0,
+      }}
+    >
       <div
         className="sidebar h-full w-[3.35rem] overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg"
         onMouseEnter={() => setIsHovered(true)}
@@ -59,10 +69,11 @@ const SideBarComponent = (props: {}) => {
                   onClick={() => {
                     navigateTo(PATH_MAIN.root);
                   }}
-                  className={`links_hover ${typeof window !== "undefined" && isActive(PATH_MAIN.root)
+                  className={`links_hover ${
+                    typeof window !== "undefined" && isActive(PATH_MAIN.root)
                       ? "active_current_link"
                       : ""
-                    }`}
+                  }`}
                 >
                   <a
                     href="/"
@@ -96,11 +107,12 @@ const SideBarComponent = (props: {}) => {
                   onClick={() => {
                     navigateTo(PATH_MAIN.category);
                   }}
-                  className={`links_hover ${typeof window !== "undefined" &&
-                      isActive(PATH_MAIN.category)
+                  className={`links_hover ${
+                    typeof window !== "undefined" &&
+                    isActive(PATH_MAIN.category)
                       ? "active_current_link"
                       : ""
-                    }`}
+                  }`}
                 >
                   <a
                     href="/category"
@@ -132,10 +144,11 @@ const SideBarComponent = (props: {}) => {
                   onClick={() => {
                     navigateTo(PATH_MAIN.order);
                   }}
-                  className={`links_hover ${typeof window !== "undefined" && isActive(PATH_MAIN.order)
+                  className={`links_hover ${
+                    typeof window !== "undefined" && isActive(PATH_MAIN.order)
                       ? "active_current_link"
                       : ""
-                    }`}
+                  }`}
                 >
                   <a
                     href="/order"
@@ -167,11 +180,12 @@ const SideBarComponent = (props: {}) => {
                   onClick={() => {
                     navigateTo(PATH_MAIN.supplier);
                   }}
-                  className={`links_hover ${typeof window !== "undefined" &&
-                      isActive(PATH_MAIN.supplier)
+                  className={`links_hover ${
+                    typeof window !== "undefined" &&
+                    isActive(PATH_MAIN.supplier)
                       ? "active_current_link"
                       : ""
-                    }`}
+                  }`}
                 >
                   <a
                     href="/supplier"
@@ -198,7 +212,7 @@ const SideBarComponent = (props: {}) => {
               </li>
               <li className="min-w-max">
                 <a
-                  href="#"
+                  href="/report"
                   className="relative flex items-center rounded-full space-x-4 text-gray-700 hover:bg-gradient-to-r hover:from-sky-600 hover:to-cyan-400 px-4 py-3 hover:text-white"
                 >
                   <svg
@@ -251,13 +265,12 @@ const SideBarComponent = (props: {}) => {
                   onClick={() => {
                     navigateTo(PATH_MAIN.users);
                   }}
-                  className={`links_hover ${typeof window !== "undefined" &&
-                      isActive(PATH_MAIN.users)
+                  className={`links_hover ${
+                    typeof window !== "undefined" && isActive(PATH_MAIN.users)
                       ? "active_current_link"
                       : ""
-                    }`}
+                  }`}
                 >
-
                   <a
                     href="/users"
                     className="relative flex items-center rounded-full space-x-4 text-gray-700 hover:bg-gradient-to-r hover:from-sky-600 hover:to-cyan-400 px-4 py-3 hover:text-white"
