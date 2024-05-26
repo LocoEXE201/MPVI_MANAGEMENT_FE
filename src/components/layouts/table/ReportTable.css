@@ -1,0 +1,17 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.report-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+.search {
+  flex: 9;
+}
+.dropdown {
+  flex: 1;
+}

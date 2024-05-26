@@ -15,6 +15,7 @@ export const PATH_MAIN = {
   category: "/category",
   order: "/order",
   supplier: "/supplier",
+  report: "/report",
   delivery: "/delivery",
   users: "/users",
   notification: "/notification"

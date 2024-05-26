@@ -49,8 +49,8 @@ export default function DeliveryBookTicket() {
         <DialogTitle>Booking Ticket Form</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To book ticket, please fill in all the fields and click on the
-            "Submit" button after that.
+            To book ticket, please fill in all the fields and click on the Submit
+            button after that.
           </DialogContentText>
           <TextField
             autoFocus
