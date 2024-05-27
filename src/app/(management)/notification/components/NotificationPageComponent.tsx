@@ -30,7 +30,7 @@ import { FirebaseConstants } from "@/constants/FirebaseConstants";
 import { Form, Input } from "antd";
 import { useFormik } from "formik";
 import TextArea from "antd/es/input/TextArea";
-import { getUserInfo } from "@/utils/utils";
+import { getUserInfo, getUserInfoId } from "@/utils/utils";
 import { AccountRoleCode } from "@/enums/accountRole";
 import sweetAlert from "@/utils/sweetAlert";
 import formatDate from "@/utils/formatDate";
@@ -49,7 +49,7 @@ const NotificationPageComponent = (props: {}) => {
   );
   const [notifications, setNotifications] = useState<NotificationDTO[]>([]);
   const [viewDetailList, setViewDetailList] = React.useState<string[]>([]);
-  const [useenList, setUseenList] = React.useState<string[]>([]);
+  const [unseenList, setUnseenList] = React.useState<string[]>([]);
 
   const handleChange = (event: SelectChangeEvent) => {
     setStatus(event.target.value);
@@ -160,30 +160,51 @@ const NotificationPageComponent = (props: {}) => {
         setNotifications(notificationsList);
       }
     );
-    if (!isAdminRole()) {
-      var unseenlist = JSON.parse(
-        localStorage.getItem(LOCALSTORAGE_CONSTANTS.UNSEEN_NOTIFICATION_LIST) ??
-          "[]"
-      );
-      setUseenList(unseenlist);
-      var userSeen: NotificationSeenDTO = JSON.parse(
-        localStorage.getItem(LOCALSTORAGE_CONSTANTS.USER_SEEN_NOTIFICATION) ??
-          "{}"
-      );
-      if (userSeen && userSeen.id) {
-        update(
-          ref(
-            database,
-            `${FirebaseConstants.SEEN_NOTIFICATIONS}/${userSeen.id}`
-          ),
-          {
-            userLoginId: userSeen.userLoginId,
-            latestTime: new Date().toISOString(),
-          }
-        );
-      }
-    }
   }, []);
+
+  useEffect(() => {
+    if (!isAdminRole() && notifications.length > 0) {
+      onValue(
+        ref(database, `${FirebaseConstants.SEEN_NOTIFICATIONS}`),
+        (snapshot) => {
+          const data = snapshot.val();
+          const seenList = data
+            ? Object.keys(data).map((key) => ({ id: key, ...data[key] }))
+            : [];
+
+          const userSeen: NotificationSeenDTO = seenList.find(
+            (x: NotificationSeenDTO) => x.userLoginId == getUserInfoId()
+          );
+
+          if (userSeen && userSeen.id) {
+            notifications
+              .filter(
+                (x: NotificationDTO) =>
+                  new Date(x.createdAt ?? "").getTime() >
+                  new Date(
+                    userSeen && userSeen.latestTime
+                      ? userSeen.latestTime
+                      : x.createdAt ?? ""
+                  ).getTime()
+              )
+              .forEach((x: NotificationDTO) => {
+                setUnseenList((unseenList) => [...unseenList, x.id ?? ""]);
+              });
+            update(
+              ref(
+                database,
+                `${FirebaseConstants.SEEN_NOTIFICATIONS}/${userSeen.id}`
+              ),
+              {
+                userLoginId: userSeen.userLoginId,
+                latestTime: new Date().toISOString(),
+              }
+            );
+          }
+        }
+      );
+    }
+  }, [notifications]);
 
   useEffect(() => {
     if (!updateMode || createMode) {
@@ -513,12 +534,12 @@ const NotificationPageComponent = (props: {}) => {
               <div
                 key={index}
                 className={`mb-4 px-[15px] py-[10px] hover:bg-gray-200 
-                ${useenList.find((x: string) => x == id) ? "bg-yellow-100" : ""}`}
+                ${unseenList.find((x: string) => x == id) ? "bg-yellow-100" : ""}`}
                 style={{
                   boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 }}
               >
-                {useenList.find((x: string) => x == id) ? (
+                {unseenList.find((x: string) => x == id) ? (
                   <>
                     <h5
                       className="w-full
