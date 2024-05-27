@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import MainLayout from "@/components/layouts";
-import NotificationPageProvider from "./components/OrderPageProvider";
+import NotificationPageProvider from "./components/NotificationPageProvider";
 
 const metadata: Metadata = {
   title: "Loco. - Quản Lý",
