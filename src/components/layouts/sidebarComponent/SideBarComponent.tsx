@@ -63,14 +63,9 @@ const SideBarComponent = (props: {}) => {
             const userSeen: NotificationSeenDTO = seenList.find(
               (x: NotificationSeenDTO) => x.userLoginId == getUserInfoId()
             );
-            localStorage.setItem(
-              LOCALSTORAGE_CONSTANTS.USER_SEEN_NOTIFICATION,
-              JSON.stringify(userSeen)
-            );
 
-            var unseenList: string[] = [];
-            notificationsList
-              .filter(
+            if (
+              notificationsList.find(
                 (x: NotificationDTO) =>
                   new Date(x.createdAt ?? "").getTime() >
                   new Date(
@@ -79,17 +74,12 @@ const SideBarComponent = (props: {}) => {
                       : x.createdAt ?? ""
                   ).getTime()
               )
-              .forEach((x: NotificationDTO) => {
-                unseenList.push(x.id ?? "");
-                if (!newNotification) {
-                  sweetAlert.alertInfo("Bạn có thông báo mới", "", 3000, "22");
-                  setNewNotification(true);
-                }
-              });
-            localStorage.setItem(
-              LOCALSTORAGE_CONSTANTS.UNSEEN_NOTIFICATION_LIST,
-              JSON.stringify(unseenList)
-            );
+            ) {
+              sweetAlert.alertInfo("Bạn có thông báo mới", "", 3000, "22");
+              setNewNotification(true);
+            } else {
+              setNewNotification(false);
+            }
           }
         );
       }
