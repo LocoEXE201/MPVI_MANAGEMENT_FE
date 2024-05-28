@@ -16,6 +16,16 @@ import { AccountRoleCode, checkRoleCode } from "@/enums/accountRole";
 import { useRouter } from "next/navigation";
 import useAppContext from "@/hooks/useAppContext";
 import { PATH_AUTH } from "@/routes/paths";
+import {
+  database,
+  onValue,
+  push,
+  ref,
+  remove,
+  update,
+} from "@/config/firebaseConfig";
+import { FirebaseConstants } from "@/constants/FirebaseConstants";
+import { NotificationSeenDTO } from "@/models/NotificationDTO";
 
 // ----------------------------------------------------------------------
 
@@ -151,6 +161,29 @@ function AuthProvider({ children }: { children: ReactNode }) {
     initialize();
   }, []);
 
+  const initNotification = async (userLoginId: string) => {
+    onValue(
+      ref(database, `${FirebaseConstants.SEEN_NOTIFICATIONS}`),
+      (snapshot) => {
+        const data = snapshot.val();
+        const list = data
+          ? Object.keys(data).map((key) => ({ id: key, ...data[key] }))
+          : [];
+        if (
+          !list.find(
+            (x: NotificationSeenDTO) =>
+              x.userLoginId && x.userLoginId == userLoginId
+          )
+        ) {
+          push(ref(database, `${FirebaseConstants.SEEN_NOTIFICATIONS}`), {
+            userLoginId: userLoginId,
+            latestTime: new Date().toISOString(),
+          });
+        }
+      }
+    );
+  };
+
   const login = async (username: string, password: string) => {
     try {
       enableLoading();
@@ -169,7 +202,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
               response.data.result.user;
 
             var userRole: any[] = [];
-            userRole.push(checkRoleCode(role));
+            var userRoleCode = checkRoleCode(role);
+            userRole.push(userRoleCode);
+            if (userRoleCode != AccountRoleCode.SUPER_ADMIN) {
+              initNotification(id);
+            }
 
             const user = {
               id: id,
@@ -250,7 +287,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
               response.data.result.user;
 
             var userRole: any[] = [];
-            userRole.push(checkRoleCode(role));
+            var userRoleCode = checkRoleCode(role);
+            userRole.push(userRoleCode);
+            if (userRoleCode != AccountRoleCode.SUPER_ADMIN) {
+              initNotification(id);
+            }
 
             const user = {
               id: id,
