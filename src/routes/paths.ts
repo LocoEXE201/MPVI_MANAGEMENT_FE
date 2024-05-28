@@ -20,4 +20,5 @@ export const PATH_MAIN = {
   deliveryDetail: (deliveryLogId: number) =>
     `/delivery/DeliveryDetail/${deliveryLogId}`,
   users: "/users",
+  notification: "/notification"
 };

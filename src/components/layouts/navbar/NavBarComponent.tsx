@@ -1,11 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css"; // You can define your styles in a separate CSS file
 import Search from "antd/es/input/Search";
+import { getUserInfo, logout } from "@/utils/jwt";
+import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
+
+import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstants";
+import Swal from "sweetalert2";
+import { PATH_MAIN } from "@/routes/paths";
+import { AuthUser } from "@/types/authentication";
 
 const Header = () => {
   // State for managing the visibility of the user profile menu
   const [isUserProfileMenuOpen, setUserProfileMenuOpen] = useState(false);
+  const { logout, isAuthenticated } = useAuth()
+  const router = useRouter()
+  const [userInfo, setUserInfo] = useState<AuthUser>()
+
+  useEffect(() => {
+    const storedUserInfo = getUserInfo()
+    if (storedUserInfo) {
+      setUserInfo(JSON.parse(storedUserInfo))
+    }
+  }, [])
+  if (!userInfo) {
+    return null
+  }
+  const navigateTo = (route : string) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route)
+    }
+    router.push(route)
+  }
 
   // Function to toggle the user profile menu
   const toggleUserProfileMenu = () => {
@@ -58,8 +85,8 @@ const Header = () => {
             <div className="user-profile flex" onClick={toggleUserProfileMenu}>
               <div style={{ marginRight: "0.5rem", textAlign: "right" }}>
                 <ul style={{ listStyle: "none", padding: 0 }}>
-                  <li>Ánh Linh</li>
-                  <li>Admin</li>
+                  <li>{userInfo.name}</li>
+                  <li>{userInfo.role?.join(', ')}</li>
                 </ul>
               </div>
               {/* Profile Picture */}
@@ -69,12 +96,41 @@ const Header = () => {
               />
               {/* User Profile Menu Dropdown */}
               {isUserProfileMenuOpen && (
-                <div className="dropdown-menu">
+                <div className="dropdown-menu text-black">
                   <ul>
                     {/* <li>Username</li>
                     <li>User Role</li>
                     <li>Settings</li> */}
-                    <li>Logout</li>
+                    <li>
+                    <div
+                    onClick={() => {
+                      Swal.fire({
+                        title: "Bạn có chắc muốn đăng xuất?",
+                        icon: "info",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Đăng xuất",
+                        cancelButtonText: "Hủy bỏ",
+                        focusCancel: true,
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          logout();
+                          navigateTo(PATH_MAIN.root);
+                          setTimeout(() => {
+                            Swal.fire({
+                              title: "Đăng xuất thành công",
+                              icon: "success",
+                              showConfirmButton: false,
+                              timer: 1000,
+                            });
+                          }, 300);
+                        }
+                      });
+                    }}
+                    className="cursor-pointer flex flex-row items-center justify-end"
+                  >Logout</div>
+                    </li>
                   </ul>
                 </div>
               )}
