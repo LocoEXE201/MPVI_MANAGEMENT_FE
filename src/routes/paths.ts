@@ -18,4 +18,5 @@ export const PATH_MAIN = {
   report: "/report",
   delivery: "/delivery",
   users: "/users",
+  notification: "/notification"
 };

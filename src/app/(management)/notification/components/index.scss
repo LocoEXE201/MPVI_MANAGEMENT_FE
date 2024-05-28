@@ -1,0 +1,21 @@
+.newNotification_alarm {
+  animation-name: newNotification_alarm;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes newNotification_alarm {
+  0% {
+    color: red;
+  }
+  25% {
+    color: rgb(199, 152, 0);
+  }
+  50% {
+    color: red;
+  }
+  100% {
+    color: rgb(199, 152, 0);
+  }
+}

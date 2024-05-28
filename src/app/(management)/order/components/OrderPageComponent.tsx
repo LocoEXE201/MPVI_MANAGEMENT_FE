@@ -1,8 +1,34 @@
 "use client";
 
+import { OrderManagemnet } from "@/api/services/api";
+import {
+  CallApiGet,
+  CallApiGetToken,
+  CallApiPostToken,
+  updateOrderStatus,
+} from "@/api/services/service";
 import { OrderTable } from "@/components/layouts/table/OrderTable";
+import { useEffect, useState } from "react";
 
 const OrderPageComponent = (props: {}) => {
+  const [OrderManage, setManage]: any = useState();
+  
+
+  const getOrderManage = () => {
+    CallApiGetToken(OrderManagemnet, {}).then((res) => {
+      setManage(res.result);
+    });
+  };
+
+  const updateOrStatus = async (orderid: string, status: string) => {
+    updateOrderStatus(orderid, status).then(() => {
+      getOrderManage();
+    });
+  };
+
+  useEffect(() => {
+    getOrderManage();
+  }, []);
   return (
     <div>
       <div
@@ -44,7 +70,7 @@ const OrderPageComponent = (props: {}) => {
                     <p className="text-xs leading-tight text-white">4%</p>
                   </div>
                   <p className="text-white opacity-0 delay-200 duration-700 ease-in-out group-hover:opacity-100">
-                    75 Orders
+                    {OrderManage?.total_orders ?? 0} Orders
                   </p>
                 </div>
                 {/* item 2 */}
@@ -79,7 +105,7 @@ const OrderPageComponent = (props: {}) => {
                     <p className="text-xs leading-tight text-white">4%</p>
                   </div>
                   <p className="text-white opacity-0 delay-200 duration-700 ease-in-out group-hover:opacity-100">
-                    357 Delivered
+                    {OrderManage?.total_deliveries ?? 0} Delivered
                   </p>
                 </div>
                 {/* item 3 */}
@@ -114,7 +140,7 @@ const OrderPageComponent = (props: {}) => {
                     <p className="text-xs leading-tight text-white">25%</p>
                   </div>
                   <p className="text-white opacity-0 delay-200 duration-700 ease-in-out group-hover:opacity-100">
-                    65 Canceled
+                    {OrderManage?.total_canceled ?? 0} Canceled
                   </p>
                 </div>
               </div>
@@ -135,7 +161,7 @@ const OrderPageComponent = (props: {}) => {
           </div>
         </div>
         <div style={{ paddingTop: "1rem", width: "95%" }}>
-          <OrderTable />
+          <OrderTable orders={OrderManage?.items?.$values} uos={updateOrStatus}/>
         </div>
       </div>
     </div>
