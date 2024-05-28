@@ -17,5 +17,7 @@ export const PATH_MAIN = {
   supplier: "/supplier",
   report: "/report",
   delivery: "/delivery",
+  deliveryDetail: (deliveryLogId: number) =>
+    `/delivery/DeliveryDetail/${deliveryLogId}`,
   users: "/users",
 };
