@@ -1,6 +1,6 @@
 "use client";
 import path from "path";
-import "./SideBarComponent.css";
+import "./SideBarComponent.scss";
 import { title } from "process";
 import { useState } from "react";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstants";
