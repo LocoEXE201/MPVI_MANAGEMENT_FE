@@ -16,7 +16,7 @@ const NotificationPageProvider = (props: {}) => {
               style={{ backgroundColor: "#F1F5F9" }}
             >
               <div
-                className="container w-full h-full"
+                className=" w-full h-full"
                 style={{ backgroundColor: "#F1F5F9" }}
               >
                 <NotificationPageComponent />
