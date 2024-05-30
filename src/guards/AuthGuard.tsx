@@ -1,4 +1,5 @@
-import { useState, ReactNode, useEffect } from "react";
+"use client";
+import { ReactNode, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 import { PATH_AUTH } from "@/routes/paths";
@@ -11,15 +12,12 @@ export default function AuthGuard({ children }: AuthGuardProps) {
   const { isAuthenticated, isInitialized } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const [requestedLocation, setRequestedLocation] = useState<string | null>(
-    null
-  );
 
   useEffect(() => {
     if (!isAuthenticated && isInitialized) {
       router.push(PATH_AUTH.login);
     }
-  }, [isAuthenticated, isInitialized, pathname, requestedLocation]);
+  }, [isAuthenticated, isInitialized, pathname]);
 
   if (isAuthenticated) {
     return <>{children}</>;

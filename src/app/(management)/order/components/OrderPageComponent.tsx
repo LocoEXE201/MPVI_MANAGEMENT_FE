@@ -12,10 +12,9 @@ import { useEffect, useState } from "react";
 
 const OrderPageComponent = (props: {}) => {
   const [OrderManage, setManage]: any = useState();
-  
 
   const getOrderManage = () => {
-    CallApiGetToken(OrderManagemnet, {}).then((res) => {
+    CallApiGetToken(OrderManagemnet).then((res) => {
       setManage(res.result);
     });
   };
@@ -161,7 +160,10 @@ const OrderPageComponent = (props: {}) => {
           </div>
         </div>
         <div style={{ paddingTop: "1rem", width: "95%" }}>
-          <OrderTable orders={OrderManage?.items?.$values} uos={updateOrStatus}/>
+          <OrderTable
+            orders={OrderManage?.items?.$values}
+            uos={updateOrStatus}
+          />
         </div>
       </div>
     </div>

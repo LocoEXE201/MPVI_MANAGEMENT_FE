@@ -10,29 +10,47 @@ import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstants";
 import Swal from "sweetalert2";
 import { PATH_MAIN } from "@/routes/paths";
 import { AuthUser } from "@/types/authentication";
+import { checkRoleString } from "@/enums/accountRole";
+import NotificationAlert from "./NotificationAlert";
 
 const Header = () => {
   // State for managing the visibility of the user profile menu
   const [isUserProfileMenuOpen, setUserProfileMenuOpen] = useState(false);
-  const { logout, isAuthenticated } = useAuth()
-  const router = useRouter()
-  const [userInfo, setUserInfo] = useState<AuthUser>()
+  const { logout, isAuthenticated } = useAuth();
+  const router = useRouter();
+  const [userInfo, setUserInfo] = useState<AuthUser>();
+  const [userRoles, setUserRoles] = useState<string>("");
 
   useEffect(() => {
-    const storedUserInfo = getUserInfo()
+    const storedUserInfo = getUserInfo();
     if (storedUserInfo) {
-      setUserInfo(JSON.parse(storedUserInfo))
+      setUserInfo(JSON.parse(storedUserInfo));
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (userInfo && userInfo.role) {
+      var userInfoRoles: string[] = userInfo.role;
+      var userRoles: string = "";
+      for (var i = 0; i <= userInfoRoles.length - 1; i++) {
+        userRoles += checkRoleString(userInfoRoles[i]);
+        if (userInfoRoles[i + 1]) {
+          userRoles += ", ";
+        }
+        setUserRoles(userRoles);
+      }
+    }
+  }, [userInfo]);
+
   if (!userInfo) {
-    return null
+    return null;
   }
-  const navigateTo = (route : string) => {
+  const navigateTo = (route: string) => {
     if (typeof window !== "undefined") {
-      localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route)
+      localStorage.setItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE, route);
     }
-    router.push(route)
-  }
+    router.push(route);
+  };
 
   // Function to toggle the user profile menu
   const toggleUserProfileMenu = () => {
@@ -51,20 +69,7 @@ const Header = () => {
         <div className="ml-auto">
           <ul className="flex items-center space-x-6 justify-end">
             <li>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                />
-              </svg>
+              <NotificationAlert />
             </li>
             <li>
               <svg
@@ -86,7 +91,7 @@ const Header = () => {
               <div style={{ marginRight: "0.5rem", textAlign: "right" }}>
                 <ul style={{ listStyle: "none", padding: 0 }}>
                   <li>{userInfo.name}</li>
-                  <li>{userInfo.role?.join(', ')}</li>
+                  <li>{userRoles}</li>
                 </ul>
               </div>
               {/* Profile Picture */}
@@ -102,34 +107,36 @@ const Header = () => {
                     <li>User Role</li>
                     <li>Settings</li> */}
                     <li>
-                    <div
-                    onClick={() => {
-                      Swal.fire({
-                        title: "Bạn có chắc muốn đăng xuất?",
-                        icon: "info",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Đăng xuất",
-                        cancelButtonText: "Hủy bỏ",
-                        focusCancel: true,
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                          logout();
-                          navigateTo(PATH_MAIN.root);
-                          setTimeout(() => {
-                            Swal.fire({
-                              title: "Đăng xuất thành công",
-                              icon: "success",
-                              showConfirmButton: false,
-                              timer: 1000,
-                            });
-                          }, 300);
-                        }
-                      });
-                    }}
-                    className="cursor-pointer flex flex-row items-center justify-end"
-                  >Logout</div>
+                      <div
+                        onClick={() => {
+                          Swal.fire({
+                            title: "Bạn có chắc muốn đăng xuất?",
+                            icon: "info",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Đăng xuất",
+                            cancelButtonText: "Hủy bỏ",
+                            focusCancel: true,
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              logout();
+                              navigateTo(PATH_MAIN.root);
+                              setTimeout(() => {
+                                Swal.fire({
+                                  title: "Đăng xuất thành công",
+                                  icon: "success",
+                                  showConfirmButton: false,
+                                  timer: 1000,
+                                });
+                              }, 300);
+                            }
+                          });
+                        }}
+                        className="cursor-pointer flex flex-row items-center justify-end"
+                      >
+                        Logout
+                      </div>
                     </li>
                   </ul>
                 </div>
