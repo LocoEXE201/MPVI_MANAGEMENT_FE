@@ -10,7 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
-import { blue } from "@mui/material/colors";
+import { red, yellow, blue, green } from "@mui/material/colors";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
@@ -33,10 +33,27 @@ interface DeliveryTicket {
   deliveryOn: string;
   driverContact: string;
   note: string;
+  status: string;
 }
 
+const getColor = (status: string) => {
+  switch (status) {
+    case "Rejected":
+      return { main: "#FF6B6B", hover: red[700] };
+    case "Pending":
+      return { main: "#FFD93D", hover: yellow[700] };
+    case "Approved":
+      return { main: "#6BCB77", hover: green[700] };
+    case "Receipt":
+      return { main: "#AD88C6", hover: "#7469B6" };
+    default:
+      return { main: "#1E90FF", hover: "#4169E1" };
+  }
+};
+
 const DeliveryTable: NextPage = () => {
-  const [supplierId, setSupplierId] = useState<number>(2);
+  const [status, setStatus] = useState<string>("");
+  const [supplierId, setSupplierId] = useState<number>(0);
   const [tickets, setTickets] = useState<DeliveryTicket[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { isLoading, enableLoading, disableLoading } = useAppContext();
@@ -75,6 +92,8 @@ const DeliveryTable: NextPage = () => {
         }
       } catch (error) {
         console.error("Error fetching tickets:", error);
+      } finally {
+        disableLoading();
       }
     };
 
@@ -98,7 +117,7 @@ const DeliveryTable: NextPage = () => {
 
   const filteredTickets = tickets.filter(
     (ticket) =>
-      (ticket.supplier.supplerId === supplierId || supplierId === 0) &&
+      (supplierId === 0 || ticket.supplier.supplerId === supplierId) &&
       (ticket.supplier?.name?.toLowerCase().includes(searchQuery) ||
         ticket.driverContact?.toLowerCase().includes(searchQuery) ||
         ticket.note?.toLowerCase().includes(searchQuery))
@@ -163,10 +182,10 @@ const DeliveryTable: NextPage = () => {
                   color: blue[500],
                 }}
               >
+                <MenuItem value={0}>All Suppliers</MenuItem>
                 <MenuItem value={2}>
                   MPVI - Mentorship for people with vision impairment
                 </MenuItem>
-                <MenuItem value={1}>Oceanic Entertainment</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -191,7 +210,7 @@ const DeliveryTable: NextPage = () => {
                   className="header-table"
                   style={{ color: "silver", fontWeight: "bold" }}
                 >
-                  Supplier ID
+                  Supplier Name
                 </TableCell>
                 <TableCell
                   align="center"
@@ -219,6 +238,13 @@ const DeliveryTable: NextPage = () => {
                   className="header-table"
                   style={{ color: "silver", fontWeight: "bold" }}
                 >
+                  Status
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className="header-table"
+                  style={{ color: "silver", fontWeight: "bold" }}
+                >
                   Note
                 </TableCell>
                 <TableCell
@@ -231,55 +257,72 @@ const DeliveryTable: NextPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredTickets.map((ticket, index) => (
-                <TableRow
-                  key={ticket.deliveryLogId}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    align="center"
-                    style={{ fontWeight: "bold" }}
+              {filteredTickets.map((ticket, index) => {
+                const { main, hover } = getColor(ticket.status);
+                return (
+                  <TableRow
+                    key={ticket.deliveryLogId}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    {index + 1}
-                  </TableCell>
-                  <TableCell style={{ color: "grey", fontWeight: "500" }}>
-                    {ticket.supplier.supplerId === 2
-                      ? "MPVI - Mentorship for people with vision impairment"
-                      : ""}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "grey" }}>
-                    {new Date(ticket.createdOn).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "grey" }}>
-                    {new Date(ticket.deliveryOn).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "grey" }}>
-                    {ticket.driverContact}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: "grey" }}>
-                    {ticket.note}
-                  </TableCell>
-
-                  <TableCell align="center">
-                    <div className="operation">
-                      <Link
-                        href={PATH_MAIN.deliveryDetail(ticket.deliveryLogId)}
-                        passHref
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      align="center"
+                      style={{ fontWeight: "bold" }}
+                    >
+                      {index + 1}
+                    </TableCell>
+                    <TableCell style={{ color: "grey", fontWeight: "500" }}>
+                      {ticket.supplier.supplerId === 2
+                        ? "MPVI - Mentorship for people with vision impairment"
+                        : ticket.supplier.name}
+                    </TableCell>
+                    <TableCell align="center" style={{ color: "grey" }}>
+                      {new Date(ticket.createdOn).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell align="center" style={{ color: "grey" }}>
+                      {new Date(ticket.deliveryOn).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell align="center" style={{ color: "grey" }}>
+                      {ticket.driverContact}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Button
+                        variant="contained"
+                        sx={{
+                          bgcolor: main,
+                          width: "110px",
+                          "&:hover": {
+                            bgcolor: hover,
+                          },
+                        }}
                       >
-                        <Button variant="text">
-                          <InfoSharpIcon sx={{ color: "#BBBFCA" }} />
-                        </Button>
-                      </Link>
-                      <DeleteTicket
-                        deliveryLogId={ticket.deliveryLogId}
-                        onDelete={handleDeleteTicket}
-                      />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+                        {ticket.status}
+                      </Button>
+                    </TableCell>
+                    <TableCell align="center" style={{ color: "grey" }}>
+                      {ticket.note}
+                    </TableCell>
+
+                    <TableCell align="center">
+                      <div className="operation">
+                        <Link
+                          href={PATH_MAIN.deliveryDetail(ticket.deliveryLogId)}
+                          passHref
+                        >
+                          <Button variant="text">
+                            <InfoSharpIcon sx={{ color: "#BBBFCA" }} />
+                          </Button>
+                        </Link>
+                        <DeleteTicket
+                          deliveryLogId={ticket.deliveryLogId}
+                          onDelete={handleDeleteTicket}
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>

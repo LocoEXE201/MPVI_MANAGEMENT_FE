@@ -54,11 +54,17 @@ const getColor = (status: string) => {
   }
 };
 
-const DeliveryDetailTable = ({ deliveryLogId }: { deliveryLogId: number }) => {
+const DeliveryDetailTable = ({
+  deliveryLogId,
+  onStatusChange,
+}: {
+  deliveryLogId: number;
+  onStatusChange: (status: string) => void;
+}) => {
   const [status, setStatus] = useState<string>("");
-  const [category, setCategory] = useState<string>(""); // State for category filter
+  const [category, setCategory] = useState<string>("");
   const [details, setDetails] = useState<DeliveryDetail[]>([]);
-  const [searchQuery, setSearchQuery] = useState<string>(""); // State for search query
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [supplier, setSupplier] = useState<{
     supplerId: number;
@@ -68,7 +74,7 @@ const DeliveryDetailTable = ({ deliveryLogId }: { deliveryLogId: number }) => {
     name: "",
   });
   const [driverContact, setDriverContact] = useState<string>("");
-  const [receiptStatus, setReceiptStatus] = useState<string>("");
+  // const [receiptStatus, setReceiptStatus] = useState<string>("");
   const [createdOn, setCreatedOn] = useState<string>("");
   const [deliveryOn, setDeliveryOn] = useState<string>("");
   useEffect(() => {
@@ -118,6 +124,7 @@ const DeliveryDetailTable = ({ deliveryLogId }: { deliveryLogId: number }) => {
           }));
 
           setDetails(formattedDetails);
+          datalList.forEach((item: any) => onStatusChange(item.status));
           console.log(details);
           disableLoading();
         } else {
@@ -233,9 +240,11 @@ const DeliveryDetailTable = ({ deliveryLogId }: { deliveryLogId: number }) => {
                 }}
               >
                 <MenuItem value="">All</MenuItem>
-                <MenuItem value="Complete">APPROVED</MenuItem>
+                <MenuItem value="Approved">APPROVED</MenuItem>
                 <MenuItem value="Pending">PENDING</MenuItem>
-                <MenuItem value="Cancel">REJECTED</MenuItem>
+                <MenuItem value="Rejected">REJECTED</MenuItem>
+                <MenuItem value="Receipt">RECEIPT</MenuItem>
+                <MenuItem value="Completed">COMPLETED</MenuItem>
               </Select>
             </FormControl>
           </div>
