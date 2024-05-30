@@ -457,7 +457,7 @@ const NotificationPageComponent = (props: {}) => {
           </div>
           {isAdminRole() ? (
             <>
-              <div className="book-ticket-button">
+              <div className="ml-2">
                 <Button
                   variant="contained"
                   onClick={() => {

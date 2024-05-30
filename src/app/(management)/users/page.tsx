@@ -1,18 +1,23 @@
+"use client";
 import { Metadata } from "next";
 import MainLayout from "@/components/layouts";
 import UserListComponent from "./components/UserProvider";
+import useProtectData from "@/hooks/useProtectData";
 
 const metadata: Metadata = {
   title: "Loco. - Quản Lý",
-  description: "This is Loco. Category Management Page",
+  description: "This is Loco. User Management Page",
 };
 
-export default function OrderManagementPage() {
+const UserManagementPage = (props: {}) => {
+  useProtectData();
   return (
     <>
       <MainLayout metadata={metadata}>
-        <UserListComponent/>
+        <UserListComponent />
       </MainLayout>
     </>
   );
-}
+};
+
+export default UserManagementPage;

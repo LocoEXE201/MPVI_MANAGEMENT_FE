@@ -55,9 +55,10 @@ const NotificationAlert = () => {
               )
             ) {
               if (
-                localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
-                localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) !=
-                  PATH_MAIN.notification
+                !localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) ||
+                (localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
+                  localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) !=
+                    PATH_MAIN.notification)
               ) {
                 sweetAlert.alertInfo("Bạn có thông báo mới", "", 3000, "22");
               }
