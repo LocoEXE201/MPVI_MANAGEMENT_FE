@@ -1,18 +1,22 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  IconButton,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { SelectChangeEvent } from "@mui/material/Select";
 
 interface FormValues {
   driverContact: string;
@@ -26,14 +30,81 @@ interface Category {
   quantity: number;
 }
 
+interface FetchedCategory {
+  categoryId: number;
+  categoryName: string;
+}
+
+interface Supplier {
+  supplerId: number;
+  supplierName: string;
+}
+
 const DeliveryBookTicket: React.FC = () => {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [confirm, setConfirm] = React.useState<boolean>(true);
-  const [supplierId, setSupplierId] = React.useState<number>(2);
-  const [categories, setCategories] = React.useState<Category[]>([
-    { categoryId: 2, quantity: 1 },
-  ]);
+  const [open, setOpen] = useState<boolean>(false);
+  const [confirm, setConfirm] = useState<boolean>(true);
+  const [supplierId, setSupplierId] = useState<number>(2);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [fetchedCategories, setFetchedCategories] = useState<FetchedCategory[]>(
+    []
+  );
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const token = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(
+          "https://mpviwarehouse.azurewebsites.net/api/category/GetAllCategory",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.result && Array.isArray(data.result)) {
+            setFetchedCategories(data.result);
+            if (data.result.length > 0) {
+              setCategories([
+                { categoryId: data.result[0].categoryId, quantity: 1 },
+              ]);
+            }
+          } else {
+            console.error("Fetched data is not in expected format:", data);
+          }
+        } else {
+          console.error("Error fetching categories:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    const fetchSuppliers = async () => {
+      try {
+        const response = await axios.post(
+          "https://mpviwarehouse.azurewebsites.net/api/Supplier/GetAllSupplier",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.data.isSuccess) {
+          setSuppliers(response.data.result);
+        } else {
+          console.error("Error fetching suppliers:", response.data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching suppliers:", error);
+      }
+    };
+
+    fetchCategories();
+    fetchSuppliers();
+  }, [token]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -67,7 +138,12 @@ const DeliveryBookTicket: React.FC = () => {
   };
 
   const addCategory = () => {
-    setCategories([...categories, { categoryId: 2, quantity: 1 }]);
+    if (fetchedCategories.length > 0) {
+      setCategories([
+        ...categories,
+        { categoryId: fetchedCategories[0].categoryId, quantity: 1 },
+      ]);
+    }
   };
 
   const deleteCategory = (index: number) => {
@@ -81,10 +157,13 @@ const DeliveryBookTicket: React.FC = () => {
     const formJson = Object.fromEntries(
       formData.entries()
     ) as unknown as FormValues;
+    const supplierName =
+      suppliers.find((supplier) => supplier.supplerId === supplierId)
+        ?.supplierName || "";
 
     const deliveryData = {
       deliveryLog: {
-        supplier: { supplerId: supplierId },
+        supplier: { supplerId: supplierId, supplierName: supplierName },
         createdOn: new Date().toISOString(),
         deliveryOn: new Date(formJson.deliveryOn).toISOString(),
         driverContact: formJson.driverContact,
@@ -124,7 +203,7 @@ const DeliveryBookTicket: React.FC = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Button
         variant="contained"
         onClick={handleClickOpen}
@@ -162,10 +241,11 @@ const DeliveryBookTicket: React.FC = () => {
               onChange={handleSupplierChange}
               label="Supplier"
             >
-              <MenuItem value={1}>Oceanic Entertainment</MenuItem>
-              <MenuItem value={2}>
-                MPVI - Mentorship for people with vision impairment
-              </MenuItem>
+              {suppliers.map((supplier) => (
+                <MenuItem key={supplier.supplerId} value={supplier.supplerId}>
+                  {supplier.supplierName}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           {categories.map((category, index) => (
@@ -180,14 +260,14 @@ const DeliveryBookTicket: React.FC = () => {
                   onChange={(event) => handleCategoryChange(index, event)}
                   label="Product"
                 >
-                  <MenuItem value={2}>Milk coffee</MenuItem>
-                  <MenuItem value={3}>Black coffee</MenuItem>
-                  <MenuItem value={4}>Cappuccino</MenuItem>
-                  <MenuItem value={5}>Book type 1</MenuItem>
-                  <MenuItem value={6}>Book type 2</MenuItem>
-                  <MenuItem value={7}>Dash book</MenuItem>
-                  <MenuItem value={8}>Black pen</MenuItem>
-                  <MenuItem value={9}>Color pen 8</MenuItem>
+                  {fetchedCategories.map((fetchedCategory) => (
+                    <MenuItem
+                      key={fetchedCategory.categoryId}
+                      value={fetchedCategory.categoryId}
+                    >
+                      {fetchedCategory.categoryName}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
               <TextField
@@ -214,7 +294,7 @@ const DeliveryBookTicket: React.FC = () => {
               </IconButton>
             </div>
           ))}
-          <Button onClick={addCategory}>
+          <Button onClick={addCategory} sx={{ marginTop: 2 }}>
             Add Product
             <AddIcon fontSize="small" style={{ marginLeft: "5px" }} />
           </Button>
@@ -256,7 +336,7 @@ const DeliveryBookTicket: React.FC = () => {
           <Button type="submit">Submit</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 };
 

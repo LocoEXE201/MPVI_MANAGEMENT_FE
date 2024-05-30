@@ -10,7 +10,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { PATH_MAIN } from "@/routes/paths";
-import { green } from "@mui/material/colors";
 import axios from "axios";
 
 const LOCALSTORAGE_CONSTANTS = {
@@ -21,6 +20,11 @@ const DeliveryDetailPageComponent = () => {
   const params = useParams();
   const deliveryLogId = Number(params.deliveryLogId);
   console.log(deliveryLogId);
+  const [status, setStatus] = useState<string>("");
+
+  const handleStatusChange = (status: string) => {
+    setStatus(status);
+  };
 
   const [buttonsVisible, setButtonsVisible] = useState(true);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
@@ -113,9 +117,12 @@ const DeliveryDetailPageComponent = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F1F5F9" }}>
       <div className="delivery-detail-table">
-        <DeliveryDetailTable deliveryLogId={deliveryLogId} />
+        <DeliveryDetailTable
+          deliveryLogId={deliveryLogId}
+          onStatusChange={handleStatusChange}
+        />
       </div>
-      {buttonsVisible && (
+      {buttonsVisible && status === "Pending" && (
         <div className="buttons">
           <Button
             variant="contained"
@@ -148,7 +155,7 @@ const DeliveryDetailPageComponent = () => {
           </Button>
         </div>
       )}
-      {actionTaken && !buttonsVisible && (
+      {status !== "Pending" && (
         <div className="done-button">
           <Button
             variant="contained"
