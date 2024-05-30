@@ -572,13 +572,13 @@ const NotificationPageComponent = (props: {}) => {
                     {formatDate.DD_MM_YYYY_Time(createdAt ?? "")}
                   </span>
                 </p>
-                <p>
+                <p className="text-justify">
                   <span className=" text-gray-400">Nội dung:</span>{" "}
                   {content && content?.length >= 150 ? (
                     <>
                       {!viewDetailList.find((x) => x == id) ? (
                         <>
-                          {content?.substring(0, 150) + "..."}{" "}
+                          {content?.substring(0, 150).trim() + "..."}{" "}
                           <span
                             className="text-white text-decoration-underline cursor-pointer
                         inline-block px-[5px] py-[1px] bg-blue-500

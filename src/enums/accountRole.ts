@@ -13,6 +13,7 @@ export enum AccountRoleString {
    ECONOMIC_LEAD = "MPVI_ECONOMIC_LEAD",
    MEMBER = "MPVI_MEMBER",
    CUSTOMER = "MPVI_CUSTOMER",
+   ANYNOMOUS = "ANYNOMOUS",
 }
 
 export const checkRoleCode = (role: any) => {
@@ -29,5 +30,22 @@ export const checkRoleCode = (role: any) => {
          return AccountRoleCode.CUSTOMER;
       default:
       return AccountRoleCode.ANYNOMOUS
+   }
+}
+
+export const checkRoleString = (role: any) => {
+   switch(role) {
+      case AccountRoleCode.SUPER_ADMIN:
+         return AccountRoleString.SUPER_ADMIN;
+      case AccountRoleCode.WAREHOUSE_MANAGER:
+         return AccountRoleString.WAREHOUSE_MANAGER;
+      case AccountRoleCode.ECONOMIC_LEAD:
+         return AccountRoleString.ECONOMIC_LEAD;
+      case AccountRoleCode.MEMBER:
+         return AccountRoleString.MEMBER;
+      case AccountRoleCode.CUSTOMER:
+         return AccountRoleString.CUSTOMER;
+      default:
+      return AccountRoleString.ANYNOMOUS
    }
 }

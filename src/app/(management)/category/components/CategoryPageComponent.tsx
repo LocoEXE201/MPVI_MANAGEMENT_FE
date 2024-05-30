@@ -18,17 +18,18 @@ import {
 } from "@/api/services/api";
 import { StonkPositionTable } from "@/components/layouts/table/StonkPositionTable";
 import { LowPostionTable } from "@/components/layouts/table/LowPositionTable";
+import { ChartConfiguration } from "chart.js";
 
 const CategoryPageComponent = (props: {}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSuper, setSuper]: any = useState({ superCategoryName: "All" });
   const [superCates, setSuperCates] = useState([]);
   const [cates, setCates] = useState([]);
-  const [search, setSearch] = useState("")
-  const [checkAvailablePosition, setCheckAvailablePosition]:any = useState();
-  const [checkStonkPosition, setCheckStonkPosition]:any = useState();
-  const [checkInlowPosition, setCheckInlowPosition]:any = useState();
-  const [table, setTable] = useState("SortTable")
+  const [search, setSearch] = useState("");
+  const [checkAvailablePosition, setCheckAvailablePosition]: any = useState();
+  const [checkStonkPosition, setCheckStonkPosition]: any = useState();
+  const [checkInlowPosition, setCheckInlowPosition]: any = useState();
+  const [table, setTable] = useState("SortTable");
 
   const getSuperCates = async () => {
     CallApiPost(GetAllSuperCate, {}).then((res) => {
@@ -37,16 +38,21 @@ const CategoryPageComponent = (props: {}) => {
   };
 
   const getCates = async () => {
-    if (selectedSuper?.superCategoryName == "All"&&search?.trim()?.length==0) {
+    if (
+      selectedSuper?.superCategoryName == "All" &&
+      search?.trim()?.length == 0
+    ) {
       CallApiGet(GetAllCate).then((res) => {
-        console.log("all cates", res)
+        console.log("all cates", res);
         setCates(res.result);
       });
     } else {
-      getCategoryByCondition(selectedSuper?.superCategoryId, search).then((res) => {
-        console.log("cates condition", res)
-        setCates(res.result);
-      });
+      getCategoryByCondition(selectedSuper?.superCategoryId, search).then(
+        (res) => {
+          console.log("cates condition", res);
+          setCates(res.result);
+        }
+      );
     }
   };
 
@@ -82,11 +88,14 @@ const CategoryPageComponent = (props: {}) => {
 
   useEffect(() => {
     const dataDoughnut = {
-      labels: [ "positionAvailable", "positionFilled"],
+      labels: ["positionAvailable", "positionFilled"],
       datasets: [
         {
           label: "My First Dataset",
-          data: [ checkAvailablePosition?.positionAvailable??0, checkAvailablePosition?.positionFilled??0],
+          data: [
+            checkAvailablePosition?.positionAvailable ?? 0,
+            checkAvailablePosition?.positionFilled ?? 0,
+          ],
           backgroundColor: [
             // "rgb(133, 105, 241)",
             "rgb(164, 101, 241)",
@@ -97,14 +106,14 @@ const CategoryPageComponent = (props: {}) => {
       ],
     };
 
-    const configDoughnut = {
+    const configDoughnut: ChartConfiguration = {
       type: "doughnut",
       data: dataDoughnut,
       options: {},
     };
 
     const chartDoughnut = new Chart(
-      document.getElementById("chartDoughnut"),
+      document.getElementById("chartDoughnut") as HTMLCanvasElement,
       configDoughnut
     );
 
@@ -119,7 +128,12 @@ const CategoryPageComponent = (props: {}) => {
       datasets: [
         {
           label: "My First Dataset",
-          data: [checkStonkPosition?.total??0-checkStonkPosition?.stonkquantity??0, checkStonkPosition?.stonkquantity??0],
+          data: [
+            checkStonkPosition?.total ??
+              0 - checkStonkPosition?.stonkquantity ??
+              0,
+            checkStonkPosition?.stonkquantity ?? 0,
+          ],
           backgroundColor: [
             "rgb(133, 105, 241)",
             "rgb(164, 101, 241)",
@@ -130,14 +144,14 @@ const CategoryPageComponent = (props: {}) => {
       ],
     };
 
-    const configDoughnut = {
+    const configDoughnut: ChartConfiguration = {
       type: "doughnut",
       data: dataDoughnut,
       options: {},
     };
 
     const chartDoughnut = new Chart(
-      document.getElementById("chartDoughnuts"),
+      document.getElementById("chartDoughnuts") as HTMLCanvasElement,
       configDoughnut
     );
 
@@ -152,7 +166,12 @@ const CategoryPageComponent = (props: {}) => {
       datasets: [
         {
           label: "My First Dataset",
-          data: [checkInlowPosition?.total??0-checkInlowPosition?.categoryInlow??0, checkInlowPosition?.categoryInlow??0],
+          data: [
+            checkInlowPosition?.total ??
+              0 - checkInlowPosition?.categoryInlow ??
+              0,
+            checkInlowPosition?.categoryInlow ?? 0,
+          ],
           backgroundColor: [
             "rgb(133, 105, 241)",
             "rgb(164, 101, 241)",
@@ -163,14 +182,14 @@ const CategoryPageComponent = (props: {}) => {
       ],
     };
 
-    const configDoughnut = {
+    const configDoughnut: ChartConfiguration = {
       type: "doughnut",
       data: dataDoughnut,
       options: {},
     };
 
     const chartDoughnut = new Chart(
-      document.getElementById("chartDoughnutss"),
+      document.getElementById("chartDoughnutss") as HTMLCanvasElement,
       configDoughnut
     );
 
@@ -184,17 +203,33 @@ const CategoryPageComponent = (props: {}) => {
   }, [selectedSuper, search]);
 
   const RenderTable = () => {
-    switch(table){
+    switch (table) {
       case "SortTable":
-        return <SortableTable categories={cates} search={search} setSearch={setSearch}/>
-      case "StonkPositionTable" :
-        return <StonkPositionTable stonkProduct={checkStonkPosition?.stonkProductID}/>
-      case "InlowPositionTable" :
-        return <LowPostionTable inLowCate={checkInlowPosition?.inLowCateID}/>
-      default :
-        return <SortableTable categories={cates} search={search} setSearch={setSearch}/>
+        return (
+          <SortableTable
+            categories={cates}
+            search={search}
+            setSearch={setSearch}
+          />
+        );
+      case "StonkPositionTable":
+        return (
+          <StonkPositionTable
+            stonkProduct={checkStonkPosition?.stonkProductID}
+          />
+        );
+      case "InlowPositionTable":
+        return <LowPostionTable inLowCate={checkInlowPosition?.inLowCateID} />;
+      default:
+        return (
+          <SortableTable
+            categories={cates}
+            search={search}
+            setSearch={setSearch}
+          />
+        );
     }
-  }
+  };
 
   return (
     <div
@@ -226,14 +261,18 @@ const CategoryPageComponent = (props: {}) => {
             {isOpen && (
               <div className="absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1">
                 <a
-                  onClick={() => {setSuper({ superCategoryName: "All" }); toggleDropdown()}}
+                  onClick={() => {
+                    setSuper({ superCategoryName: "All" });
+                    toggleDropdown();
+                  }}
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md"
                 >
                   All
                 </a>
 
-                {superCates?.map((cate: any) => (
+                {superCates?.map((cate: any, index: any) => (
                   <a
+                    key={index}
                     onClick={() => {
                       setSuper(cate);
                       toggleDropdown();
