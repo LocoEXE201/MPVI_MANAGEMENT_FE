@@ -7,7 +7,7 @@ import "./Delivery.css";
 
 const DeliveryPageComponent = (props: {}) => {
   return (
-    <div className="" style={{ backgroundColor: "#F1F5F9" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "#F1F5F9" }}>
       <div className="container h-full" style={{ backgroundColor: "#F1F5F9" }}>
         <div className="calendar">
           <Calendar />

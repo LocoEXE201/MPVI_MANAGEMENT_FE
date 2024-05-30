@@ -1,0 +1,24 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.delivery-detail-table {
+  padding-top: 1rem;
+  width: 95%;
+  margin: 0 auto;
+}
+.buttons {
+  padding-top: 1rem;
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.done-button {
+  display: flex;
+  padding-top: 1rem;
+  width: 95%;
+  justify-content: flex-end;
+}

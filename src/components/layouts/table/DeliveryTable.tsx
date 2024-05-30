@@ -1,4 +1,7 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { PATH_MAIN } from "@/routes/paths";
+import { NextPage } from "next";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,7 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
-import { red, yellow, blue, green } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
@@ -17,157 +20,220 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InfoSharpIcon from "@mui/icons-material/InfoSharp";
-import "./DeliveryTable.css";
 import DeliveryBookTicket from "@/components/DialogForm/DeliveryBookTicket";
+import "./DeliveryTable.css";
+import DeleteTicket from "@/components/DialogForm/DeleteTicket";
+import useAppContext from "@/hooks/useAppContext";
+import Loading from "@/components/Loading/Loading";
 
-function createData(
-  id: number,
-  cname: string,
-  orderdate: string,
-  payment: string,
-  status: string
-) {
-  return { id, cname, orderdate, payment, status };
+interface DeliveryTicket {
+  deliveryLogId: number;
+  supplier: { supplerId: number; name: string };
+  createdOn: string;
+  deliveryOn: string;
+  driverContact: string;
+  note: string;
 }
 
-const rows = [
-  createData(1, "Hector Hugo", "01/03/2023", "Momo", "Complete"),
-  createData(2, "Fermanda", "29/02/2024", "Vnpay", "Complete"),
-  createData(3, "Francisco", "29/02/2024", "Cash", "Cancel"),
-  createData(4, "Alberto", "29/02/2024", "Cash", "Complete"),
-  createData(5, "Hector Hugo", "01/03/2023", "Momo", "Complete"),
-  createData(6, "Fermanda", "29/02/2024", "Vnpay", "Complete"),
-  createData(7, "Francisco", "29/02/2024", "Cash", "Cancel"),
-  createData(8, "Alberto", "29/02/2024", "Cash", "Pending"),
-];
+const DeliveryTable: NextPage = () => {
+  const [supplierId, setSupplierId] = useState<number>(2);
+  const [tickets, setTickets] = useState<DeliveryTicket[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const { isLoading, enableLoading, disableLoading } = useAppContext();
 
-const getColor = (status: String) => {
-  switch (status) {
-    case "Cancel":
-      return { main: red[500], hover: red[700] };
-    case "Pending":
-      return { main: "#FFD700", hover: yellow[700] };
-    default:
-      return { main: "#1E90FF", hover: "#4169E1" };
-  }
-};
+  useEffect(() => {
+    const fetchTickets = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return;
 
-export default function DeliveryTable() {
-  const [status, setStatus] = React.useState("");
+      try {
+        enableLoading();
+        const response = await fetch(
+          "https://mpviwarehouse.azurewebsites.net/api/delivery/GetAllTicket",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setStatus(event.target.value);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.isSuccess) {
+            if (Array.isArray(data.result)) {
+              setTickets(data.result);
+              console.log(data.result);
+              disableLoading();
+            } else {
+              console.error("Result is not an array", data);
+            }
+          } else {
+            console.error("API request unsuccessful:", data.message);
+          }
+        } else {
+          console.error("Failed to fetch tickets", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching tickets:", error);
+      }
+    };
+
+    fetchTickets();
+  }, []);
+
+  const handleChange = (event: SelectChangeEvent<number>) => {
+    setSupplierId(Number(event.target.value));
+    setSearchQuery(""); // Optional: Reset search query when filter changes
   };
+
+  const handleDeleteTicket = (id: number) => {
+    setTickets((prevTickets) =>
+      prevTickets.filter((ticket) => ticket.deliveryLogId !== id)
+    );
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value.toLowerCase());
+  };
+
+  const filteredTickets = tickets.filter(
+    (ticket) =>
+      (ticket.supplier.supplerId === supplierId || supplierId === 0) &&
+      (ticket.supplier?.name?.toLowerCase().includes(searchQuery) ||
+        ticket.driverContact?.toLowerCase().includes(searchQuery) ||
+        ticket.note?.toLowerCase().includes(searchQuery))
+  );
+
   return (
-    <div>
-      <div className="delivery-container">
-        <div className="search">
-          <TextField
-            id="outlined-basic"
-            variant="outlined"
-            placeholder="Search here"
-            sx={{
-              bgcolor: "#fff",
-              width: "80%",
-              borderRadius: "4px",
-              boxShadow: `0px 2px 1px -1px rgba(255, 182, 193, 0.2),
-                    0px 1px 1px 0px rgba(255, 182, 193, 0.14),
-                    0px 1px 3px 0px rgba(255, 182, 193, 0.12)`,
-              "& .MuiOutlinedInput-root": {
-                height: "40px", // Adjust the height as needed
-                "& input": {
-                  padding: "10px 14px", // Adjust padding to center the text vertically
-                },
-              },
-              "& .MuiInputAdornment-root": {
-                marginRight: "4px", // Adjust margin to better align icon
-              },
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </div>
-        <div className="dropdown">
-          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small-label" style={{ color: "grey" }}>
-              Filter
-            </InputLabel>
-            <Select
-              labelId="demo-select-small-label"
-              id="demo-select-small"
-              label="Filter"
-              value={status}
-              onChange={handleChange}
+    <>
+      <Loading loading={isLoading} />
+      <div>
+        <div className="delivery-container">
+          <div className="search">
+            <TextField
+              id="outlined-basic"
+              variant="outlined"
+              placeholder="Search here"
               sx={{
                 bgcolor: "#fff",
-                color: blue[500],
+                width: "80%",
+                borderRadius: "4px",
+                boxShadow: `0px 2px 1px -1px rgba(255, 182, 193, 0.2),
+                    0px 1px 1px 0px rgba(255, 182, 193, 0.14),
+                    0px 1px 3px 0px rgba(255, 182, 193, 0.12)`,
+                "& .MuiOutlinedInput-root": {
+                  height: "40px",
+                  "& input": {
+                    padding: "10px 14px",
+                  },
+                },
+                "& .MuiInputAdornment-root": {
+                  marginRight: "4px",
+                },
               }}
-            >
-              <MenuItem value="Complete">COMPLETE</MenuItem>
-              <MenuItem value="Pending">PENDING</MenuItem>
-              <MenuItem value="Cancel">CANCEL</MenuItem>
-            </Select>
-          </FormControl>
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+          </div>
+          <div className="dropdown">
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <InputLabel
+                id="demo-select-small-label"
+                style={{ color: "grey" }}
+              >
+                Filter
+              </InputLabel>
+              <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                label="Filter"
+                value={supplierId}
+                onChange={handleChange}
+                sx={{
+                  bgcolor: "#fff",
+                  color: blue[500],
+                }}
+              >
+                <MenuItem value={2}>
+                  MPVI - Mentorship for people with vision impairment
+                </MenuItem>
+                <MenuItem value={1}>Oceanic Entertainment</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <div className="book-ticket-button">
+            <DeliveryBookTicket />
+          </div>
         </div>
-        <div className="book-ticket-button">
-          <DeliveryBookTicket />
-        </div>
-      </div>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell
-                align="center"
-                className="header-table"
-                style={{ color: "silver", fontWeight: "bold" }}
-              >
-                Customer Name
-              </TableCell>
-              <TableCell
-                align="center"
-                className="header-table"
-                style={{ color: "silver", fontWeight: "bold" }}
-              >
-                Order Date
-              </TableCell>
-              <TableCell
-                align="center"
-                className="header-table"
-                style={{ color: "silver", fontWeight: "bold" }}
-              >
-                Payment Type
-              </TableCell>
-              <TableCell
-                align="center"
-                className="header-table"
-                style={{ color: "silver", fontWeight: "bold" }}
-              >
-                Status
-              </TableCell>
-              <TableCell
-                align="center"
-                className="header-table"
-                style={{ color: "silver", fontWeight: "bold" }}
-              >
-                Detail
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => {
-              const { main, hover } = getColor(row.status);
-              return (
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  align="center"
+                  className="header-table"
+                  style={{ color: "silver", fontWeight: "bold" }}
+                >
+                  No.
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className="header-table"
+                  style={{ color: "silver", fontWeight: "bold" }}
+                >
+                  Supplier ID
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className="header-table"
+                  style={{ color: "silver", fontWeight: "bold" }}
+                >
+                  Created On
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className="header-table"
+                  style={{ color: "silver", fontWeight: "bold" }}
+                >
+                  Delivery On
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className="header-table"
+                  style={{ color: "silver", fontWeight: "bold" }}
+                >
+                  Driver Contact
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className="header-table"
+                  style={{ color: "silver", fontWeight: "bold" }}
+                >
+                  Note
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className="header-table"
+                  style={{ color: "silver", fontWeight: "bold" }}
+                >
+                  Operation
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredTickets.map((ticket, index) => (
                 <TableRow
-                  key={row.id}
+                  key={ticket.deliveryLogId}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell
@@ -176,39 +242,50 @@ export default function DeliveryTable() {
                     align="center"
                     style={{ fontWeight: "bold" }}
                   >
-                    {row.cname}
+                    {index + 1}
+                  </TableCell>
+                  <TableCell style={{ color: "grey", fontWeight: "500" }}>
+                    {ticket.supplier.supplerId === 2
+                      ? "MPVI - Mentorship for people with vision impairment"
+                      : ""}
                   </TableCell>
                   <TableCell align="center" style={{ color: "grey" }}>
-                    {row.orderdate}
+                    {new Date(ticket.createdOn).toLocaleDateString()}
                   </TableCell>
                   <TableCell align="center" style={{ color: "grey" }}>
-                    {row.payment}
+                    {new Date(ticket.deliveryOn).toLocaleDateString()}
                   </TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      sx={{
-                        bgcolor: main,
-                        width: "110px",
-                        "&:hover": {
-                          bgcolor: hover,
-                        },
-                      }}
-                    >
-                      {row.status}
-                    </Button>
+                  <TableCell align="center" style={{ color: "grey" }}>
+                    {ticket.driverContact}
                   </TableCell>
+                  <TableCell align="center" style={{ color: "grey" }}>
+                    {ticket.note}
+                  </TableCell>
+
                   <TableCell align="center">
-                    <Button variant="text">
-                      <InfoSharpIcon sx={{ color: "grey" }} />
-                    </Button>
+                    <div className="operation">
+                      <Link
+                        href={PATH_MAIN.deliveryDetail(ticket.deliveryLogId)}
+                        passHref
+                      >
+                        <Button variant="text">
+                          <InfoSharpIcon sx={{ color: "#BBBFCA" }} />
+                        </Button>
+                      </Link>
+                      <DeleteTicket
+                        deliveryLogId={ticket.deliveryLogId}
+                        onDelete={handleDeleteTicket}
+                      />
+                    </div>
                   </TableCell>
                 </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </>
   );
-}
+};
+
+export default DeliveryTable;
