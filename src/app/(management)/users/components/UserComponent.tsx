@@ -9,6 +9,7 @@ import {
   getStaffList,
   importStaffList,
 } from "@/api/services/service";
+import useProtectData from "@/hooks/useProtectData";
 import { getUserInfo } from "@/utils/jwt";
 import { Grid } from "@mui/material";
 import { Button } from "@nextui-org/react";
@@ -19,6 +20,7 @@ import { toast } from "react-toastify";
 import io from "socket.io-client";
 
 const UserList: React.FC = () => {
+  useProtectData();
   const [userInfo, setUserInfo]: any = useState();
   const [users, setUsers]: any = useState();
   const [code, setCode]: any = useState("");
