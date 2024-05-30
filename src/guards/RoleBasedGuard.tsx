@@ -25,6 +25,7 @@ export default function RoleBasedGuard({
 
   useEffect(() => {
     if (
+      isAuthenticated &&
       !(
         accessibleRoles?.length !== 0 &&
         !accessibleRoles.some((r) => currentRole.some((ur) => ur === r))
@@ -35,39 +36,32 @@ export default function RoleBasedGuard({
     }
   }, [isAuthenticated]);
 
-  if (isAuthenticated && ending) {
-    if (!accessible) {
-      return (
-        <div
-          style={{ height: "100vh", width: "100vw", margin: "auto" }}
-          className="flex items-center justify-center"
-        >
-          <Container>
-            <Alert severity="error" className="flex justify-center">
-              <AlertTitle>Permission Denied</AlertTitle>
-              You do not have permission to access this page
-            </Alert>
-            <Stack direction="row" justifyContent="center">
-              <Button
-                onClick={() => router.push("/")}
-                variant="outlined"
-                style={{ margin: "0 5px" }}
-              >
-                Back to home
-              </Button>
-              <Button
-                onClick={logout}
-                variant="outlined"
-                color="inherit"
-                style={{ margin: "0 5px" }}
-              >
-                Logout
-              </Button>
-            </Stack>
-          </Container>
-        </div>
-      );
-    }
+  if (isAuthenticated && !accessible) {
+    return (
+      <div
+        style={{ height: "100vh", width: "100vw", margin: "auto" }}
+        className="flex items-center justify-center bg-white"
+      >
+        <Container>
+          <Alert severity="error" className="flex justify-center">
+            <AlertTitle>
+              <strong>Quyền truy cập bị từ chối</strong>
+            </AlertTitle>
+            Rất tiếc! Bạn không có quyền truy cập trang này
+          </Alert>
+          <Stack direction="row" justifyContent="center">
+            <Button
+              onClick={logout}
+              variant="contained"
+              color="error"
+              style={{ margin: "0 5px" }}
+            >
+              XÁC NHẬN
+            </Button>
+          </Stack>
+        </Container>
+      </div>
+    );
   }
 
   if (accessible && isAuthenticated) {

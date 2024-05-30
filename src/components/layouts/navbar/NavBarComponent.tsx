@@ -101,7 +101,10 @@ const Header = () => {
               />
               {/* User Profile Menu Dropdown */}
               {isUserProfileMenuOpen && (
-                <div className="dropdown-menu text-black">
+                <div
+                  className="dropdown-menu text-black"
+                  style={{ zIndex: "999" }}
+                >
                   <ul>
                     {/* <li>Username</li>
                     <li>User Role</li>
@@ -121,7 +124,6 @@ const Header = () => {
                           }).then((result) => {
                             if (result.isConfirmed) {
                               logout();
-                              navigateTo(PATH_MAIN.root);
                               setTimeout(() => {
                                 Swal.fire({
                                   title: "Đăng xuất thành công",

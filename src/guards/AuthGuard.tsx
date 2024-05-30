@@ -11,13 +11,12 @@ type AuthGuardProps = {
 export default function AuthGuard({ children }: AuthGuardProps) {
   const { isAuthenticated, isInitialized } = useAuth();
   const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
     if (!isAuthenticated && isInitialized) {
       router.push(PATH_AUTH.login);
     }
-  }, [isAuthenticated, isInitialized, pathname]);
+  }, [isAuthenticated, isInitialized]);
 
   if (isAuthenticated) {
     return <>{children}</>;
