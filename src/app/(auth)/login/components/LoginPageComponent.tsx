@@ -82,7 +82,7 @@ const LoginPageComponent = (props: {}) => {
   return (
     <GuestGuard>
       <Loading loading={isLoading} />
-      <div className="font-baloo-2 text-lightslategray mq800:gap-[0px_24px] mq1325:flex-wrap relative flex w-full min-w-full flex-row items-start justify-start gap-[0px_49px] overflow-hidden bg-neutral-white text-left text-base tracking-[normal]">
+      <div className="bg-white font-baloo-2 text-lightslategray mq800:gap-[0px_24px] mq1325:flex-wrap relative flex w-full min-w-full flex-row items-start justify-start gap-[0px_49px] overflow-hidden bg-neutral-white text-left text-base tracking-[normal]">
         <Welcomeframe propMargin="0" />
         <div className="min-h-screen justify-center mq800:pt-[31px] mq800:box-border mq800:min-w-full mq1325:flex-1 mq1125:pt-12 mq1125:box-border box-border flex w-[632px] min-w-[632px] max-w-full flex-col items-start px-0 pb-0 pt-[20px]">
           <div className="mq800:flex-wrap mq800:gap-[0px_38px] mq450:gap-[0px_19px] flex max-w-full flex-row items-start justify-start gap-[0px_76px] self-stretch">
