@@ -18,22 +18,22 @@ import "./Calendar.css";
 
 interface TicketDateResponse {
   deliveryDate: string;
-  ticketID: string;
+  ticketID: number;
 }
 
 function ServerDay(
-  props: PickersDayProps<Dayjs> & { highlightedDays?: number[] }
+  props: PickersDayProps<Dayjs> & { highlightedDays?: string[] }
 ) {
   const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
 
   const isSelected =
-    !outsideCurrentMonth && highlightedDays.indexOf(day.date()) >= 0;
+    !outsideCurrentMonth && highlightedDays.includes(day.format("YYYY-MM-DD"));
 
   return (
     <Badge
       key={day.toString()}
       overlap="circular"
-      badgeContent={isSelected ? "🌚" : undefined}
+      badgeContent={isSelected ? "📍" : undefined}
     >
       <PickersDay
         {...other}
@@ -47,22 +47,26 @@ function ServerDay(
 export default function Calendar() {
   const requestAbortController = React.useRef<AbortController | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [highlightedDays, setHighlightedDays] = useState<number[]>([]);
+  const [highlightedDays, setHighlightedDays] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [message, setMessage] = useState<string>("");
   const [open, setOpen] = useState(false);
-  const [ticketDates, setTicketDates] = useState<Set<string>>(new Set());
 
-  const fetchTicketDates = async () => {
+  const fetchHighlightedDays = async (date: Dayjs) => {
+    setIsLoading(true);
+    const formattedDate = date.format("YYYY-MM-DD");
+    const url = `https://mpviwarehouse.azurewebsites.net/api/delivery/GetTicketCalendar?selectedDate=${formattedDate}`;
+
     const token = localStorage.getItem("accessToken");
-    if (!token) return;
 
     try {
-      const response = await axios.get<{
+      const response = await axios.post<{
         isSuccess: boolean;
         result: TicketDateResponse[];
+        message?: string;
       }>(
-        "https://mpviwarehouse.azurewebsites.net/api/delivery/GetAllTicketDates",
+        url,
+        {},
         {
           headers: {
             accept: "text/plain",
@@ -73,21 +77,19 @@ export default function Calendar() {
 
       const data = response.data;
       if (data.isSuccess) {
-        const dates = data.result.map((item) =>
+        const deliveryDates = data.result.map((item) =>
           dayjs(item.deliveryDate).format("YYYY-MM-DD")
         );
-        setTicketDates(new Set(dates));
+        setHighlightedDays(deliveryDates);
       } else {
-        console.error("Failed to fetch ticket dates");
+        console.error("Failed to fetch highlighted days:", data.message);
       }
     } catch (error) {
-      console.error("Error fetching ticket dates:", error);
+      console.error("Error fetching highlighted days:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchTicketDates();
-  }, []);
 
   const handleDateChange = async (date: Dayjs | null) => {
     if (date) {
@@ -147,24 +149,6 @@ export default function Calendar() {
     setOpen(false);
   };
 
-  const fetchHighlightedDays = (date: Dayjs) => {
-    const controller = new AbortController();
-    const daysInMonth = date.daysInMonth();
-    const daysToHighlight = Array.from(
-      { length: daysInMonth },
-      (_, i) => i + 1
-    );
-
-    const highlighted = daysToHighlight.filter((day) =>
-      ticketDates.has(date.date(day).format("YYYY-MM-DD"))
-    );
-
-    setHighlightedDays(highlighted);
-    setIsLoading(false);
-
-    requestAbortController.current = controller;
-  };
-
   const handleMonthChange = (date: Dayjs) => {
     if (requestAbortController.current) {
       requestAbortController.current.abort();
@@ -177,7 +161,7 @@ export default function Calendar() {
 
   useEffect(() => {
     fetchHighlightedDays(dayjs());
-  }, [ticketDates]);
+  }, []);
 
   return (
     <div>
