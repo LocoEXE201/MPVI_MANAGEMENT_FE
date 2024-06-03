@@ -25,6 +25,7 @@ import "./DeliveryTable.css";
 import DeleteTicket from "@/components/DialogForm/DeleteTicket";
 import useAppContext from "@/hooks/useAppContext";
 import Loading from "@/components/Loading/Loading";
+import TablePagination from "@mui/material/TablePagination"; // Import TablePagination
 
 interface DeliveryTicket {
   deliveryLogId: number;
@@ -57,6 +58,8 @@ const DeliveryTable: NextPage = () => {
   const [tickets, setTickets] = useState<DeliveryTicket[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { isLoading, enableLoading, disableLoading } = useAppContext();
+  const [page, setPage] = useState<number>(0); // State for pagination
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10); // State for rows per page
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -115,12 +118,28 @@ const DeliveryTable: NextPage = () => {
     setSearchQuery(event.target.value.toLowerCase());
   };
 
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const filteredTickets = tickets.filter(
     (ticket) =>
       (supplierId === 0 || ticket.supplier.supplerId === supplierId) &&
       (ticket.supplier?.name?.toLowerCase().includes(searchQuery) ||
         ticket.driverContact?.toLowerCase().includes(searchQuery) ||
         ticket.note?.toLowerCase().includes(searchQuery))
+  );
+
+  const paginatedTickets = filteredTickets.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
   );
 
   return (
@@ -257,7 +276,7 @@ const DeliveryTable: NextPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredTickets.map((ticket, index) => {
+              {paginatedTickets.map((ticket, index) => {
                 const { main, hover } = getColor(ticket.status);
                 return (
                   <TableRow
@@ -270,7 +289,7 @@ const DeliveryTable: NextPage = () => {
                       align="center"
                       style={{ fontWeight: "bold" }}
                     >
-                      {index + 1}
+                      {page * rowsPerPage + index + 1}
                     </TableCell>
                     <TableCell style={{ color: "grey", fontWeight: "500" }}>
                       {ticket.supplier.supplerId === 2
@@ -325,6 +344,15 @@ const DeliveryTable: NextPage = () => {
               })}
             </TableBody>
           </Table>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 50]}
+            component="div"
+            count={filteredTickets.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </TableContainer>
       </div>
     </>
