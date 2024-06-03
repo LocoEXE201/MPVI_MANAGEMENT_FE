@@ -11,7 +11,7 @@ import { OrderTable } from "@/components/layouts/table/OrderTable";
 import { useEffect, useState } from "react";
 
 const OrderPageComponent = (props: {}) => {
-  const [OrderManage, setManage]: any = useState();
+  const [OrderManage, setManage]: any = useState([]);
 
   const getOrderManage = () => {
     CallApiGetToken(OrderManagemnet).then((res) => {
@@ -28,6 +28,7 @@ const OrderPageComponent = (props: {}) => {
   useEffect(() => {
     getOrderManage();
   }, []);
+  console.log(OrderManage);
   return (
     <div>
       <div
@@ -160,10 +161,7 @@ const OrderPageComponent = (props: {}) => {
           </div>
         </div>
         <div style={{ paddingTop: "1rem", width: "95%" }}>
-          <OrderTable
-            orders={OrderManage?.items?.$values}
-            uos={updateOrStatus}
-          />
+          <OrderTable orders={OrderManage?.$values} uos={updateOrStatus} />
         </div>
       </div>
     </div>

@@ -39,6 +39,9 @@ const TABS = [
 const TABLE_HEAD = [
   "customerId",
   "createdOn",
+  "receiverName",
+  "receiverAddress",
+  "receiverPhoneNumber",
   "total",
   "orderStatus",
   "Edit Status",
@@ -160,6 +163,7 @@ export function OrderTable({ orders, uos }: any) {
           </thead>
           <tbody>
             {orders?.map((order: any, index: any) => {
+              console.log(order);
               const isLast = index === orders?.length - 1;
               const classes = isLast
                 ? "p-4"
@@ -196,6 +200,42 @@ export function OrderTable({ orders, uos }: any) {
                         {formatDate(order?.createdOn)}
                       </Typography>
                     </div>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                      placeholder={undefined}
+                      onPointerEnterCapture={undefined}
+                      onPointerLeaveCapture={undefined}
+                    >
+                      {order?.receiverName}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                      placeholder={undefined}
+                      onPointerEnterCapture={undefined}
+                      onPointerLeaveCapture={undefined}
+                    >
+                      {order?.receiverAddress}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                      placeholder={undefined}
+                      onPointerEnterCapture={undefined}
+                      onPointerLeaveCapture={undefined}
+                    >
+                      {order?.receiverPhoneNumber}
+                    </Typography>
                   </td>
                   <td className={classes}>
                     <Typography
