@@ -13,7 +13,7 @@ const Welcomeframe: NextPage<WelcomeframeType> = ({ propMargin }) => {
   }, [propMargin]);
 
   return (
-    <div className="mq800:pt-[3.438rem] mq800:pb-[3.438rem] mq800:box-border mq800:min-w-full mq1325:flex-1 mq1325:min-h-[auto] box-border flex min-h-screen w-[44.375rem] min-w-[44.375rem] max-w-full shrink-0 flex-row items-center justify-start overflow-hidden bg-[url('/Background/Login_frame.jpg')] bg-cover bg-[center] bg-no-repeat py-[5.25rem] text-left text-[2rem] text-neutral-white">
+    <div className="mq1200:hidden w-[50%] box-border flex min-h-screen max-w-full shrink-0 flex-row items-center justify-start overflow-hidden bg-[url('/Background/Login_frame.jpg')] bg-cover bg-[center] bg-no-repeat py-[5.25rem] text-left text-[2rem] text-neutral-white">
       <div
         style={{
           backgroundColor: "rgba(0, 0, 0, 0.8)",

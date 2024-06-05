@@ -82,15 +82,15 @@ const LoginPageComponent = (props: {}) => {
   return (
     <GuestGuard>
       <Loading loading={isLoading} />
-      <div className="bg-white font-baloo-2 text-lightslategray mq800:gap-[0px_24px] mq1325:flex-wrap relative flex w-full min-w-full flex-row items-start justify-start gap-[0px_49px] overflow-hidden bg-neutral-white text-left text-base tracking-[normal]">
+      <div className="bg-white font-baloo-2 flex w-full min-w-full flex-row items-center justify-between overflow-hidden bg-neutral-white text-left text-base tracking-[normal]">
         <Welcomeframe propMargin="0" />
-        <div className="min-h-screen justify-center mq800:pt-[31px] mq800:box-border mq800:min-w-full mq1325:flex-1 mq1125:pt-12 mq1125:box-border box-border flex w-[632px] min-w-[632px] max-w-full flex-col items-start px-0 pb-0 pt-[20px]">
+        <div className="mq450:overflow-x-auto mq1200:w-full mq1200:min-h-screen pl-5 pr-20 mq450:px-5 w-[50%] justify-center box-border flex max-w-full flex-col items-start pb-0 pt-[20px] mq450:pt-0">
           <div className="mq800:flex-wrap mq800:gap-[0px_38px] mq450:gap-[0px_19px] flex max-w-full flex-row items-start justify-start gap-[0px_76px] self-stretch">
             <div className="box-border flex max-w-full flex-1 flex-col items-start justify-start px-0 pb-0 pt-px">
               <div className="mq450:gap-[49px_0px] flex max-w-full flex-col items-start justify-start gap-[5px_0px] self-stretch">
-                <div className="text-dimgray-300 box-border flex max-w-full flex-row items-start justify-start self-stretch py-0 pl-[33px] pr-0">
+                <div className="text-dimgray-300 box-border flex max-w-full flex-row items-start justify-start self-stretch py-0 mq450:pl-0 pl-[33px] pr-0">
                   <div className="flex max-w-full flex-1 flex-col items-end justify-start gap-[10px_0px]">
-                    <div className="flex max-w-full flex-col items-start justify-start gap-[16px_0px] self-stretch">
+                    <div className="flex max-w-full flex-col items-start justify-start mq450:gap-0 gap-[16px_0px] self-stretch">
                       <LoginFrame registerIndividualAccount="Đăng Nhập Tài Khoản Quản Lý" />
                       <div className="border-whitesmoke-100 relative box-border h-px self-stretch border-t-[1px] border-solid" />
                     </div>
@@ -188,13 +188,13 @@ const LoginPageComponent = (props: {}) => {
                       </Form.Item>
                     </Form>
                     <div className="text-silver-200 mq450:flex-wrap mq450:gap-[0px_17px] flex flex-row items-end justify-center gap-[0px_35px] self-stretch text-center text-xs">
-                      <div className="box-border flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
+                      <div className="box-border mq450:mb-2 flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
                         <div className="border-gray-800 relative box-border h-px self-stretch border-t-[1px] border-solid" />
                       </div>
                       <div className="text-[1.3rem] mq450:w-full mq450:h-3 relative flex w-3 items-center justify-center">
                         Hoặc
                       </div>
-                      <div className="box-border flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
+                      <div className="box-border mq450:mt-2 flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
                         <div className="border-gray-800 relative box-border h-px self-stretch border-t-[1px] border-solid" />
                       </div>
                     </div>

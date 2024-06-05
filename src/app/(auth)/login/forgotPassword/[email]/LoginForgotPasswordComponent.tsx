@@ -96,11 +96,14 @@ const LoginForgotPasswordComponent: NextPage = () => {
   if (userEmail == "") return <></>;
 
   return (
-    <section className="w-screen h-screen">
+    <section
+      className="w-auto h-screen mq900:w-auto mq900:h-auto bg-white"
+      style={{ margin: "auto" }}
+    >
       <Loading loading={isLoading} />
       <div
-        className="font-baloo-2 h-full flex flex-row justify-center items-center"
-        style={{ width: "50vw", margin: "0 auto" }}
+        className="w-[50vw] mq900:w-full mq900:mx-0 mq900:overflow-x-auto mq900:px-5 font-baloo-2 h-full flex flex-row justify-center items-center"
+        style={{ margin: "0 auto" }}
       >
         <Form
           onFinish={formik.handleSubmit}
@@ -110,18 +113,22 @@ const LoginForgotPasswordComponent: NextPage = () => {
           className="w-full"
         >
           <h1
-            className="font-baloo text-primary text-center"
-            style={{ fontSize: "3rem", fontWeight: "bolder" }}
+            className="text-[3rem] mq900:text-[2rem] font-baloo text-primary text-center"
+            style={{ fontWeight: "bolder" }}
           >
             Đặt Lại Mật Khẩu
           </h1>
           <p className="text-center font-baloo-2 text-[1.2rem]">
-            Chúng tôi vừa gửi một mã xác nhận đến email của bạn:<br></br>
-            <strong>{userEmail}</strong>
-            <br></br>
+            Chúng tôi vừa gửi một mã xác nhận đến email của bạn:
+            <br className="mq900:hidden"></br>{" "}
+            <strong>
+              {userEmail}
+              <span className="mq900:inline hidden">.</span>
+            </strong>{" "}
+            <br className="mq900:hidden"></br>
             Bạn vui lòng kiểm tra email và nhập mã xác nhận cùng mật khẩu mới
-            bên dưới đây.<br></br>
-            Trong trường hợp bạn chưa nhận được mã xác nhận, bạn vui lòng{" "}
+            bên dưới đây. <br className="mq900:hidden"></br> Trong trường hợp
+            bạn chưa nhận được mã xác nhận, bạn vui lòng{" "}
             <a
               className="links_hover text-primary font-medium"
               onClick={() => {
@@ -147,7 +154,7 @@ const LoginForgotPasswordComponent: NextPage = () => {
               bấm vào đây{" "}
             </a>{" "}
             để được gửi lại mã xác nhận mới vào email.
-            <br></br>
+            <br className="mq900:hidden"></br>
           </p>
 
           <div className="row align-items-start justify-content-between">
