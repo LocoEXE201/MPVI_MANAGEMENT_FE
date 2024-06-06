@@ -55,7 +55,7 @@ export default function Calendar() {
   const fetchHighlightedDays = async (date: Dayjs) => {
     setIsLoading(true);
     const formattedDate = date.format("YYYY-MM-DD");
-    const url = `https://mpviwarehouse.azurewebsites.net/api/delivery/GetTicketCalendar?selectedDate=${formattedDate}`;
+    const url = `http://14.225.211.1:8084/api/delivery/GetTicketCalendar?selectedDate=${formattedDate}`;
 
     const token = localStorage.getItem("accessToken");
 
@@ -96,7 +96,7 @@ export default function Calendar() {
       setSelectedDate(date);
 
       const formattedDate = date.format("M-D-YYYY");
-      const url = `https://mpviwarehouse.azurewebsites.net/api/delivery/GetTicketCalendar?selectedDate=${formattedDate}`;
+      const url = `http://14.225.211.1:8084/api/delivery/GetTicketCalendar?selectedDate=${formattedDate}`;
 
       const token = localStorage.getItem("accessToken");
 

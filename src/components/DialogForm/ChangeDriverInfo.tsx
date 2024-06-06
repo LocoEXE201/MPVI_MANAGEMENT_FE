@@ -46,7 +46,7 @@ export default function ChangeDriverInfo({
 
     try {
       const response = await axios.post(
-        `https://mpviwarehouse.azurewebsites.net/api/delivery/ChangeDriverInfo?ticket_ID=${deliveryLogId}&driverContact=${driverContact}&note=${note}`,
+        `http://14.225.211.1:8084/api/delivery/ChangeDriverInfo?ticket_ID=${deliveryLogId}&driverContact=${driverContact}&note=${note}`,
         {},
         {
           headers: {
