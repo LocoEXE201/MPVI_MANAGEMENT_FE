@@ -89,7 +89,7 @@ export default function CheckReceiptProduct({
         return;
       }
       const response = await axios.post(
-        `https://mpviwarehouse.azurewebsites.net/api/delivery/CheckReceiptProduct`,
+        `http://14.225.211.1:8084/api/delivery/CheckReceiptProduct`,
         null,
         {
           params: {

@@ -37,7 +37,7 @@ const DeleteTicket = ({
 
     try {
       const response = await axios.post(
-        `https://mpviwarehouse.azurewebsites.net/api/delivery/DeleteTicket?ticket_ID=${deliveryLogId}`,
+        `http://14.225.211.1:8084/api/delivery/DeleteTicket?ticket_ID=${deliveryLogId}`,
         {},
         {
           headers: {

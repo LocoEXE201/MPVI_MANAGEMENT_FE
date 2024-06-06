@@ -69,7 +69,7 @@ const DeliveryTable: NextPage = () => {
       try {
         enableLoading();
         const response = await fetch(
-          "https://mpviwarehouse.azurewebsites.net/api/delivery/GetAllTicket",
+          "http://14.225.211.1:8084/api/delivery/GetAllTicket",
           {
             headers: {
               Authorization: `Bearer ${token}`,

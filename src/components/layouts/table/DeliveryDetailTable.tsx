@@ -89,7 +89,7 @@ const DeliveryDetailTable = ({
       try {
         enableLoading();
         const response = await axios.post(
-          `https://mpviwarehouse.azurewebsites.net/api/delivery/GetTicketByID?DeliveryID=${deliveryLogId}`,
+          `http://14.225.211.1:8084/api/delivery/GetTicketByID?DeliveryID=${deliveryLogId}`,
           {},
           {
             headers: {

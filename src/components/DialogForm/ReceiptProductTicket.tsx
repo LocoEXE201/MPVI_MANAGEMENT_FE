@@ -132,7 +132,7 @@ export default function ReceiptProductTicket({
       }
 
       const response = await axios.post(
-        `https://mpviwarehouse.azurewebsites.net/api/delivery/ReceiptProductTicket?DeliveryID=${deliveryLogId}`,
+        `http://14.225.211.1:8084/api/delivery/ReceiptProductTicket?DeliveryID=${deliveryLogId}`,
         formData,
         {
           headers: {

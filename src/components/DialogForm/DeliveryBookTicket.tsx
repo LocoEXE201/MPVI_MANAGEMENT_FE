@@ -55,7 +55,7 @@ const DeliveryBookTicket: React.FC = () => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "https://mpviwarehouse.azurewebsites.net/api/category/GetAllCategory",
+          "http://14.225.211.1:8084/api/category/GetAllCategory",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -85,7 +85,7 @@ const DeliveryBookTicket: React.FC = () => {
     const fetchSuppliers = async () => {
       try {
         const response = await axios.post(
-          "https://mpviwarehouse.azurewebsites.net/api/Supplier/GetAllSupplier",
+          "http://14.225.211.1:8084/api/Supplier/GetAllSupplier",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -177,7 +177,7 @@ const DeliveryBookTicket: React.FC = () => {
 
     try {
       const response = await fetch(
-        `https://mpviwarehouse.azurewebsites.net/api/delivery/BookDeliveryTicket?confirm=${confirm}`,
+        `http://14.225.211.1:8084/api/delivery/BookDeliveryTicket?confirm=${confirm}`,
         {
           method: "POST",
           headers: {
