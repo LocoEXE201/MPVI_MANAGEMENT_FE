@@ -27,7 +27,24 @@ const config: Config = {
       },
       colors: {
         primary: "#cb6f04",
-      }
+      },
+      screens: {
+        mq1725: {
+          raw: "screen and (max-width: 1725px)",
+        },
+        mq1350: {
+          raw: "screen and (max-width: 1350px)",
+        },
+        mq1200: {
+          raw: "screen and (max-width: 1200px)",
+        },
+        mq900: {
+          raw: "screen and (max-width: 900px)",
+        },
+        mq450: {
+          raw: "screen and (max-width: 450px)",
+        },
+      },
     },
   },
   plugins: [nextui()],
