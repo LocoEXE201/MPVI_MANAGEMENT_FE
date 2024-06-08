@@ -1,19 +1,21 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from "axios";
 
 export enum AxiosClientFactoryEnum {
-  AUTH = 'auth',
-  SHOP = 'shop',
-  WAREHOUSE = 'warehouse',
+  AUTH = "auth",
+  SHOP = "shop",
+  WAREHOUSE = "warehouse",
 }
 
 export const parseParams = (params: any) => {
   const keys = Object.keys(params);
-  let options = '';
+  let options = "";
 
   keys.forEach((key) => {
-    const isParamTypeObject = typeof params[key] === 'object';
+    const isParamTypeObject = typeof params[key] === "object";
     const isParamTypeArray =
-      isParamTypeObject && Array.isArray(params[key]) && params[key].length >= 0;
+      isParamTypeObject &&
+      Array.isArray(params[key]) &&
+      params[key].length >= 0;
 
     if (!isParamTypeObject) {
       options += `${key}=${params[key]}&`;
@@ -29,21 +31,21 @@ export const parseParams = (params: any) => {
   return options ? options.slice(0, -1) : options;
 };
 
-const auth = `https://mpviauth.azurewebsites.net/api/`;
-const shop = `https://mpvishopapi.azurewebsites.net/api/`;
-const warehouse = `https://mpviwarehouse.azurewebsites.net/api/`;
+const auth = `http://14.225.211.1:8081/api/`;
+const shop = `http://14.225.211.1:8083/api/`;
+const warehouse = `http://14.225.211.1:8084/api/`;
 
 const request = axios.create({
   baseURL: auth,
-  paramsSerializer: parseParams
+  paramsSerializer: parseParams,
 });
 
 request.interceptors.request.use((options) => {
   const { method } = options;
 
-  if (method === 'put' || method === 'post') {
+  if (method === "put" || method === "post") {
     Object.assign(options.headers, {
-      'Content-Type': 'application/json;charset=UTF-8'
+      "Content-Type": "application/json;charset=UTF-8",
     });
   }
 
@@ -52,24 +54,24 @@ request.interceptors.request.use((options) => {
 
 request.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+  (error) =>
+    Promise.reject((error.response && error.response.data) || "Có lỗi xảy ra")
 );
 
 const requestManagement = axios.create({
   baseURL: shop,
   paramsSerializer: parseParams,
   headers: {
-    Authorization:
-      'Bearer '
-  }
+    Authorization: "Bearer ",
+  },
 });
 
 requestManagement.interceptors.request.use((options) => {
   const { method } = options;
 
-  if (method === 'put' || method === 'post') {
+  if (method === "put" || method === "post") {
     Object.assign(options.headers, {
-      'Content-Type': 'application/json;charset=UTF-8'
+      "Content-Type": "application/json;charset=UTF-8",
     });
   }
 
@@ -78,44 +80,47 @@ requestManagement.interceptors.request.use((options) => {
 
 requestManagement.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+  (error) =>
+    Promise.reject((error.response && error.response.data) || "Có lỗi xảy ra")
 );
 
 const requestWarehouse = axios.create({
-    baseURL: warehouse,
-    paramsSerializer: parseParams,
-    headers: {
-        Authorization:
-          'Bearer '
-      }
+  baseURL: warehouse,
+  paramsSerializer: parseParams,
+  headers: {
+    Authorization: "Bearer ",
+  },
 });
-  
-  
-requestWarehouse.interceptors.request.use((options) => {
-    const { method } = options;
 
-  if (method === 'put' || method === 'post') {
+requestWarehouse.interceptors.request.use((options) => {
+  const { method } = options;
+
+  if (method === "put" || method === "post") {
     Object.assign(options.headers, {
-      'Content-Type': 'application/json;charset=UTF-8'
+      "Content-Type": "application/json;charset=UTF-8",
     });
   }
 
   return options;
-  });
-  
+});
+
 requestWarehouse.interceptors.response.use(
-    (response) => response,
-    (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
-  );
+  (response) => response,
+  (error) =>
+    Promise.reject((error.response && error.response.data) || "Có lỗi xảy ra")
+);
 
 class AxiosClientFactory {
-  getAxiosClient(type?: AxiosClientFactoryEnum, config: AxiosRequestConfig = {}) {
+  getAxiosClient(
+    type?: AxiosClientFactoryEnum,
+    config: AxiosRequestConfig = {}
+  ) {
     switch (type) {
-      case 'auth':
+      case "auth":
         return request;
-      case 'shop':
+      case "shop":
         return requestManagement;
-      case 'warehouse':
+      case "warehouse":
         return requestWarehouse;
       default:
         return request;
@@ -128,7 +133,9 @@ const axiosClientFactory = new AxiosClientFactory();
 const axiosInstances = {
   auth: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.AUTH),
   shop: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SHOP),
-  warehouse: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.WAREHOUSE),
+  warehouse: axiosClientFactory.getAxiosClient(
+    AxiosClientFactoryEnum.WAREHOUSE
+  ),
 };
 
 export { axiosClientFactory };

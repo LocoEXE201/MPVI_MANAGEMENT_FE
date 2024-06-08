@@ -72,8 +72,8 @@ const DeliveryDetailPageComponent = () => {
 
     const url =
       confirmAction === "approve"
-        ? `https://mpviwarehouse.azurewebsites.net/api/delivery/ApprovedTicket?ticket_ID=${deliveryLogId}`
-        : `https://mpviwarehouse.azurewebsites.net/api/delivery/RejecTicket?ticket_ID=${deliveryLogId}`;
+        ? `http://14.225.211.1:8084/api/delivery/ApprovedTicket?ticket_ID=${deliveryLogId}`
+        : `http://14.225.211.1:8084/api/delivery/RejecTicket?ticket_ID=${deliveryLogId}`;
 
     try {
       const response = await axios.post(
