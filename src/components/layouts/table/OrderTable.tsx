@@ -37,14 +37,13 @@ const TABS = [
 ];
 
 const TABLE_HEAD = [
-  "customerId",
-  "createdOn",
-  "receiverName",
-  "receiverAddress",
-  "receiverPhoneNumber",
-  "total",
-  "orderStatus",
-  "Edit Status",
+  "Customer ID",
+  "Created On",
+  "Receiver Name",
+  "Receiver Address",
+  "Receiver PhoneNumber",
+  "Total",
+  "Order Status",
 ];
 
 export function OrderTable({ orders, uos }: any) {
@@ -257,8 +256,6 @@ export function OrderTable({ orders, uos }: any) {
                         value={order?.orderStatus}
                       />
                     </div>
-                  </td>
-                  <td className={classes}>
                     <select
                       onChange={(event) => {
                         console.log(event.target.value);
@@ -266,12 +263,14 @@ export function OrderTable({ orders, uos }: any) {
                       }}
                       value={order?.orderStatus}
                     >
-                      <option>Pending</option>
-                      <option>Approved</option>
-                      <option>ReadyForPickup</option>
-                      <option>Refunded</option>
-                      <option>Completed</option>
-                      <option>Cancelled</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Payment_Successfully">
+                        Payment Successfully
+                      </option>
+                      <option value="Arrived">Arrived</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Refund">Refund</option>
+                      <option value="Cancelled">Cancelled</option>
                     </select>
                   </td>
                 </tr>
