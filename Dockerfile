@@ -2,7 +2,7 @@
 FROM node:20
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy package.json and yarn.lock (if using Yarn) to the working directory
 COPY package*.json ./
@@ -14,7 +14,7 @@ RUN npm i
 COPY . .
 
 # Build the NestJS application (assuming you have a build script)
-RUN npm run dev
+RUN npm run build
 
 # Start the server using the production build
 CMD [ "npm", "run", "start:dev" ]
