@@ -33,15 +33,6 @@ jobs:
         with:
           node-version: '20'  # Chọn phiên bản Node.js bạn muốn sử dụng, thay vì '14'
 
-      # Bước npm install
-      - name: Install dependencies
-        run: npm i
-        working-directory: ./  # Thay đổi thư mục nếu cần
-
-      # Bước npm run dev
-      - name: Run npm dev
-        run: npm run dev
-        working-directory: ./  # Thay đổi thư mục nếu cần
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
