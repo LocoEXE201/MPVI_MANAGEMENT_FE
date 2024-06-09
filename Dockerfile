@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Cài đặt các gói phụ thuộc
-RUN npm install
+RUN npm i
 
 # Sao chép toàn bộ mã nguồn của dự án vào thư mục làm việc
 COPY . .
@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Khởi động ứng dụng NestJS
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "dev"]
