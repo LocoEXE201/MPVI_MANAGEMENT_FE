@@ -35,13 +35,13 @@ jobs:
 
       # Bước npm install
       - name: Install dependencies
-        run: npm install
-        working-directory: ./MPVI_Warehouse  # Thay đổi thư mục nếu cần
+        run: npm i
+        working-directory: ./  # Thay đổi thư mục nếu cần
 
       # Bước npm run build
-      - name: Run npm build
-        run: npm run build
-        working-directory: ./MPVI_Warehouse  # Thay đổi thư mục nếu cần
+      - name: Run npm dev
+        run: npm run dev
+        working-directory: ./  # Thay đổi thư mục nếu cần
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
