@@ -1,23 +1,20 @@
-# Sử dụng hình ảnh gốc của Node.js
+# Base image
 FROM node:20
 
-# Thiết lập thư mục làm việc trong container
-WORKDIR /app
+# Create app directory
+WORKDIR /usr/src/app
 
-# Sao chép tệp package.json và package-lock.json (nếu có) vào thư mục làm việc
-COPY package*.json ./
+# Copy package.json and yarn.lock (if using Yarn) to the working directory
+COPY package*.json yarn.lock ./
 
-# Cài đặt các gói phụ thuộc
-RUN npm i
+# Install app dependencies
+RUN yarn install --frozen-lockfile
 
-# Sao chép toàn bộ mã nguồn của dự án vào thư mục làm việc
+# Bundle app source code
 COPY . .
 
-# Biên dịch ứng dụng NestJS
-RUN npm run build
+# Build the NestJS application (assuming you have a build script)
+RUN npm run dev
 
-# Mở cổng 3000 để truy cập từ bên ngoài
-EXPOSE 3000
-
-# Khởi động ứng dụng NestJS
-CMD ["npm", "run", "dev"]
+# Start the server using the production build
+CMD ["node", "dist/main.js"]
