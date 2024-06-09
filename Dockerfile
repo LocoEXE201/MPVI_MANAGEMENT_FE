@@ -5,10 +5,10 @@ FROM node:20
 WORKDIR /usr/src/app
 
 # Copy package.json and yarn.lock (if using Yarn) to the working directory
-COPY package*.json yarn.lock ./
+COPY package*.json ./
 
 # Install app dependencies
-RUN yarn install --frozen-lockfile
+RUN npm i
 
 # Bundle app source code
 COPY . .
@@ -17,4 +17,4 @@ COPY . .
 RUN npm run dev
 
 # Start the server using the production build
-CMD ["node", "dist/main.js"]
+CMD [ "npm", "run", "start:dev" ]
