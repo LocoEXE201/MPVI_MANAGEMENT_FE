@@ -1,4 +1,4 @@
-name: CI-build-and-push-image-for-dotnetapp
+name: CI-build-and-push-image-for-Management-fe
 
 # Controls when the action will run.
 on:
