@@ -37,8 +37,11 @@ import formatDate from "@/utils/formatDate";
 import Swal from "sweetalert2";
 import { LOCALSTORAGE_CONSTANTS } from "@/constants/WebsiteConstants";
 import "./index.scss";
+import useAppContext from "@/hooks/useAppContext";
+import Loading from "@/components/Loading/Loading";
 
 const NotificationPageComponent = (props: {}) => {
+  const { isLoading, enableLoading, disableLoading } = useAppContext();
   const [status, setStatus] = React.useState<string>("");
   const [statusFilteredDate, setStatusFilteredDate] =
     React.useState<string>("");
@@ -50,6 +53,8 @@ const NotificationPageComponent = (props: {}) => {
   const [notifications, setNotifications] = useState<NotificationDTO[]>([]);
   const [viewDetailList, setViewDetailList] = React.useState<string[]>([]);
   const [unseenList, setUnseenList] = React.useState<string[]>([]);
+  const [searchKey, setSearchKey] = React.useState<string>("");
+  const [finalSearchKey, setFinalSearchKey] = React.useState<string>("");
 
   const handleChange = (event: SelectChangeEvent) => {
     setStatus(event.target.value);
@@ -150,6 +155,7 @@ const NotificationPageComponent = (props: {}) => {
   };
 
   useEffect(() => {
+    enableLoading();
     onValue(
       ref(database, `${FirebaseConstants.MANAGEMENT_NOTIFICATIONS}`),
       (snapshot) => {
@@ -158,6 +164,7 @@ const NotificationPageComponent = (props: {}) => {
           ? Object.keys(data).map((key) => ({ id: key, ...data[key] }))
           : [];
         setNotifications(notificationsList);
+        disableLoading();
       }
     );
   }, []);
@@ -225,6 +232,7 @@ const NotificationPageComponent = (props: {}) => {
   if (createMode || updateMode) {
     return (
       <>
+        <Loading loading={isLoading} />
         <div className="px-[5rem]">
           <div className="w-full">
             <Form
@@ -357,6 +365,11 @@ const NotificationPageComponent = (props: {}) => {
     );
   }
 
+  const handleSearchByKey = () => {
+    setFinalSearchKey(searchKey);
+    disableLoading();
+  };
+
   return (
     <>
       <div className="px-[5rem] w-full flex flex-row items-center justify-between">
@@ -366,6 +379,15 @@ const NotificationPageComponent = (props: {}) => {
             className="w-full font-baloo-2"
             variant="outlined"
             placeholder="Nhập từ khóa tìm kiếm"
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                handleSearchByKey();
+              }
+            }}
+            onChange={(event) => {
+              setSearchKey(event.target.value);
+            }}
+            value={searchKey}
             sx={{
               bgcolor: "#fff",
               width: "80%",
@@ -386,7 +408,25 @@ const NotificationPageComponent = (props: {}) => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton>
+                  {finalSearchKey != "" ? (
+                    <>
+                      <IconButton
+                        onClick={() => {
+                          setSearchKey("");
+                          setFinalSearchKey("");
+                        }}
+                      >
+                        <span className="font-baloo">x</span>
+                      </IconButton>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <IconButton
+                    onClick={() => {
+                      handleSearchByKey();
+                    }}
+                  >
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>
@@ -489,7 +529,7 @@ const NotificationPageComponent = (props: {}) => {
           )}
         </div>
       </div>
-      <div className="px-[5rem] w-full">
+      <div className="px-[5rem] w-full min-h-[90vh] bg-white">
         <h1
           className="w-full text-center mb-1 mt-1
                  text-[2rem] uppercase text-blue-700"
@@ -498,6 +538,22 @@ const NotificationPageComponent = (props: {}) => {
           Tất Cả Thông Báo
         </h1>
         {notifications
+          .filter((x) => {
+            if (finalSearchKey != "") {
+              return (
+                x.title
+                  ?.toLowerCase()
+                  .includes(finalSearchKey.trim().toLowerCase()) ||
+                x.subtitle
+                  ?.toLowerCase()
+                  .includes(finalSearchKey.trim().toLowerCase()) ||
+                x.content
+                  ?.toLowerCase()
+                  .includes(finalSearchKey.trim().toLowerCase())
+              );
+            }
+            return true;
+          })
           .filter((x) => {
             if (status && status != "" && status != "all") {
               return (
