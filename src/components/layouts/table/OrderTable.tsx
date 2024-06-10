@@ -253,24 +253,23 @@ export function OrderTable({ orders, uos }: any) {
                       <Chip
                         variant="ghost"
                         size="sm"
-                        value={order?.orderStatus}
+                        value={order?.paymentType + order?.orderStatus}
                       />
                     </div>
                     <select
                       onChange={(event) => {
-                        console.log(event.target.value);
                         uos(order?.orderId, event.target.value);
                       }}
-                      value={order?.orderStatus}
+                      // value={order?.orderStatus}
                     >
-                      <option value="Pending">Pending</option>
-                      <option value="Payment_Successfully">
-                        Payment Successfully
+                      <option value="_Pending">Pending</option>
+                      <option value="_Payment_Successfully">
+                        Payment_Successfully
                       </option>
-                      <option value="Arrived">Arrived</option>
-                      <option value="Completed">Completed</option>
-                      <option value="Refund">Refund</option>
-                      <option value="Cancelled">Cancelled</option>
+                      <option value="_Arrived">Arrived</option>
+                      <option value="_Completed">Completed</option>
+                      <option value="_Refund">Refund</option>
+                      <option value="_Cancelled">Cancelled</option>
                     </select>
                   </td>
                 </tr>

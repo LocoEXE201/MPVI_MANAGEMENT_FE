@@ -8,6 +8,7 @@ import {
   updateOrderStatus,
 } from "@/api/services/service";
 import { OrderTable } from "@/components/layouts/table/OrderTable";
+import { getToken } from "@/utils/jwt";
 import { useEffect, useState } from "react";
 
 const OrderPageComponent = (props: {}) => {
@@ -19,10 +20,14 @@ const OrderPageComponent = (props: {}) => {
     });
   };
 
-  const updateOrStatus = async (orderid: string, status: string) => {
-    updateOrderStatus(orderid, status).then(() => {
+  const handleUpdateOrderStatus = async (orderid: number, status: string) => {
+    try {
+      await updateOrderStatus(orderid, status);
+      // console.log(getToken());
       getOrderManage();
-    });
+    } catch (error) {
+      console.error("Error handling order status update:", error);
+    }
   };
 
   useEffect(() => {
@@ -140,7 +145,7 @@ const OrderPageComponent = (props: {}) => {
                     <p className="text-xs leading-tight text-white">25%</p>
                   </div>
                   <p className="text-white opacity-0 delay-200 duration-700 ease-in-out group-hover:opacity-100">
-                    {OrderManage?.total_canceled ?? 0} Canceled
+                    {OrderManage?.total_cancelled ?? 0} Cancelled
                   </p>
                 </div>
               </div>
@@ -152,7 +157,7 @@ const OrderPageComponent = (props: {}) => {
             >
               <p className="text-[#fff]">Total Orders</p>
               <p className="text-[#fff]">Total Delivered</p>
-              <p className="text-[#fff]">Total Canceled</p>
+              <p className="text-[#fff]">Total Cancelled</p>
             </div>
             <div
               className="h-16 w-[28rem] -left-10 shadow-2xl shadow-[#3d348b] absolute bottom-0"
@@ -161,7 +166,10 @@ const OrderPageComponent = (props: {}) => {
           </div>
         </div>
         <div style={{ paddingTop: "1rem", width: "95%" }}>
-          <OrderTable orders={OrderManage?.$values} uos={updateOrStatus} />
+          <OrderTable
+            orders={OrderManage?.items?.$values}
+            uos={handleUpdateOrderStatus}
+          />
         </div>
       </div>
     </div>

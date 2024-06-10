@@ -75,18 +75,23 @@ export const getSuppliersByCondition = async (
   return res.data;
 };
 
-export const updateOrderStatus = async (orderId: string, status: string) => {
+export const updateOrderStatus = async (orderId: number, status: string) => {
   try {
+    console.log(orderId);
+    console.log(status);
     const res = await axios.post(
       `${UpdateOrderStatus}?id=${orderId}&newStatus=${status}`,
       {},
       {
         headers: {
+          Accept: "text/plain",
           Authorization: `Bearer ${getToken()}`,
-          "Content-Type": "application/json",
         },
+        withCredentials: true,
       }
     );
+
+    console.log(res.data);
     return res.data;
   } catch (error: any) {
     console.log(error.message);
