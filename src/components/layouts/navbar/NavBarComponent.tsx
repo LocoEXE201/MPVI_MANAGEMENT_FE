@@ -66,7 +66,7 @@ const Header = () => {
         <div className="flex items-center">
           <h1
             className="header_component_title font-baloo mq900:text-[1.5rem] text-[2.15rem]"
-            style={{ fontWeight: "bolder" }}
+            style={{ fontWeight: "normal" }}
           >
             Loco Management
           </h1>
