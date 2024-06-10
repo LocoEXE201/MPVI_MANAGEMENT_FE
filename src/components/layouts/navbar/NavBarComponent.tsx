@@ -107,7 +107,7 @@ const Header = () => {
               {/* User Profile Menu Dropdown */}
               {isUserProfileMenuOpen && (
                 <div
-                  className="dropdown-menu text-black hover:bg-black hover:text-white "
+                  className="dropdown-menu text-black hover:bg-black hover:text-white border-black border-[2px] border-solid"
                   style={{ zIndex: "999" }}
                   onClick={() => {
                     Swal.fire({
@@ -118,7 +118,8 @@ const Header = () => {
                       cancelButtonColor: "#d33",
                       confirmButtonText: "Đăng xuất",
                       cancelButtonText: "Hủy bỏ",
-                      focusCancel: true,
+                      focusConfirm: false,
+                      focusDeny: true,
                     }).then((result) => {
                       if (result.isConfirmed) {
                         logout();
@@ -139,7 +140,10 @@ const Header = () => {
                     <li>User Role</li>
                     <li>Settings</li> */}
                     <li>
-                      <div className="cursor-pointer flex flex-row items-center justify-end">
+                      <div
+                        className="px-[5px] text-[1.3rem] font-baloo-2 cursor-pointer flex flex-row items-center justify-end"
+                        style={{ fontWeight: "600" }}
+                      >
                         Đăng xuất
                       </div>
                     </li>
