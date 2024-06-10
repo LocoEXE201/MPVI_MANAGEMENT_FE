@@ -10,7 +10,6 @@ const metadata: Metadata = {
 };
 
 const UserManagementPage = (props: {}) => {
-  useProtectData();
   return (
     <>
       <MainLayout metadata={metadata}>

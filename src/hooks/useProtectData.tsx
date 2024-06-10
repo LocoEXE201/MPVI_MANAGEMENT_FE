@@ -10,22 +10,22 @@ const useProtectData = () => {
       e.preventDefault();
     };
 
-    const handleSelectStart = (e: MouseEvent) => {
-      e.preventDefault();
-    };
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
-        e.code == "44" ||
-        e.key == "PrintScreen" || // Print Screen key
-        // e.key == "F12" || // F12 key
+        (typeof window !== "undefined" &&
+          localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
+          localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) ==
+            PATH_MAIN.users &&
+          (e.code == "44" ||
+            e.key == "PrintScreen" ||
+            (e.metaKey && e.shiftKey) ||
+            (e.shiftKey && e.metaKey) ||
+            (e.metaKey && e.key == "G"))) ||
+        e.key == "F12" || // F12 key
         (e.ctrlKey && e.shiftKey && e.key == "I") || // DevTools
         (e.ctrlKey && e.shiftKey && e.key == "C") || // DevTools
         (e.ctrlKey && e.shiftKey && e.key == "J") || // DevTools
-        (e.ctrlKey && e.key == "U") || // View Source
-        (e.metaKey && e.shiftKey) ||
-        (e.shiftKey && e.metaKey) ||
-        (e.metaKey && e.key == "G")
+        (e.ctrlKey && e.key == "U") // View Source
       ) {
         e.preventDefault();
         document.body.hidden = true;
@@ -36,9 +36,9 @@ const useProtectData = () => {
 
     const handleKeyUp = (e: KeyboardEvent) => {
       if (
-        // e.code == "44" ||
-        // e.key == "PrintScreen" || // Print Screen key
-        // e.key == "F12" || // F12 key
+        e.code == "44" ||
+        e.key == "PrintScreen" || // Print Screen key
+        e.key == "F12" || // F12 key
         (e.ctrlKey && e.shiftKey && e.key == "I") || // DevTools
         (e.ctrlKey && e.shiftKey && e.key == "C") || // DevTools
         (e.ctrlKey && e.shiftKey && e.key == "J") || // DevTools
@@ -50,11 +50,15 @@ const useProtectData = () => {
         document.body.classList.remove("screenshot-overlay");
       }
       if (
-        e.code == "44" ||
-        e.key == "PrintScreen" ||
-        (e.metaKey && e.shiftKey) ||
-        (e.shiftKey && e.metaKey) ||
-        (e.metaKey && e.key == "G")
+        typeof window !== "undefined" &&
+        localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
+        localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) ==
+          PATH_MAIN.users &&
+        (e.code == "44" ||
+          e.key == "PrintScreen" ||
+          (e.metaKey && e.shiftKey) ||
+          (e.shiftKey && e.metaKey) ||
+          (e.metaKey && e.key == "G"))
       ) {
         e.preventDefault();
         document.body.hidden = true;

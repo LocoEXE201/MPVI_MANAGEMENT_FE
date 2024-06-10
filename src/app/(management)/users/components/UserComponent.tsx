@@ -20,7 +20,6 @@ import { toast } from "react-toastify";
 import io from "socket.io-client";
 
 const UserList: React.FC = () => {
-  useProtectData();
   const [userInfo, setUserInfo]: any = useState();
   const [users, setUsers]: any = useState();
   const [code, setCode]: any = useState("");
