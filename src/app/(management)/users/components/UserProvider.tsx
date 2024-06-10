@@ -7,8 +7,6 @@ import UserList from "./UserComponent";
 import useProtectData from "@/hooks/useProtectData";
 
 const UserListComponent = (props: {}) => {
-  useProtectData();
-
   return (
     <>
       <AppProvider>

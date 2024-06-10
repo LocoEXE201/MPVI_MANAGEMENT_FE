@@ -181,7 +181,7 @@ const LoginPageComponent = (props: {}) => {
                           style={{ fontWeight: "bolder" }}
                           className="hover:bg-yellow-600 bg-primary text-white mt-3 box-border flex w-full max-w-full flex-1 cursor-pointer flex-row items-start justify-center overflow-hidden whitespace-nowrap rounded-md bg-primary-colour px-5 py-[21px] [border:none]"
                         >
-                          <div className="text-[1.6rem] font-baloo-2 relative mt-0 flex w-full items-center justify-center text-center text-lg font-medium text-neutral-white">
+                          <div className="text-[1.601rem] font-baloo-2 relative mt-0 flex w-full items-center justify-center text-center text-lg font-medium text-neutral-white">
                             Đăng Nhập
                           </div>
                         </button>
@@ -191,7 +191,7 @@ const LoginPageComponent = (props: {}) => {
                       <div className="box-border mq450:mb-2 flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
                         <div className="border-gray-800 relative box-border h-px self-stretch border-t-[1px] border-solid" />
                       </div>
-                      <div className="text-[1.3rem] mq450:w-full mq450:h-3 relative flex w-3 items-center justify-center">
+                      <div className="text-[1.31rem] mq450:w-full mq450:h-3 relative flex w-3 items-center justify-center">
                         Hoặc
                       </div>
                       <div className="box-border mq450:mt-2 flex h-1.5 min-w-[112px] flex-1 flex-col items-start justify-start px-0 pb-1.5 pt-0">
@@ -212,9 +212,12 @@ const LoginPageComponent = (props: {}) => {
                           alt=""
                           src="/Icons/google_icon.svg"
                         />
-                        <div className="text-[1.3rem] relative z-[1] w-full self-stretch pl-5 font-medium font-baloo-2">
+                        <p
+                          className="text-black text-[1.35rem] relative z-[1] w-full self-stretch pl-5 font-medium font-baloo-2"
+                          style={{ color: "#000" }}
+                        >
                           Đăng Nhập Với Google
-                        </div>
+                        </p>
                       </div>
                     </div>
                   </div>

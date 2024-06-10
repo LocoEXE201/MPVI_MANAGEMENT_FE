@@ -20,6 +20,7 @@ import MainLayout from "@/components/layouts";
 import CategoryManagementPage from "./(management)/category/page";
 import OrderManagementPage from "./(management)/order/page";
 import { Metadata } from "next";
+import useProtectData from "@/hooks/useProtectData";
 
 interface HomePageProviderProps {
   metadata: Metadata;
@@ -31,6 +32,8 @@ const HomePageProvider: React.FC<HomePageProviderProps> = ({ metadata }) => {
       localStorage.removeItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE);
     }
   }, []);
+
+  useProtectData();
 
   // const [currentPage, setCurrentPage] = useState(PATH_MAIN.root)
 
