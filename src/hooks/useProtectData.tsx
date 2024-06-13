@@ -30,17 +30,17 @@ const useProtectData = () => {
         e.preventDefault();
         document.body.hidden = true;
         document.body.classList.add("screenshot-overlay");
-        if (
-          typeof window !== "undefined" &&
-          localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
-          localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) ==
-            PATH_MAIN.users &&
-          window.isSecureContext &&
-          navigator &&
-          navigator.clipboard
-        ) {
-          navigator.clipboard.writeText("");
-        }
+        // if (
+        //   typeof window !== "undefined" &&
+        //   localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
+        //   localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) ==
+        //     PATH_MAIN.users &&
+        //   window.isSecureContext &&
+        //   navigator &&
+        //   navigator.clipboard
+        // ) {
+        //   navigator.clipboard.writeText("");
+        // }
       }
     };
 
@@ -73,17 +73,17 @@ const useProtectData = () => {
         e.preventDefault();
         document.body.hidden = true;
         document.body.classList.add("screenshot-overlay");
-        if (
-          typeof window !== "undefined" &&
-          localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
-          localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) ==
-            PATH_MAIN.users &&
-          window.isSecureContext &&
-          navigator &&
-          navigator.clipboard
-        ) {
-          navigator.clipboard.writeText("");
-        }
+        // if (
+        //   typeof window !== "undefined" &&
+        //   localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) &&
+        //   localStorage.getItem(LOCALSTORAGE_CONSTANTS.CURRENT_PAGE) ==
+        //     PATH_MAIN.users &&
+        //   window.isSecureContext &&
+        //   navigator &&
+        //   navigator.clipboard
+        // ) {
+        //   navigator.clipboard.writeText("");
+        // }
       }
     };
 
