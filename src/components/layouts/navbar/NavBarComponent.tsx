@@ -62,9 +62,14 @@ const Header = () => {
       className="flex-grow-0 justify-between px-20 items-center bg-white"
       style={{ paddingBottom: "1.5rem", paddingTop: "1.5rem" }}
     >
-      <div className="flex items-center">
+      <div className="text-black flex items-center">
         <div className="flex items-center">
-          <Search placeholder="Type to Search..." style={{ width: "30rem" }} />
+          <h1
+            className="header_component_title font-baloo mq900:text-[1.5rem] text-[2.15rem]"
+            style={{ fontWeight: "normal" }}
+          >
+            Loco Management
+          </h1>
         </div>
         <div className="ml-auto">
           <ul className="flex items-center space-x-6 justify-end">
@@ -77,7 +82,7 @@ const Header = () => {
                 className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
+                stroke="#000"
               >
                 <path
                   strokeLinecap="round"
@@ -87,10 +92,10 @@ const Header = () => {
                 />
               </svg>
             </li>
-            <div className="user-profile flex" onClick={toggleUserProfileMenu}>
+            <div className="text-black user-profile flex">
               <div style={{ marginRight: "0.5rem", textAlign: "right" }}>
                 <ul style={{ listStyle: "none", padding: 0 }}>
-                  <li>{userInfo.name}</li>
+                  <li style={{ fontWeight: "600" }}>{userInfo.name}</li>
                   <li>{userRoles}</li>
                 </ul>
               </div>
@@ -102,8 +107,33 @@ const Header = () => {
               {/* User Profile Menu Dropdown */}
               {isUserProfileMenuOpen && (
                 <div
-                  className="dropdown-menu text-black"
+                  className="dropdown-menu text-black hover:bg-black hover:text-white border-black border-[2px] border-solid"
                   style={{ zIndex: "999" }}
+                  onClick={() => {
+                    Swal.fire({
+                      title: "Bạn có chắc muốn đăng xuất?",
+                      icon: "info",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Đăng xuất",
+                      cancelButtonText: "Hủy bỏ",
+                      focusConfirm: false,
+                      focusDeny: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        logout();
+                        setTimeout(() => {
+                          Swal.fire({
+                            title: "Đăng xuất thành công",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1000,
+                          });
+                        }, 300);
+                      }
+                    });
+                  }}
                 >
                   <ul>
                     {/* <li>Username</li>
@@ -111,33 +141,10 @@ const Header = () => {
                     <li>Settings</li> */}
                     <li>
                       <div
-                        onClick={() => {
-                          Swal.fire({
-                            title: "Bạn có chắc muốn đăng xuất?",
-                            icon: "info",
-                            showCancelButton: true,
-                            confirmButtonColor: "#3085d6",
-                            cancelButtonColor: "#d33",
-                            confirmButtonText: "Đăng xuất",
-                            cancelButtonText: "Hủy bỏ",
-                            focusCancel: true,
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              logout();
-                              setTimeout(() => {
-                                Swal.fire({
-                                  title: "Đăng xuất thành công",
-                                  icon: "success",
-                                  showConfirmButton: false,
-                                  timer: 1000,
-                                });
-                              }, 300);
-                            }
-                          });
-                        }}
-                        className="cursor-pointer flex flex-row items-center justify-end"
+                        className="px-[5px] text-[1.3rem] font-baloo-2 cursor-pointer flex flex-row items-center justify-end"
+                        style={{ fontWeight: "600" }}
                       >
-                        Logout
+                        Đăng xuất
                       </div>
                     </li>
                   </ul>
@@ -150,13 +157,14 @@ const Header = () => {
                   alignItems: "center",
                   marginLeft: "0.5rem",
                 }}
+                onClick={toggleUserProfileMenu}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke="currentColor"
+                  stroke="#000"
                 >
                   <path
                     strokeLinecap="round"
