@@ -2,7 +2,6 @@
 import { Metadata } from "next";
 import MainLayout from "@/components/layouts";
 import UserListComponent from "./components/UserProvider";
-import useProtectData from "@/hooks/useProtectData";
 
 const metadata: Metadata = {
   title: "Loco. - Quản Lý",
@@ -10,7 +9,6 @@ const metadata: Metadata = {
 };
 
 const UserManagementPage = (props: {}) => {
-  useProtectData();
   return (
     <>
       <MainLayout metadata={metadata}>
