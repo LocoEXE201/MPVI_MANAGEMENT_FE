@@ -4,6 +4,16 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import PersonIcon from "@mui/icons-material/Person";
 import PaymentsIcon from "@mui/icons-material/Payments";
+import { LineChart } from "@mui/x-charts/LineChart";
+import { BarChart } from "@mui/x-charts/BarChart";
+import { axisClasses } from "@mui/x-charts/ChartsAxis";
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 
 interface DashboardData {
   total_money: number;
@@ -19,6 +29,10 @@ interface DashboardData {
 const DashBoardComponent: React.FC = () => {
   const [data, setData] = useState<DashboardData | null>(null);
   const token = localStorage.getItem("accessToken");
+  const [profitOfYear, setProfitOfYear] = useState([]);
+  const [profitOfWeek, setProfitOfWeek] = useState([]);
+
+  const [selectedDate, setSelectedDate] = useState(dayjs("06/12/2024"));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,9 +54,74 @@ const DashBoardComponent: React.FC = () => {
     fetchData();
   }, [token]);
 
+  useEffect(() => {
+    const fetchProfitOfYear = async () => {
+      try {
+        const response = await axios.get(
+          `http://14.225.211.1:8083/api/shop/ProfitThisYear?selectedYear=${selectedDate.format("MM/DD/YYYY")}`,
+          {
+            headers: {
+              Accept: "text/plain",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setProfitOfYear(response.data.result.$values);
+      } catch (error) {
+        console.error("Error fetching the profit of the year data:", error);
+      }
+    };
+
+    fetchProfitOfYear();
+  }, [token, selectedDate]);
+
+  useEffect(() => {
+    const fetchProfitOfWeek = async () => {
+      try {
+        const response = await axios.get(
+          `http://14.225.211.1:8083/api/shop/ProfitThisWeek?selectedWeek=${selectedDate.format("MM/DD/YYYY")}`,
+          {
+            headers: {
+              Accept: "text/plain",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setProfitOfWeek(response.data.result.$values);
+      } catch (error) {
+        console.error("Error fetching the profit of the year data:", error);
+      }
+    };
+
+    fetchProfitOfWeek();
+  }, [token, selectedDate]);
+
   if (!data) {
     return <div>Loading...</div>;
   }
+
+  const handleChangeDay = (date: any) => {
+    setSelectedDate(date);
+  };
+
+  // console.log(profitOfWeek);
+
+  const today = dayjs();
+
+  const chartSetting = {
+    yAxis: [
+      {
+        label: "Money Unit (VND)",
+      },
+    ],
+    series: [{ dataKey: "revenue", label: "VND" }],
+    height: 300,
+    sx: {
+      [`& .${axisClasses.directionY} .${axisClasses.label}`]: {
+        transform: "translateX(-10px)",
+      },
+    },
+  };
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F1F5F9" }}>
@@ -205,221 +284,62 @@ const DashBoardComponent: React.FC = () => {
           </div>
 
           {/* Code bên dưới là code cái phần table không quan trọng có thể xóa để thêm mây cái chart vào */}
-          {/* <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
-            <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
-              <div className="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
-                <div>
-                  <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">
-                    Projects
-                  </h6>
-                  <p className="antialiased font-sans text-sm leading-normal flex items-center gap-1 font-normal text-blue-gray-600">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="3"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                      className="h-4 w-4 text-blue-500"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      ></path>
-                    </svg>
-                    <strong>30 done</strong> this month
-                  </p>
-                </div>
-                <button
-                  aria-expanded="false"
-                  aria-haspopup="menu"
-                  id=":r5:"
-                  className="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
-                  type="button"
-                >
-                  <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currenColor"
-                      viewBox="0 0 24 24"
-                      stroke-width="3"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                      className="h-6 w-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                      ></path>
-                    </svg>
-                  </span>
-                </button>
-              </div>
-              <div className="p-6 overflow-x-scroll px-0 pt-0 pb-2">
-                <table className="w-full min-w-[640px] table-auto">
-                  <thead>
-                    <tr>
-                      <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
-                        <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                          companies
-                        </p>
-                      </th>
-                      <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
-                        <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                          budget
-                        </p>
-                      </th>
-                      <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
-                        <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                          completion
-                        </p>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <div className="flex items-center gap-4">
-                          <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
-                            Material XD Version
-                          </p>
-                        </div>
-                      </td>
 
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <p className="block antialiased font-sans text-xs font-medium text-blue-gray-600">
-                          $14,000
-                        </p>
-                      </td>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <div className="w-10/12">
-                          <p className="antialiased font-sans mb-1 block text-xs font-medium text-blue-gray-600">
-                            60%
-                          </p>
-                          <div className="flex flex-start bg-blue-gray-50 overflow-hidden w-full rounded-sm font-sans text-xs font-medium h-1">
-                            <div
-                              className="flex justify-center items-center h-full bg-gradient-to-tr from-blue-600 to-blue-400 text-white"
-                              style={{ width: "60%" }}
-                            ></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <div className="flex items-center gap-4">
-                          <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
-                            Add Progress Track
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <p className="block antialiased font-sans text-xs font-medium text-blue-gray-600">
-                          $3,000
-                        </p>
-                      </td>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <div className="w-10/12">
-                          <p className="antialiased font-sans mb-1 block text-xs font-medium text-blue-gray-600">
-                            10%
-                          </p>
-                          <div className="flex flex-start bg-blue-gray-50 overflow-hidden w-full rounded-sm font-sans text-xs font-medium h-1">
-                            <div
-                              className="flex justify-center items-center h-full bg-gradient-to-tr from-blue-600 to-blue-400 text-white"
-                              style={{ width: "10%" }}
-                            ></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <div className="flex items-center gap-4">
-                          <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
-                            Fix Platform Errors
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <p className="block antialiased font-sans text-xs font-medium text-blue-gray-600">
-                          Not set
-                        </p>
-                      </td>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <div className="w-10/12">
-                          <p className="antialiased font-sans mb-1 block text-xs font-medium text-blue-gray-600">
-                            100%
-                          </p>
-                          <div className="flex flex-start bg-blue-gray-50 overflow-hidden w-full rounded-sm font-sans text-xs font-medium h-1">
-                            <div
-                              className="flex justify-center items-center h-full bg-gradient-to-tr from-green-600 to-green-400 text-white"
-                              style={{ width: "100%" }}
-                            ></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <div className="flex items-center gap-4">
-                          <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
-                            Launch our Mobile App
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <p className="block antialiased font-sans text-xs font-medium text-blue-gray-600">
-                          $20,500
-                        </p>
-                      </td>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <div className="w-10/12">
-                          <p className="antialiased font-sans mb-1 block text-xs font-medium text-blue-gray-600">
-                            100%
-                          </p>
-                          <div className="flex flex-start bg-blue-gray-50 overflow-hidden w-full rounded-sm font-sans text-xs font-medium h-1">
-                            <div
-                              className="flex justify-center items-center h-full bg-gradient-to-tr from-green-600 to-green-400 text-white"
-                              style={{ width: "100%" }}
-                            ></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <div className="flex items-center gap-4">
-                          <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
-                            Add the New Pricing Page
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <p className="block antialiased font-sans text-xs font-medium text-blue-gray-600">
-                          $500
-                        </p>
-                      </td>
-                      <td className="py-3 px-5 border-b border-blue-gray-50">
-                        <div className="w-10/12">
-                          <p className="antialiased font-sans mb-1 block text-xs font-medium text-blue-gray-600">
-                            25%
-                          </p>
-                          <div className="flex flex-start bg-blue-gray-50 overflow-hidden w-full rounded-sm font-sans text-xs font-medium h-1">
-                            <div
-                              className="flex justify-center items-center h-full bg-gradient-to-tr from-blue-600 to-blue-400 text-white"
-                              style={{ width: "25%" }}
-                            ></div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+          <div className="flex flex-row gap-4">
+            <div className="bg-white rounded-xl overflow-hidden text-gray-700 shadow-none p-4 flex flex-col justify-center items-center content-cneter">
+              <div>
+                <DemoContainer components={["DatePicker"]}>
+                  <DemoItem label="Chọn năm">
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        views={["month", "day", "year"]}
+                        value={selectedDate}
+                        onChange={handleChangeDay}
+                      />
+                    </LocalizationProvider>
+                  </DemoItem>
+                </DemoContainer>
               </div>
+              <LineChart
+                dataset={profitOfYear}
+                xAxis={[
+                  {
+                    scaleType: "band",
+                    dataKey: "time",
+                  },
+                ]}
+                series={[
+                  // {
+                  //   data: [2, 5.5, 2, 8.5, 1.5, 5, 12, 16, 11.5],
+                  //   valueFormatter: (value) =>
+                  //     value == null ? "NaN" : value.toString(),
+                  //   area: true,
+                  // },
+                  {
+                    dataKey: "revenue",
+                    area: true,
+                  },
+                ]}
+                width={900}
+                height={200}
+                margin={{ top: 10, bottom: 20 }}
+              />
             </div>
-          </div> */}
+            <div className="bg-white rounded-xl overflow-hidden text-gray-700 shadow-none p-4">
+              <BarChart
+                dataset={profitOfWeek}
+                xAxis={[
+                  {
+                    scaleType: "band",
+                    dataKey: "time",
+                  },
+                ]}
+                {...chartSetting}
+                width={500}
+                height={300}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
