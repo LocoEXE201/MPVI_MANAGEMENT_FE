@@ -27,6 +27,8 @@ const SupplierComponent = () => {
   const [selectSup, setSelectSup]: any = useState([]);
 
   const getSuppliers = async () => {
+    console.log("api response: ", getSuppliersByCondition(searchName));
+    
     getSuppliersByCondition(searchName).then((res) => {
       setSuppliers(res.result);
     });
