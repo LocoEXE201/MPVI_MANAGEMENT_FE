@@ -30,7 +30,6 @@ import UpdateCategoryPageComponent from "./EditCategoryModal";
 import EditCategoryModal from "./EditCategoryModal";
 import SortableTable from "@/components/layouts/table/CategoryTable";
 import axios from "axios";
-import Modal from "react-modal";
 
 interface Category {
   categoryId: number;
