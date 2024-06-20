@@ -67,16 +67,17 @@ const SideBarComponent = (props: {}) => {
               <li className="min-w-max">
                 <div
                   onClick={() => {
-                    navigateTo(PATH_MAIN.root);
+                    navigateTo(PATH_MAIN.dashboard);
                   }}
                   className={`links_hover ${
-                    typeof window !== "undefined" && isActive(PATH_MAIN.root)
+                    typeof window !== "undefined" &&
+                    isActive(PATH_MAIN.dashboard)
                       ? "active_current_link"
                       : ""
                   }`}
                 >
                   <a
-                    href="/"
+                    href="/dashboard"
                     aria-label="dashboard"
                     className="relative flex items-center rounded-full space-x-4 text-gray-700 hover:bg-gradient-to-r hover:from-sky-600 hover:to-cyan-400 px-4 py-3 hover:text-white"
                   >
