@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import MainLayout from "@/components/layouts";
-import Dashboard from "./DashboardProvider";
+import Dashboard from "./components/DashboardProvider";
+
 
 const metadata: Metadata = {
   title: "Loco. - Quản Lý",
