@@ -43,7 +43,7 @@ interface Supplier {
 const DeliveryBookTicket: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(true);
-  const [supplierId, setSupplierId] = useState<number>(2);
+  const [supplierId, setSupplierId] = useState<number>(1);
   const [categories, setCategories] = useState<Category[]>([]);
   const [fetchedCategories, setFetchedCategories] = useState<FetchedCategory[]>(
     []

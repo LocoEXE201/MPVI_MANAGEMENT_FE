@@ -93,6 +93,7 @@ const DeliveryDetailTable = ({
           {},
           {
             headers: {
+              Accept: "text/plain",
               Authorization: `Bearer ${token}`,
             },
             withCredentials: true,
@@ -256,7 +257,7 @@ const DeliveryDetailTable = ({
                   color: blue[500],
                 }}
               >
-                <MenuItem value="">All</MenuItem>
+                {/* <MenuItem value="">ALL</MenuItem> */}
                 <MenuItem value="Approved">APPROVED</MenuItem>
                 <MenuItem value="Pending">PENDING</MenuItem>
                 <MenuItem value="Rejected">REJECTED</MenuItem>
@@ -428,9 +429,11 @@ const DeliveryDetailTable = ({
                       {detail.deliveryLogId}
                     </TableCell>
                     <TableCell align="center" style={{ color: "grey" }}>
-                      {detail.supplier.supplierId === 2
-                        ? "MPVI - Mentorship for people with vision impairment"
-                        : detail.supplier.name}
+                      {detail.supplier.supplierId === 1
+                        ? "Tiệm len nhỏ"
+                        : detail.supplier.supplierId === 2
+                          ? "Túi Tote"
+                          : detail.supplier.name}
                     </TableCell>
                     <TableCell align="center" style={{ color: "grey" }}>
                       {new Date(detail.createdOn).toLocaleDateString()}
