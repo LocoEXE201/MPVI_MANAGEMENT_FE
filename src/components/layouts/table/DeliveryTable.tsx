@@ -72,6 +72,7 @@ const DeliveryTable: NextPage = () => {
           "http://14.225.211.1:8084/api/delivery/GetAllTicket",
           {
             headers: {
+              Accept: "text/plain",
               Authorization: `Bearer ${token}`,
             },
           }
@@ -105,7 +106,7 @@ const DeliveryTable: NextPage = () => {
 
   const handleChange = (event: SelectChangeEvent<number>) => {
     setSupplierId(Number(event.target.value));
-    setSearchQuery(""); // Optional: Reset search query when filter changes
+    setSearchQuery("");
   };
 
   const handleDeleteTicket = (id: number) => {
@@ -202,9 +203,9 @@ const DeliveryTable: NextPage = () => {
                 }}
               >
                 <MenuItem value={0}>All Suppliers</MenuItem>
-                <MenuItem value={2}>
-                  MPVI - Mentorship for people with vision impairment
-                </MenuItem>
+                <MenuItem value={1}>Tiệm len nhỏ</MenuItem>
+                <MenuItem value={2}>Túi Tote</MenuItem>
+                <MenuItem value={3}>Anna</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -292,9 +293,11 @@ const DeliveryTable: NextPage = () => {
                       {page * rowsPerPage + index + 1}
                     </TableCell>
                     <TableCell style={{ color: "grey", fontWeight: "500" }}>
-                      {ticket.supplier.supplerId === 2
-                        ? "MPVI - Mentorship for people with vision impairment"
-                        : ticket.supplier.name}
+                      {ticket.supplier.supplerId === 1
+                        ? "Tiệm len nhỏ"
+                        : ticket.supplier.supplerId === 2
+                          ? "Túi Tote"
+                          : "Anna"}
                     </TableCell>
                     <TableCell align="center" style={{ color: "grey" }}>
                       {new Date(ticket.createdOn).toLocaleDateString()}
