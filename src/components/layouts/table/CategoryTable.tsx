@@ -1,3 +1,6 @@
+import EditCategoryModal from "@/app/(management)/category/components/EditCategoryModal";
+import UpdateCategoryModal from "@/app/(management)/category/components/EditCategoryModal";
+import UpdateCategoryPageComponent from "@/app/(management)/category/components/EditCategoryModal";
 import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
@@ -19,6 +22,7 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
+import { useState } from "react";
 
 const TABS = [
   {
@@ -35,15 +39,37 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = [
-  "image",
-  "categoryId",
-  "status",
-  "quantity",
-  "",
-];
+const TABLE_HEAD = ["image", "categoryId", "status", "quantity", ""];
+interface SortableTableProps {
+  categories: any[]; // Adjust type according to your category structure
+  search: any;
+  selectedUpState: any
+  setSearch: (search: string) => void;
+  onEditCategory: (categoryId: number) => void;
+}
 
-export function SortableTable({ categories, search, setSearch }: any) {
+const SortableTable: React.FC<SortableTableProps> = ({
+  categories,
+  search,
+  selectedUpState,
+  setSearch,
+  onEditCategory,
+}) => {
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    null
+  );
+  const [searchName, setSearchName] = search
+  const [selectUp, setSelectUp] = selectedUpState
+
+  const handleEditCategory = (categoryId: number) => {
+    setSelectedCategoryId(categoryId);
+  };
+
+  const handleUpdateCategory = (updatedCategory: any) => {
+    // Implement category update logic here (e.g., API call)
+    console.log("Updated category:", updatedCategory);
+    setSelectedCategoryId(null); // Close modal after update
+  };
   return (
     <Card
       className="h-full w-full"
@@ -70,67 +96,6 @@ export function SortableTable({ categories, search, setSearch }: any) {
             >
               Category list
             </Typography>
-            <Typography
-              color="gray"
-              className="mt-1 font-normal"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              See information about all members
-            </Typography>
-          </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button
-              variant="outlined"
-              size="sm"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              view all
-            </Button>
-            <Button
-              className="flex items-center gap-3"
-              size="sm"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-            </Button>
-          </div>
-        </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              {TABS.map(({ label, value }) => (
-                <Tab
-                  key={value}
-                  value={value}
-                  placeholder={undefined}
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                >
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-              crossOrigin={undefined}
-            />
           </div>
         </div>
       </CardHeader>
@@ -176,6 +141,19 @@ export function SortableTable({ categories, search, setSearch }: any) {
                 <tr key={category?.categoryId}>
                   <td className={classes}>
                     <div className="flex items-center gap-3 w-1/3">
+                    <input onChange={(event) => {
+                      if (event.target?.checked) {
+                        if (!selectUp.includes(category?.categoryId)) {
+                          setSelectUp([...selectUp, category.categoryId])
+                        }
+                      } else {
+                        if (selectUp.includes(category?.categoryId)) {
+                          setSelectUp([selectUp.filter((catId: any) => catId != category?.categoryId)])
+                        }
+                      }
+                    }}
+                    type="checkbox"
+                    />
                       <Avatar
                         src={category?.image}
                         alt={category?.categoryId}
@@ -241,6 +219,7 @@ export function SortableTable({ categories, search, setSearch }: any) {
                         placeholder={undefined}
                         onPointerEnterCapture={undefined}
                         onPointerLeaveCapture={undefined}
+                        onClick={() => onEditCategory(category.categoryId)}
                       >
                         <PencilIcon className="h-4 w-4" />
                       </IconButton>
@@ -250,6 +229,15 @@ export function SortableTable({ categories, search, setSearch }: any) {
               );
             })}
           </tbody>
+          {selectedCategoryId !== null && (
+            <EditCategoryModal
+              category={categories.find(
+                (cat) => cat.categoryId === selectedCategoryId
+              )}
+              onUpdate={handleUpdateCategory} // Pass onUpdate function to EditCategoryModal
+              onClose={() => setSelectedCategoryId(null)}
+            />
+          )}
         </table>
       </CardBody>
       <CardFooter
@@ -291,4 +279,5 @@ export function SortableTable({ categories, search, setSearch }: any) {
       </CardFooter>
     </Card>
   );
-}
+};
+export default SortableTable

@@ -12,6 +12,9 @@ export const CheckInlowPosition =
   "http://14.225.211.1:8084/api/position/CheckInlowPosition";
 export const OrderManagemnet =
   "http://14.225.211.1:8083/api/shop/OrderManagemnet";
+export const CreateNewCategory = "http://14.225.211.1:8084/api/category/CreateNewCategory";
+export const UpdateCategory = "http://14.225.211.1:8084/api/category/UpdateCategory";
+export const DeleteCategoryByID = "http://14.225.211.1:8084/api/category/DeleteCategoryByID";
 export const GetOrderbyCondition =
   "http://14.225.211.1:8083/api/shop/GetOrderbyCondition";
 export const CreateNewSupplier =
