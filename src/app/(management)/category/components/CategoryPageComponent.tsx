@@ -301,6 +301,14 @@ const CategoryPageComponent = (props: {}) => {
     }
   };
 
+  const handleSuperCategoryIdNew = (event: ChangeEvent<HTMLSelectElement>) => {
+    const supplierId = parseInt(event.target.value);
+    setNewCate((prevCate: any) => ({
+      ...prevCate,
+      SupplierId: isNaN(supplierId) ? 0 : supplierId,
+    }));
+  };
+
   // const handleInputChange = (
   //   event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   // ) => {
@@ -328,6 +336,10 @@ const CategoryPageComponent = (props: {}) => {
     }
   };
 
+  useEffect(() => {
+    console.log("Initial state of newCate: ", newCate);
+  }, []);
+
   const createACategory = () => {
     const requiredFields = [
       "CategoryName",
@@ -349,8 +361,18 @@ const CategoryPageComponent = (props: {}) => {
       "PriceSold",
       "ImageFile",
     ];
+    console.log("Current state of newCate before validation: ", newCate);
+
     for (let field of requiredFields) {
-      if (!newCate[field] || newCate[field]?.length < 1) {
+      const value = newCate[field];
+      console.log(`Checking field: ${field}, value: ${value}`);
+
+      if (
+        (typeof value === "string" && value.trim().length === 0) ||
+        (typeof value === "number" && isNaN(value)) ||
+        value === null ||
+        value === undefined
+      ) {
         toast.warning(`Insert ${field}`);
         return;
       }
@@ -572,80 +594,92 @@ const CategoryPageComponent = (props: {}) => {
       style={{ backgroundColor: "#F1F5F9", paddingTop: "1rem" }}
     >
       <div className="min-h-screen" style={{ backgroundColor: "#F1F5F9" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            paddingTop: "1rem",
-          }}
-        >
-          <button
-            onClick={unhiddenNewContactdiv}
-            className="py-2 px-4 bg-transparent text-gray-700 font-semibold border border-gray-700 rounded hover:bg-gray-500 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
-          >
-            New Category
-          </button>
-          <button
-            onClick={unhiddenUpdatedContactdiv}
-            className="py-2 px-4 bg-transparent text-gray-700 font-semibold border border-gray-700 rounded hover:bg-gray-500 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
-          >
-            Update
-          </button>
-          <button
-            className="py-2 px-4 bg-transparent text-gray-700 font-semibold border border-gray-700 rounded hover:bg-gray-500 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
-            onClick={cancelCategory}
-          >
-            Cancel Contract
-          </button>
-        </div>
         <div className="above flex justify-around">
           <div className="flex">
-            <div className="relative group">
-              <button
-                onClick={toggleDropdown}
-                className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
+            <div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                  paddingTop: "1rem",
+                }}
               >
-                <span className="mr-2">{selectedSuper?.superCategoryName}</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 ml-2 -mr-1"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-              {isOpen && (
-                <div className="absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1">
-                  <a
-                    onClick={() => {
-                      setSuper({ superCategoryName: "All" });
-                      toggleDropdown();
-                    }}
-                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    All
-                  </a>
-
-                  {superCates?.map((cate: any, index: any) => (
-                    <a
-                      key={index}
-                      onClick={() => {
-                        setSuper(cate);
-                        toggleDropdown();
-                      }}
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md"
+                  <div className="relative group mb-4">
+                    <button
+                      onClick={toggleDropdown}
+                      className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
                     >
-                      {cate?.superCategoryName}
-                    </a>
-                  ))}
+                      <span className="mr-2">
+                        {selectedSuper?.superCategoryName}
+                      </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5 ml-2 -mr-1"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                    {isOpen && (
+                      <div className="absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1">
+                        <a
+                          onClick={() => {
+                            setSuper({ superCategoryName: "All" });
+                            toggleDropdown();
+                          }}
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md"
+                        >
+                          All
+                        </a>
+
+                        {superCates?.map((cate: any, index: any) => (
+                          <a
+                            key={index}
+                            onClick={() => {
+                              setSuper(cate);
+                              toggleDropdown();
+                            }}
+                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md"
+                          >
+                            {cate?.superCategoryName}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                <div className="flex space-x-4" style={{ marginLeft: '2rem' }}>
+                  <div className="mb-4">
+                    <button
+                      onClick={unhiddenNewContactdiv}
+                      className="py-2 px-4 bg-transparent text-gray-700 font-semibold border border-gray-700 rounded hover:bg-gray-500 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0 mb-4"
+                    >
+                      Tạo Sản Phẩm Mới
+                    </button>
+                  </div>
+                  <div className="mb-4">
+                    <button
+                      onClick={unhiddenUpdatedContactdiv}
+                      className="py-2 px-4 bg-transparent text-gray-700 font-semibold border border-gray-700 rounded hover:bg-gray-500 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0 mb-4"
+                    >
+                      Cập Nhật Sản Phẩm
+                    </button>
+                  </div>
+                  <div className="mb-4">
+                    <button
+                      className="py-2 px-4 bg-transparent text-gray-700 font-semibold border border-gray-700 rounded hover:bg-gray-500 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0 mb-4"
+                      onClick={cancelCategory}
+                    >
+                      Hủy Sản Phẩm
+                    </button>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
           <div
@@ -657,7 +691,7 @@ const CategoryPageComponent = (props: {}) => {
                 className="py-1 px-5 bg-gray-50 text-black dark:bg-gray-800 dark:text-white"
                 style={{ fontWeight: "bold" }}
               >
-                Doughnut chart
+                Biểu đồ
               </div>
               <canvas
                 className=""
@@ -953,10 +987,10 @@ const CategoryPageComponent = (props: {}) => {
               onPress={unhiddenNewContactdiv}
               className="border text-red-500"
             >
-              Close
+              Đóng
             </Button>
             <Button onPress={createACategory} className="border text-blue-500">
-              Create New
+              Tạo mới
             </Button>
           </div>
         </div>
@@ -1022,7 +1056,10 @@ const CategoryPageComponent = (props: {}) => {
             className="border mb-5 px-5 py-2 w-2/3"
             value={updatedCate?.maxUseDate}
             onChange={(event) =>
-              setUpdatedCate({ ...updatedCate, maxUseDate: Number(event.target.value) })
+              setUpdatedCate({
+                ...updatedCate,
+                maxUseDate: Number(event.target.value),
+              })
             }
           />
 
@@ -1081,7 +1118,10 @@ const CategoryPageComponent = (props: {}) => {
             className="border mb-5 px-5 py-2 w-2/3"
             value={updatedCate?.priceSold}
             onChange={(event) =>
-              setUpdatedCate({ ...updatedCate, priceSold: Number(event.target.value) })
+              setUpdatedCate({
+                ...updatedCate,
+                priceSold: Number(event.target.value),
+              })
             }
           />
 

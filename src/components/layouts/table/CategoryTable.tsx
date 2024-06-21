@@ -24,26 +24,11 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
-
-const TABLE_HEAD = ["image", "categoryId", "status", "quantity", ""];
+const TABLE_HEAD = ["", "STT", "Tên Sản Phẩm", "Trạng thái hàng", "Số lượng", ""];
 interface SortableTableProps {
   categories: any[]; // Adjust type according to your category structure
   search: any;
-  selectedUpState: any
+  selectedUpState: any;
   setSearch: (search: string) => void;
   onEditCategory: (categoryId: number) => void;
 }
@@ -58,8 +43,8 @@ const SortableTable: React.FC<SortableTableProps> = ({
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
   );
-  const [searchName, setSearchName] = search
-  const [selectUp, setSelectUp] = selectedUpState
+  const [searchName, setSearchName] = search;
+  const [selectUp, setSelectUp] = selectedUpState;
 
   const handleEditCategory = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
@@ -94,7 +79,7 @@ const SortableTable: React.FC<SortableTableProps> = ({
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
             >
-              Category list
+              Danh Sách Sản Phẩm
             </Typography>
           </div>
         </div>
@@ -122,9 +107,9 @@ const SortableTable: React.FC<SortableTableProps> = ({
                     onPointerLeaveCapture={undefined}
                   >
                     {head}{" "}
-                    {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
+                    {/* {index !== TABLE_HEAD.length - 1 && (
+                      // <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
+                    )} */}
                   </Typography>
                 </th>
               ))}
@@ -141,19 +126,24 @@ const SortableTable: React.FC<SortableTableProps> = ({
                 <tr key={category?.categoryId}>
                   <td className={classes}>
                     <div className="flex items-center gap-3 w-1/3">
-                    <input onChange={(event) => {
-                      if (event.target?.checked) {
-                        if (!selectUp.includes(category?.categoryId)) {
-                          setSelectUp([...selectUp, category.categoryId])
-                        }
-                      } else {
-                        if (selectUp.includes(category?.categoryId)) {
-                          setSelectUp([selectUp.filter((catId: any) => catId != category?.categoryId)])
-                        }
-                      }
-                    }}
-                    type="checkbox"
-                    />
+                      <input
+                        onChange={(event) => {
+                          if (event.target?.checked) {
+                            if (!selectUp.includes(category?.categoryId)) {
+                              setSelectUp([...selectUp, category.categoryId]);
+                            }
+                          } else {
+                            if (selectUp.includes(category?.categoryId)) {
+                              setSelectUp([
+                                selectUp.filter(
+                                  (catId: any) => catId != category?.categoryId
+                                ),
+                              ]);
+                            }
+                          }
+                        }}
+                        type="checkbox"
+                      />
                       <Avatar
                         src={category?.image}
                         alt={category?.categoryId}
@@ -161,19 +151,8 @@ const SortableTable: React.FC<SortableTableProps> = ({
                         placeholder={undefined}
                         onPointerEnterCapture={undefined}
                         onPointerLeaveCapture={undefined}
+                        style={{ width: "15rem", height: "10rem" }}
                       />
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                          placeholder={undefined}
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        >
-                          {category?.categoryName}
-                        </Typography>
-                      </div>
                     </div>
                   </td>
                   <td className={classes}>
@@ -187,6 +166,20 @@ const SortableTable: React.FC<SortableTableProps> = ({
                         onPointerLeaveCapture={undefined}
                       >
                         {category?.categoryId}
+                      </Typography>
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex flex-col">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                        placeholder={undefined}
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      >
+                        {category?.categoryName}
                       </Typography>
                     </div>
                   </td>
@@ -212,19 +205,7 @@ const SortableTable: React.FC<SortableTableProps> = ({
                       {category?.quantity}
                     </Typography>
                   </td>
-                  <td className={classes}>
-                    <Tooltip content="Edit User">
-                      <IconButton
-                        variant="text"
-                        placeholder={undefined}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                        onClick={() => onEditCategory(category.categoryId)}
-                      >
-                        <PencilIcon className="h-4 w-4" />
-                      </IconButton>
-                    </Tooltip>
-                  </td>
+                  
                 </tr>
               );
             })}
@@ -280,4 +261,4 @@ const SortableTable: React.FC<SortableTableProps> = ({
     </Card>
   );
 };
-export default SortableTable
+export default SortableTable;
