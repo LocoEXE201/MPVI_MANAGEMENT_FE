@@ -194,6 +194,7 @@ const CategoryPageComponent = (props: {}) => {
         priceSold: 0,
         imageFile: null,
       });
+      toast.success("Cập nhật thành công");
     });
     unhiddenUpdatedContactdiv();
   };
@@ -217,7 +218,7 @@ const CategoryPageComponent = (props: {}) => {
       deleteCategory(catId);
     });
     getCates();
-    toast.success("Cancel successful");
+    toast.success("Hủy thành công");
   };
 
   const handleEditCategory = (category: any) => {
@@ -404,7 +405,7 @@ const CategoryPageComponent = (props: {}) => {
         PriceSold: 0.0,
         ImageFile: null,
       });
-      toast.success("Create successful");
+      toast.success("Tạo mới thành công");
     });
 
     unhiddenNewContactdiv();
@@ -778,7 +779,7 @@ const CategoryPageComponent = (props: {}) => {
           id="newcontact"
           className="text-black transition-all hidden absolute z-20 top-20 right-96 w-7/12 py-10 px-20 border rounded-md bg-white animate-appearance-in"
         >
-          <InputLabel className="mb-2">Supplier</InputLabel>
+          <InputLabel className="mb-2">Mã Nhà Cung Cấp</InputLabel>
           {/* <select
             className="border mb-5 px-5 py-2 w-2/3"
             value={newCate?.SupplierId}
@@ -799,7 +800,7 @@ const CategoryPageComponent = (props: {}) => {
               setNewCate({ ...newCate, SupplierId: event.target.value })
             }
           />
-          <InputLabel className="mb-2">Category Name</InputLabel>
+          <InputLabel className="mb-2">Tên Sản Phẩm</InputLabel>
           <input
             className="border mb-5 px-5 py-2 w-2/3"
             value={newCate?.CategoryName}
@@ -807,7 +808,7 @@ const CategoryPageComponent = (props: {}) => {
               setNewCate({ ...newCate, CategoryName: event.target.value })
             }
           />
-          <InputLabel className="mb-2">Quantity</InputLabel>
+          <InputLabel className="mb-2">Số Lượng</InputLabel>
           <input
             type="number"
             value={newCate?.Quantity}
@@ -816,7 +817,7 @@ const CategoryPageComponent = (props: {}) => {
               setNewCate({ ...newCate, Quantity: parseInt(event.target.value) })
             }
           />
-          <InputLabel className="mb-2">Licences</InputLabel>
+          <InputLabel className="mb-2">Giấy Phép</InputLabel>
           <input
             className="border mb-5 px-5 py-2 w-2/3"
             value={newCate?.Licences}
@@ -825,7 +826,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Max Stonk Date</InputLabel>
+          <InputLabel className="mb-2">Thời Gian Tồn Kho Tối Đa</InputLabel>
           <input
             type="number"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -835,7 +836,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Max Use Date</InputLabel>
+          <InputLabel className="mb-2">Thời Gian Bảo Hành</InputLabel>
           <input
             type="number"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -845,7 +846,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Update By</InputLabel>
+          <InputLabel className="mb-2">Cập Nhật Bởi</InputLabel>
           <input
             className="border mb-5 px-5 py-2 w-2/3"
             value={newCate?.UpdateBy}
@@ -854,7 +855,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Update On</InputLabel>
+          <InputLabel className="mb-2">Cập Nhật Ngày</InputLabel>
           <input
             type="datetime-local"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -863,7 +864,7 @@ const CategoryPageComponent = (props: {}) => {
               setNewCate({ ...newCate, UpdateOn: event.target.value })
             }
           />
-          <InputLabel className="mb-2">Status</InputLabel>
+          <InputLabel className="mb-2">Trạng Thái</InputLabel>
           <select
             className="border mb-5 px-5 py-2"
             value={newCate?.Status}
@@ -874,7 +875,7 @@ const CategoryPageComponent = (props: {}) => {
             <option>Available</option>
             <option>Unavailable</option>
           </select>
-          <InputLabel className="mb-2">Rate</InputLabel>
+          <InputLabel className="mb-2">Đánh Giá</InputLabel>
           <input
             type="number"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -883,7 +884,7 @@ const CategoryPageComponent = (props: {}) => {
               setNewCate({ ...newCate, Rate: event.target.value })
             }
           />
-          <InputLabel className="mb-2">Price In</InputLabel>
+          <InputLabel className="mb-2">Giá Trị Nhập</InputLabel>
           <input
             type="number"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -893,7 +894,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Day In</InputLabel>
+          <InputLabel className="mb-2">Ngày Nhập Kho</InputLabel>
           <input
             type="datetime-local"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -903,7 +904,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Production Date</InputLabel>
+          <InputLabel className="mb-2">Ngày Sản Xuất</InputLabel>
           <input
             type="datetime-local"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -913,7 +914,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Description</InputLabel>
+          <InputLabel className="mb-2">Mô Tả</InputLabel>
           <input
             className="border mb-5 px-5 py-2 w-2/3"
             value={newCate?.Notes}
@@ -922,7 +923,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Super Category ID</InputLabel>
+          <InputLabel className="mb-2">Mã Phân Loại Hàng</InputLabel>
           <select
             className="border mb-5 px-5 py-2 w-2/3"
             value={newCate?.SuperCategoryId}
@@ -937,7 +938,7 @@ const CategoryPageComponent = (props: {}) => {
             ))}
           </select>
 
-          <InputLabel className="mb-2">Created By</InputLabel>
+          <InputLabel className="mb-2">Tạo Bởi</InputLabel>
           <input
             className="border mb-5 px-5 py-2 w-2/3"
             value={newCate?.CreatedBy}
@@ -946,7 +947,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Created On</InputLabel>
+          <InputLabel className="mb-2">Ngày Khởi Tạo</InputLabel>
           <input
             type="datetime-local"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -956,7 +957,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Image</InputLabel>
+          <InputLabel className="mb-2">Hình Ảnh</InputLabel>
           <input
             className="border mb-5 px-5 py-2 w-2/3"
             value={newCate?.Image}
@@ -965,7 +966,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Price Sold</InputLabel>
+          <InputLabel className="mb-2">Giá Bán</InputLabel>
           <input
             type="number"
             step="0.01"
@@ -976,7 +977,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Image File</InputLabel>
+          <InputLabel className="mb-2">Tệp Hình Ảnh</InputLabel>
           <input
             type="file"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -998,7 +999,7 @@ const CategoryPageComponent = (props: {}) => {
           id="updatecontact"
           className="text-black transition-all hidden absolute z-20 top-20 right-96 w-7/12 py-10 px-20 border rounded-md bg-white animate-appearance-in"
         >
-          <InputLabel className="mb-2">Category ID</InputLabel>
+          <InputLabel className="mb-2">Tên Sản Phẩm</InputLabel>
           <select
             className="border mb-5 px-5 py-2 w-2/3"
             value={updatedCate.categoryId}
@@ -1017,7 +1018,7 @@ const CategoryPageComponent = (props: {}) => {
               setUpdatedCate({ ...updatedCate, categoryId: event.target.value })
             }
           /> */}
-          <InputLabel className="mb-2">Category Name</InputLabel>
+          <InputLabel className="mb-2">Tên Sản Phẩm Mới</InputLabel>
           <input
             className="border mb-5 px-5 py-2 w-2/3"
             value={updatedCate?.categoryName}
@@ -1028,7 +1029,7 @@ const CategoryPageComponent = (props: {}) => {
               })
             }
           />
-          <InputLabel className="mb-2">Licences</InputLabel>
+          <InputLabel className="mb-2">Giấy Phép</InputLabel>
           <input
             className="border mb-5 px-5 py-2 w-2/3"
             value={updatedCate?.licences}
@@ -1037,7 +1038,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Max Stonk Date</InputLabel>
+          <InputLabel className="mb-2">Thời Gian Tồn Kho Tối Đa</InputLabel>
           <input
             type="number"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -1050,7 +1051,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Max Use Date</InputLabel>
+          <InputLabel className="mb-2">Thời Lượng Bảo Hành</InputLabel>
           <input
             type="number"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -1063,7 +1064,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Status</InputLabel>
+          <InputLabel className="mb-2">Trạng Thái</InputLabel>
           <select
             className="border mb-5 px-5 py-2"
             value={updatedCate?.status}
@@ -1075,7 +1076,7 @@ const CategoryPageComponent = (props: {}) => {
             <option>Unavailable</option>
           </select>
 
-          <InputLabel className="mb-2">Description</InputLabel>
+          <InputLabel className="mb-2">Mô Tả</InputLabel>
           <input
             className="border mb-5 px-5 py-2 w-2/3"
             value={updatedCate?.notes}
@@ -1084,7 +1085,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Super Category ID</InputLabel>
+          <InputLabel className="mb-2">Mã Phân Loại Hàng</InputLabel>
           <select
             className="border mb-5 px-5 py-2 w-2/3"
             value={updatedCate?.superCategoryId}
@@ -1102,7 +1103,7 @@ const CategoryPageComponent = (props: {}) => {
             ))}
           </select>
 
-          <InputLabel className="mb-2">Image</InputLabel>
+          <InputLabel className="mb-2">Hình Ảnh</InputLabel>
           <input
             className="border mb-5 px-5 py-2 w-2/3"
             value={updatedCate?.image}
@@ -1111,7 +1112,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Price Sold</InputLabel>
+          <InputLabel className="mb-2">Giá Bán</InputLabel>
           <input
             type="number"
             step="0.01"
@@ -1125,7 +1126,7 @@ const CategoryPageComponent = (props: {}) => {
             }
           />
 
-          <InputLabel className="mb-2">Image File</InputLabel>
+          <InputLabel className="mb-2">Tệp Hình Ảnh</InputLabel>
           <input
             type="file"
             className="border mb-5 px-5 py-2 w-2/3"
@@ -1136,10 +1137,10 @@ const CategoryPageComponent = (props: {}) => {
               onPress={unhiddenUpdatedContactdiv}
               className="border text-red-500"
             >
-              Close
+              Đóng
             </Button>
             <Button onPress={updateACategory} className="border text-blue-500">
-              Confirm
+              Cập Nhật
             </Button>
           </div>
           {/* <Modal */}
