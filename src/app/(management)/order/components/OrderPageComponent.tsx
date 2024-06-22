@@ -75,7 +75,7 @@ const OrderPageComponent = (props: {}) => {
                     <p className="text-xs leading-tight text-white">4%</p>
                   </div>
                   <p className="text-white opacity-0 delay-200 duration-700 ease-in-out group-hover:opacity-100">
-                    {OrderManage?.total_orders ?? 0} Orders
+                    {OrderManage?.total_orders ?? 0} Đơn
                   </p>
                 </div>
                 {/* item 2 */}
@@ -110,7 +110,7 @@ const OrderPageComponent = (props: {}) => {
                     <p className="text-xs leading-tight text-white">4%</p>
                   </div>
                   <p className="text-white opacity-0 delay-200 duration-700 ease-in-out group-hover:opacity-100">
-                    {OrderManage?.total_deliveries ?? 0} Delivered
+                    {OrderManage?.total_deliveries ?? 0} Đơn
                   </p>
                 </div>
                 {/* item 3 */}
@@ -145,7 +145,7 @@ const OrderPageComponent = (props: {}) => {
                     <p className="text-xs leading-tight text-white">25%</p>
                   </div>
                   <p className="text-white opacity-0 delay-200 duration-700 ease-in-out group-hover:opacity-100">
-                    {OrderManage?.total_cancelled ?? 0} Cancelled
+                    {OrderManage?.total_cancelled ?? 0} Đơn
                   </p>
                 </div>
               </div>
@@ -155,9 +155,9 @@ const OrderPageComponent = (props: {}) => {
               className="absolute -right-16 top-0 z-20 flex w-96 flex-col gap-4 self-end rounded-xl rounded-l-2xl border-none px-5 py-3 text-base font-semibold leading-7 transition-all duration-700 group-hover:-right-14 group-hover:w-64 group-hover:rounded-l-lg"
               style={{ backgroundColor: "#B0C4DE" }}
             >
-              <p className="text-[#fff]">Total Orders</p>
-              <p className="text-[#fff]">Total Delivered</p>
-              <p className="text-[#fff]">Total Cancelled</p>
+              <p className="text-[#fff]">Tổng số đơn đặt hàng</p>
+              <p className="text-[#fff]">Tổng số đơn vận chuyển</p>
+              <p className="text-[#fff]">Tổng số đơn bị hủy</p>
             </div>
             <div
               className="h-16 w-[28rem] -left-10 shadow-2xl shadow-[#3d348b] absolute bottom-0"

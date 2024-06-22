@@ -327,17 +327,17 @@ const UserList: React.FC = () => {
     <>
       <div className="flex h-20 px-10 justify-between items-center">
         <Button onPress={getCode} className="border">
-          Get Code
+          Nhận Mã
         </Button>
         <div className="flex items-center">
           <input
             value={code}
             onChange={(event) => setCode(event.target.value)}
-            placeholder="input code"
+            placeholder="Enter Here"
             className="border py-1 px-5 mr-3 text-black"
           />
           <Button onPress={getSList} className="border">
-            Fetch User
+            Truy Xuất
           </Button>
         </div>
       </div>
@@ -387,7 +387,7 @@ const UserList: React.FC = () => {
               className="text-white/50 group-hover:text-white group-hover:smooth-hover text-center"
               href="#"
             >
-              Import file
+              Nhập Tệp
             </a>
           </div>
         </Grid>
