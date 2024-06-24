@@ -21,29 +21,13 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
-
 const TABLE_HEAD = [
-  "Customer ID",
-  "Created On",
-  "Receiver Name",
-  "Receiver Address",
-  "Receiver PhoneNumber",
-  "Total",
-  "Order Status",
+  "Mã Đơn Hàng",
+  "Mã Khách Hàng",
+  "Ngày Đặt Hàng",
+  "Tổng Giá Trị",
+  "Trạng Thái Đơn Hàng",
+  "Ghi Chú"
 ];
 
 export function OrderTable({ orders, uos }: any) {
@@ -71,13 +55,13 @@ export function OrderTable({ orders, uos }: any) {
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
             >
-              Order list
+              Danh Sách Đơn Hàng
             </Typography>
             {/* <Typography color="gray" className="mt-1 font-normal"  placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                 See information about all members
               </Typography> */}
           </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+          {/* <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button
               variant="outlined"
               size="sm"
@@ -96,9 +80,9 @@ export function OrderTable({ orders, uos }: any) {
             >
               <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
             </Button>
-          </div>
+          </div> */}
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max">
             <TabsHeader
               placeholder={undefined}
@@ -127,7 +111,7 @@ export function OrderTable({ orders, uos }: any) {
               crossOrigin={undefined}
             />
           </div>
-        </div>
+        </div> */}
       </CardHeader>
       <CardBody
         className="overflow-scroll px-0"
@@ -152,9 +136,9 @@ export function OrderTable({ orders, uos }: any) {
                     onPointerLeaveCapture={undefined}
                   >
                     {head}{" "}
-                    {index !== TABLE_HEAD.length - 1 && (
+                    {/* {index !== TABLE_HEAD.length - 1 && (
                       <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
+                    )} */}
                   </Typography>
                 </th>
               ))}
@@ -170,6 +154,22 @@ export function OrderTable({ orders, uos }: any) {
 
               return (
                 <tr key={index}>
+                  <td className={classes}>
+                    <div className="flex items-center gap-3">
+                      <div className="flex flex-col">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                          placeholder={undefined}
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        >
+                          {order?.orderId}
+                        </Typography>
+                      </div>
+                    </div>
+                  </td>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
                       <div className="flex flex-col">
@@ -200,7 +200,7 @@ export function OrderTable({ orders, uos }: any) {
                       </Typography>
                     </div>
                   </td>
-                  <td className={classes}>
+                  {/* <td className={classes}>
                     <Typography
                       variant="small"
                       color="blue-gray"
@@ -235,7 +235,7 @@ export function OrderTable({ orders, uos }: any) {
                     >
                       {order?.receiverPhoneNumber}
                     </Typography>
-                  </td>
+                  </td> */}
                   <td className={classes}>
                     <Typography
                       variant="small"
@@ -271,6 +271,18 @@ export function OrderTable({ orders, uos }: any) {
                       <option value="_Refund">Refund</option>
                       <option value="_Cancelled">Cancelled</option>
                     </select>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                      placeholder={undefined}
+                      onPointerEnterCapture={undefined}
+                      onPointerLeaveCapture={undefined}
+                    >
+                      {order?.notes}
+                    </Typography>
                   </td>
                 </tr>
               );

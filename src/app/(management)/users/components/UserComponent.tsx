@@ -62,7 +62,7 @@ const UserList: React.FC = () => {
       if (Object.keys(res?.result)?.length == 0) {
         toast.error("Import Staff Failed");
       } else {
-        toast.success("Import Staff Successfully");
+        toast.success("Nhập tệp thành công");
         getSList();
       }
     });
@@ -97,7 +97,7 @@ const UserList: React.FC = () => {
   const getCode = async () => {
     CallApiGetToken(`${GetCodeForStaffList}?email=${userInfo?.email}`).then(
       () => {
-        toast.success("check your email for code");
+        toast.success("Vui lòng kiểm tra mail để lấy mã");
       }
     );
   };
@@ -125,18 +125,18 @@ const UserList: React.FC = () => {
                 d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"
               ></path>
             </svg>
-            <p className="pt-2 text-lg font-semibold text-gray-50"></p>
-            <p className="text-sm text-gray-100"></p>
+            <p className="pt-2 text-lg font-semibold text-white"></p>
+            <p className="text-sm text-white"></p>
             <div className="mt-5">
-              <div className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">
+              <div className="border rounded-full py-2 px-4 text-xs font-semibold text-white">
                 Manage your Account
               </div>
             </div>
           </div>
           <div className="border-b">
             <Link href="/account/campaigns">
-              <div className="px-4 py-2 hover:bg-gray-100 flex">
-                <div className="text-green-600">
+              <div className="px-4 py-2 flex">
+                <div className="text-white">
                   <svg
                     fill="none"
                     stroke="currentColor"
@@ -150,16 +150,28 @@ const UserList: React.FC = () => {
                   </svg>
                 </div>
                 <div className="pl-3">
-                  <p className="text-sm font-medium text-gray-800 leading-none">
+                  <p className="text-sm font-medium text-white leading-none">
                     Campaigns
                   </p>
-                  <p className="text-xs text-gray-500">View your campaigns</p>
+                  <p className="text-sm font-medium text-white leading-none">
+                    Campaigns
+                  </p>
+                  <p className="text-sm font-medium text-white leading-none">
+                    Campaigns
+                  </p>
+                  <p className="text-sm font-medium text-white leading-none">
+                    Campaigns
+                  </p>
+                  <p className="text-sm font-medium text-white leading-none">
+                    Campaigns
+                  </p>
+                  <p className="text-xs text-white">View your campaigns</p>
                 </div>
               </div>
             </Link>
             <Link href="/account/donations">
-              <div className="px-4 py-2 hover:bg-gray-100 flex">
-                <div className="text-gray-800">
+              <div className="px-4 py-2 flex">
+                <div className="text-white">
                   <svg
                     fill="none"
                     stroke="currentColor"
@@ -173,10 +185,10 @@ const UserList: React.FC = () => {
                   </svg>
                 </div>
                 <div className="pl-3">
-                  <p className="text-sm font-medium text-gray-800 leading-none">
+                  <p className="text-sm font-medium text-white leading-none">
                     Donations
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-white">
                     View your last donations
                   </p>
                 </div>
@@ -241,8 +253,8 @@ const UserList: React.FC = () => {
           </div>
           <div className="border-b">
             <Link href="/account/campaigns">
-              <div className="px-4 py-2 hover:bg-gray-100 flex">
-                <div className="text-green-600">
+              <div className="px-4 py-2 flex">
+                <div className="text-white">
                   <svg
                     fill="none"
                     stroke="currentColor"
@@ -256,16 +268,22 @@ const UserList: React.FC = () => {
                   </svg>
                 </div>
                 <div className="pl-3">
-                  <p className="text-sm font-medium text-gray-800 leading-none">
+                  <p className="text-sm font-medium text-white leading-none">
                     Campaigns
                   </p>
-                  <p className="text-xs text-gray-500">View your campaigns</p>
+                  <p className="text-sm font-medium text-white leading-none">
+                    Campaigns
+                  </p>
+                  <p className="text-sm font-medium text-white leading-none">
+                    Campaigns
+                  </p>
+                  <p className="text-xs text-white">View your campaigns</p>
                 </div>
               </div>
             </Link>
             <Link href="/account/donations">
-              <div className="px-4 py-2 hover:bg-gray-100 flex">
-                <div className="text-gray-800">
+              <div className="px-4 py-2 flex">
+                <div className="text-white">
                   <svg
                     fill="none"
                     stroke="currentColor"
@@ -279,10 +297,10 @@ const UserList: React.FC = () => {
                   </svg>
                 </div>
                 <div className="pl-3">
-                  <p className="text-sm font-medium text-gray-800 leading-none">
+                  <p className="text-sm font-medium text-white leading-none">
                     Donations
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-white">
                     View your last donations
                   </p>
                 </div>
@@ -298,7 +316,7 @@ const UserList: React.FC = () => {
               }}
               className="w-full px-4 py-2 pb-4 hover:bg-gray-100 flex"
             >
-              <p className="text-sm font-medium text-gray-800 leading-none">
+              <p className="text-sm font-medium text-gray-800 leading-none text-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
@@ -327,17 +345,17 @@ const UserList: React.FC = () => {
     <>
       <div className="flex h-20 px-10 justify-between items-center">
         <Button onPress={getCode} className="border">
-          Get Code
+          Nhận Mã
         </Button>
         <div className="flex items-center">
           <input
             value={code}
             onChange={(event) => setCode(event.target.value)}
-            placeholder="input code"
+            placeholder="Enter Here"
             className="border py-1 px-5 mr-3 text-black"
           />
           <Button onPress={getSList} className="border">
-            Fetch User
+            Truy Xuất
           </Button>
         </div>
       </div>
@@ -387,7 +405,7 @@ const UserList: React.FC = () => {
               className="text-white/50 group-hover:text-white group-hover:smooth-hover text-center"
               href="#"
             >
-              Import file
+              Nhập Tệp
             </a>
           </div>
         </Grid>

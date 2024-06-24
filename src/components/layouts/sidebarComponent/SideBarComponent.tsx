@@ -136,7 +136,7 @@ const SideBarComponent = (props: {}) => {
                         d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z"
                       />
                     </svg>
-                    <span className="group-hover:text-gray-700">Category</span>
+                    <span className="group-hover:text-gray-700">Danh Mục</span>
                   </a>
                 </div>
               </li>
@@ -172,7 +172,7 @@ const SideBarComponent = (props: {}) => {
                         d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"
                       />
                     </svg>
-                    <span className="group-hover:text-gray-700">Order</span>
+                    <span className="group-hover:text-gray-700">Đơn Hàng</span>
                   </a>
                 </div>
               </li>
@@ -207,7 +207,7 @@ const SideBarComponent = (props: {}) => {
                         d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
                       />
                     </svg>
-                    <span className="group-hover:text-gray-700">Supplier</span>
+                    <span className="group-hover:text-gray-700">Nhà Cung Cấp</span>
                   </a>
                 </div>
               </li>
@@ -233,7 +233,7 @@ const SideBarComponent = (props: {}) => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className="group-hover:text-gray-700">Report</span>
+                  <span className="group-hover:text-gray-700">Báo Cáo</span>
                 </a>
               </li>
               <li className="min-w-max">
@@ -258,7 +258,7 @@ const SideBarComponent = (props: {}) => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className="group-hover:text-gray-700">Delivery</span>
+                  <span className="group-hover:text-gray-700">Vận Chuyển</span>
                 </a>
               </li>
               <li className="min-w-max">
@@ -293,7 +293,7 @@ const SideBarComponent = (props: {}) => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span className="group-hover:text-gray-700">Users</span>
+                    <span className="group-hover:text-gray-700">Danh Sách Nhân Viên</span>
                   </a>
                 </div>
               </li>

@@ -22,26 +22,15 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
+const TABLE_HEAD = ["", "Nhà Cung Cấp", "Người Đại Diện", "Số Điện Thoại", "Email", "Hình Thức Cung Cấp"];
 
-const TABLE_HEAD = ["Supplier", "Address", "Phone", "Email", ""];
-
-export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
-  const [searchName, setSearch] = searchState
-  const [selectSup, setSelectSup] = selectedSUpState
+export function SupplierTable({
+  suppliers,
+  selectedSUpState,
+  searchState,
+}: any) {
+  const [searchName, setSearch] = searchState;
+  const [selectSup, setSelectSup] = selectedSUpState;
   return (
     <Card
       className="h-full w-full"
@@ -66,9 +55,9 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
             >
-              Supplier list
+              Danh Sách Nhà Cung Cấp
             </Typography>
-            <Typography
+            {/* <Typography
               color="gray"
               className="mt-1 font-normal"
               placeholder={undefined}
@@ -76,9 +65,9 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
               onPointerLeaveCapture={undefined}
             >
               See information about all members
-            </Typography>
+            </Typography> */}
           </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+          {/* <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button
               variant="outlined"
               size="sm"
@@ -97,10 +86,10 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
             >
               <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
             </Button>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
+          {/* <Tabs value="all" className="w-full md:w-max">
             <TabsHeader
               placeholder={undefined}
               onPointerEnterCapture={undefined}
@@ -118,8 +107,8 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
                 </Tab>
               ))}
             </TabsHeader>
-          </Tabs>
-          <div className="w-full md:w-72">
+          </Tabs> */}
+          {/* <div className="w-full md:w-72">
             <Input
               label="Search"
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
@@ -129,7 +118,7 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
               value={searchName}
               onChange={(event) => setSearch(event.target.value)}
             />
-          </div>
+          </div> */}
         </div>
       </CardHeader>
       <CardBody
@@ -155,9 +144,9 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
                     onPointerLeaveCapture={undefined}
                   >
                     {head}{" "}
-                    {index !== TABLE_HEAD.length - 1 && (
+                    {/* {index !== TABLE_HEAD.length - 1 && (
                       <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
+                    )} */}
                   </Typography>
                 </th>
               ))}
@@ -192,28 +181,34 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
                         }}
                         type="checkbox"
                       />
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                          placeholder={undefined}
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        >
-                          {sup?.supplierName}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                          placeholder={undefined}
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        >
-                          {sup?.contactPersonName}
-                        </Typography>
-                      </div>
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex flex-col">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                        placeholder={undefined}
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      >
+                        {sup?.supplierName}
+                      </Typography>
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex flex-col">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal opacity-70"
+                        placeholder={undefined}
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      >
+                        {sup?.contactPersonName}
+                      </Typography>
                     </div>
                   </td>
                   <td className={classes}>
@@ -230,7 +225,7 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
                       </Typography>
                     </div>
                   </td>
-                  <td className={classes}>
+                  {/* <td className={classes}>
                     <div className="w-max">
                       <Chip
                         variant="ghost"
@@ -239,7 +234,7 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
                         color={"green"}
                       />
                     </div>
-                  </td>
+                  </td> */}
                   <td className={classes}>
                     <Typography
                       variant="small"
@@ -253,6 +248,18 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
                     </Typography>
                   </td>
                   <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                      placeholder={undefined}
+                      onPointerEnterCapture={undefined}
+                      onPointerLeaveCapture={undefined}
+                    >
+                      {sup?.supplierType}
+                    </Typography>
+                  </td>
+                  {/* <td className={classes}>
                     <Tooltip content="Edit User">
                       <IconButton
                         variant="text"
@@ -263,7 +270,7 @@ export function SupplierTable({suppliers, selectedSUpState, searchState}:any) {
                         <PencilIcon className="h-4 w-4" />
                       </IconButton>
                     </Tooltip>
-                  </td>
+                  </td> */}
                 </tr>
               );
             })}
