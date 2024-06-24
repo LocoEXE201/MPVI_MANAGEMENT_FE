@@ -65,8 +65,13 @@ export default function ReceiptProductTicket({
 
   const handleClickOpen = () => {
     const allApproved = details.every((detail) => detail.status === "Approved");
+    const hasCompletedStatus = details.every(
+      (detail) => detail.status === "Completed"
+    );
     if (allApproved) {
       setOpen(true);
+    } else if (hasCompletedStatus) {
+      alert("You checked this receipt !");
     } else {
       alert("Can not receipt this ticket!");
     }
