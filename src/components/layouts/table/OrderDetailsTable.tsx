@@ -1,5 +1,6 @@
 import React from "react";
 interface OrderDetails {
+    result: any;
     orderId: number;
     customerId: string;
     receiverName: string;
@@ -44,13 +45,13 @@ const OrderDetailsPopup: React.FC<OrderDetailsPopupProps> = ({ order, onClose })
             </h3>
             <div className="mt-5" style={{ color: 'black' }}>
               {/* Display order details here */}
-              <p>Mã đơn hàng: {order.orderId}</p>
-              <p>Mã khách hàng: {order.customerId}</p>
-              <p>Tên người nhận: {order.receiverName}</p>
-              <p>Địa chỉ: {order.receiverAddress}</p>
-              <p>Số điện thoại: {order.receiverPhoneNumber}</p>
-              <p>Tổng: {order.total}</p>
-              <p>Ngày tạo: {order.createdOn}</p>
+              <p>Mã đơn hàng: {order.result.orderId}</p>
+              <p>Mã khách hàng: {order.result.customerId}</p>
+              <p>Tên người nhận: {order.result.receiverName}</p>
+              <p>Địa chỉ: {order.result.receiverAddress}</p>
+              <p>Số điện thoại: {order.result.receiverPhoneNumber}</p>
+              <p>Tổng: {order.result.total}</p>
+              <p>Ngày tạo: {order.result.createdOn}</p>
               {/* Add more fields as needed */}
             </div>
           </div>

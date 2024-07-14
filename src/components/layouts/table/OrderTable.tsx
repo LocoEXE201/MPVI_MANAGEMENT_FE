@@ -34,7 +34,7 @@ const TABLE_HEAD = [
 ];
 
 export function OrderTable({ orders, uos }: any) {
-  const [id, setId]: any = useState("")
+  const [orderId, setOrderId]: any = useState("")
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const openOrderDetails = async (order: any) => {
     try {
@@ -46,13 +46,13 @@ export function OrderTable({ orders, uos }: any) {
     }
 };
 const getOrdersById = async () => {
-  getOrderById(id).then((res) => {
+  getOrderById(orderId).then((res) => {
     setSelectedOrder(res.result)
   })
 }
 useEffect(() => {
   getOrdersById()
-}, [id])
+}, [orderId])
 const closeOrderDetails = () => {
     setSelectedOrder(null);
 };
