@@ -6,6 +6,7 @@ import {
   DeleteSupplierByID,
   GetAllCategoryByCondition,
   GetAllSupplierByCondition,
+  GetOrderById,
   GetStaffList,
   ImportStaffList,
   Token,
@@ -61,72 +62,53 @@ export const getCategoryByCondition = async (
   );
   return res.data;
 };
+
+// export const getOrderById = async (orderId: number) => {
+//   const res = await axios.get(`${GetOrderById}`, {
+//     headers: {
+//       Accept: "text/plain",
+//       Authorization: `Bearer ${getToken()}`,
+//     }
+//   })
+//   return res.data
+// }
+export default async function getOrderById(orderId: number) {
+  try {
+      const response = await axios.get(`${GetOrderById}?orderid=${orderId}`, {
+          headers: {
+              Authorization: `Bearer ${getToken()}`,
+          },
+      });
+      console.log("Order details response:", response.data); // Log response data for debugging
+      return response.data;
+  } catch (error: any) {
+      console.error("Error fetching order details:", error);
+      throw new Error(error.response?.data?.message || "Failed to fetch order details");
+  }
+}
 export const updateCategory = async (data: {
-  categoryId: number,
-  categoryName: string,
-  licences: string,
-  maxStonkDate: number,
-  maxUseDate: number,
-  status: string,
-  notes: string,
-  superCategoryID: number,
-  image: string,
-  priceSold: number,
-  imageFile?: Blob // Optional image file if needed
+  categoryId: number;
+  categoryName: string;
+  licences: string;
+  maxStonkDate: number;
+  maxUseDate: number;
+  status: string;
+  notes: string;
+  superCategoryID: number;
+  image: string;
+  priceSold: number;
+  imageFile?: Blob; // Optional image file if needed
 }) => {
-      const res = await axios.post(
-          `${UpdateCategory}`,
-          data,
-          {
-              headers: {
-                  Accept: "text/plain",
-                  Authorization: `Bearer ${getToken()}`,
-                  "Content-Type": "multipart/form-data",
-              },
-              withCredentials: true,
-          }
-      );
-      return res.data;
+  const res = await axios.post(`${UpdateCategory}`, data, {
+    headers: {
+      Accept: "text/plain",
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "multipart/form-data",
+    },
+    withCredentials: true,
+  });
+  return res.data;
 };
-// export const updateCategory = async (data: any) => {
-//   const { imageFile, ...jsonData } = data;
-
-//   if (imageFile) {
-//     jsonData.imageFile = await new Promise((resolve, reject) => {
-//       const reader = new FileReader();
-//       reader.onloadend = () => {
-//         const result = reader.result;
-//         if (typeof result === 'string') {
-//           resolve(result.split(',')[1]); // Remove the base64 prefix
-//         } else {
-//           reject(new Error("FileReader result is not a string"));
-//         }
-//       };
-//       reader.onerror = (error) => reject(error);
-//       reader.readAsDataURL(imageFile);
-//     });
-//   }
-
-//   const headers = {
-//     Accept: "text/plain",
-//     Authorization: `Bearer ${getToken()}`,
-//     "Content-Type": "application/json",
-//   };
-
-//   try {
-//     const res = await axios.post(
-//       "http://14.225.211.1:8084/api/category/UpdateCategory",
-//       JSON.stringify(jsonData),
-//       { headers, withCredentials: true }
-//     );
-
-//     return res.data;
-//   } catch (error) {
-//     console.error("Error updating category:", error);
-//     throw error;
-//   }
-// };
-
 
 export const getSuppliersByCondition = async (
   SupplierName: any = undefined
@@ -216,7 +198,7 @@ export const createNewSupplier = async (data: any) => {
 };
 
 export const createNewCategory = async (data: {
-  CategoryId: number;
+  CategoryId: number,
   SupplierId: number;
   CategoryName: string;
   Licences: string;
@@ -239,15 +221,43 @@ export const createNewCategory = async (data: {
   ImageFile: Blob;
 }) => {
   try {
-    const res = await axios.post(CreateNewCategory, data, {
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, (data as any)[key]);
+    }
+
+    // Log formData entries using forEach
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+
+    const res = await axios.post(CreateNewCategory, formData, {
       headers: {
+        Accept: "text/plain",
         Authorization: `Bearer ${getToken()}`,
         "Content-Type": "multipart/form-data",
       },
     });
-    return res.data;
+    console.log("true");
+    return (
+      res.data ?? {
+        result: null,
+        isSuccess: false,
+        message: "No data returned",
+      }
+    );
   } catch (error: any) {
-    console.log(error.message);
+    console.error("API call failed:", error);
+    if (error.response) {
+      console.error("Response data:", error.response.data);
+      console.error("Response status:", error.response.status);
+      console.error("Response headers:", error.response.headers);
+    } else if (error.request) {
+      console.error("No response received:", error.request);
+    } else {
+      console.error("Error setting up request:", error.message);
+    }
+    throw error; // Rethrow the error for further handling if needed
   }
 };
 

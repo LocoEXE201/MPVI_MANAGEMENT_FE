@@ -23,7 +23,6 @@ const OrderPageComponent = (props: {}) => {
   const handleUpdateOrderStatus = async (orderid: number, status: string) => {
     try {
       await updateOrderStatus(orderid, status);
-      // console.log(getToken());
       getOrderManage();
     } catch (error) {
       console.error("Error handling order status update:", error);

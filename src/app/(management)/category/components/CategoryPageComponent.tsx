@@ -366,7 +366,7 @@ const CategoryPageComponent = (props: {}) => {
 
     for (let field of requiredFields) {
       const value = newCate[field];
-      console.log(`Checking field: ${field}, value: ${value}`);
+      // console.log(`Checking field: ${field}, value: ${value}`);
 
       if (
         (typeof value === "string" && value.trim().length === 0) ||
@@ -779,6 +779,14 @@ const CategoryPageComponent = (props: {}) => {
           id="newcontact"
           className="text-black transition-all hidden absolute z-20 top-20 right-96 w-7/12 py-10 px-20 border rounded-md bg-white animate-appearance-in"
         >
+          <InputLabel className="mb-2">CategoryId</InputLabel>
+          <input
+            className="border mb-5 px-5 py-2 w-2/3"
+            value={newCate?.CategoryId}
+            onChange={(event: any) =>
+              setNewCate({ ...newCate, CategoryId: event.target.value })
+            }
+          />
           <InputLabel className="mb-2">Mã Nhà Cung Cấp</InputLabel>
           {/* <select
             className="border mb-5 px-5 py-2 w-2/3"
@@ -814,7 +822,7 @@ const CategoryPageComponent = (props: {}) => {
             value={newCate?.Quantity}
             className="border mb-5 px-5 py-2 w-2/3"
             onChange={(event: any) =>
-              setNewCate({ ...newCate, Quantity: parseInt(event.target.value) })
+              setNewCate({ ...newCate, Quantity: event.target.value })
             }
           />
           <InputLabel className="mb-2">Giấy Phép</InputLabel>

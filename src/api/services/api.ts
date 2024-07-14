@@ -32,6 +32,7 @@ export const GetCodeForStaffList =
   "http://14.225.211.1:8081/api/auth/GetCodeForExportStaffList";
 export const ImportStaffList =
   "http://14.225.211.1:8081/api/auth/ImportStaffList";
+export const GetOrderById = "http://14.225.211.1:8083/api/shop/OrderDetail";
 export const SOCKET_SERVER_URL =
   "wss://mpviauth.azurewebsites.net/NotificationHub";
 export const ActiveAccount = "http://14.225.211.1:8081/api/auth/ActiveAccount";
