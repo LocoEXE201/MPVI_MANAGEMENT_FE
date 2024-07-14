@@ -53,16 +53,21 @@ export default function CheckReceiptProduct({
   }, []);
 
   const handleClickOpen = () => {
-    const hasReceiptStatus = details.some(
+    const hasReceiptStatus = details.every(
       (detail) => detail.status === "Receipt"
+    );
+    const hasCompletedStatus = details.every(
+      (detail) => detail.status === "Completed"
     );
 
     if (adminRole === "tTjEu2THQ4ByaQw" && hasReceiptStatus) {
       setOpen(true);
     } else if (adminRole !== "tTjEu2THQ4ByaQw") {
       alert("You are not a MPVI_SUPER_ADMIN");
+    } else if (hasCompletedStatus) {
+      alert("You checked this receipt !");
     } else {
-      alert("You need to receipt product ticket first !");
+      alert("You need to make a receipt product ticket first !");
     }
   };
 
